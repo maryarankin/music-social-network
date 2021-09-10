@@ -8,14 +8,18 @@ const Profile = () => {
     const [albums, setAlbums] = useState(albumData);
 
     return (
-        <div>
-            {
-                albums.map((album) => {
-                    return (
-                        <Album key={album.albumId} {...album} />
-                    )
-                })
-            }
+        <div class="container">
+            <div class="row mt-5">
+                {
+                    albums.map((album) => {
+                        return (
+                            <div class="col-4 mb-5">
+                                <Album key={album.albumId} {...album} />
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 }
