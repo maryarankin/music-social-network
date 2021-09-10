@@ -1,17 +1,12 @@
 /* Album component that will display the title, artist, release year, and cover art */
 
-import React, { useState } from 'react';
+import React from 'react';
 import defaultAlbumCover from './assets/default-album-cover.png';
 
-const Album = () => {
-    const [albumTitle, setAlbumTitle] = useState('Album Title');
-    const [albumArtist, setAlbumArtist] = useState('Artist');
-    const [albumYear, setAlbumYear] = useState(2000);
-    const [albumCover, setAlbumCover] = useState('Image'); //put a generic image url here in case the api doesn't retrieve an image
-
+const Album = ({ id, albumTitle, albumArtist, albumYear, albumCover }) => {
     return (
         <>
-            <img src={defaultAlbumCover} />
+            <img src={albumCover || defaultAlbumCover} />
             <div>
                 <p>Title: {albumTitle}</p>
                 <p>Artist: {albumArtist}</p>
