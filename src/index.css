@@ -1,3 +1,13 @@
 .navbar {
     background-color: #f9bf86
 }
+
+.title-div {
+    width: 50%;
+}
+
+.main-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 5rem;
+    color: rgb(104, 99, 95);
+}
