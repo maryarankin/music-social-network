@@ -1,20 +1,20 @@
 /* Profile page where all of a user's information is shown; also where they can display their favorite albums, songs, and artists */
 
 import React, { useState } from 'react';
-import Album from './Album';
-import { albumData } from './albumData';
+import Album from '../components/Album';
+import { albumData } from '../data/albumData';
 
 const Profile = () => {
     const [albums, setAlbums] = useState(albumData);
 
     return (
-        <div class="container">
-            <div class="row mt-5">
+        <div className="container">
+            <div className="row mt-5">
                 {
                     albums.map((album) => {
                         return (
-                            <div class="col-4 mb-5">
-                                <Album key={album.albumId} {...album} />
+                            <div className="col-4 mb-5" key={album.albumId}>
+                                <Album {...album} />
                             </div>
                         )
                     })
