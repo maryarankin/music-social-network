@@ -13,9 +13,9 @@ const Album = ({ id, albumTitle, albumArtist, albumYear, albumCover }) => {
         <div className="card" style={{ width: '18rem' }}>
             <img src={albumCover || defaultAlbumCover} className="card-img-top" alt={albumTitle} />
             <div className="card-body">
-                <h5 className="card-title">{albumTitle} ({albumYear})</h5>
+                <h5 className="card-title album-title">{albumTitle} ({albumYear})</h5>
                 <p className="card-text">{albumArtist}</p>
-                <a href="#" className="btn btn-dark">View</a>
+                <a href="#" className="btn buttons">View</a>
             </div>
         </div>
     )

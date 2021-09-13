@@ -1,5 +1,33 @@
 .navbar {
-    background-color: #f9bf86
+    background-color: #ec7a5d;
+    /* #f9bf86 */
+    /* #0ec094 */
+}
+
+.navbar-brand {
+    font-family: 'Orbitron', sans-serif;
+    color: #3f2119;
+    /* rgb(104, 99, 95) */
+}
+
+.navbar-brand:hover {
+    color: #3f2119;
+}
+
+.navbar-brand:visited {
+    color: #3f2119;
+}
+
+.nav-link {
+    color: #3f2119;
+}
+
+.nav-link:hover {
+    color: #3f2119;
+}
+
+.nav-link:visited {
+    color: #3f2119;
 }
 
 .title-div {
@@ -9,5 +37,39 @@
 .main-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 5rem;
-    color: rgb(104, 99, 95);
+    color: #3f2119;
+}
+
+.blurb-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: #3f2119;
+}
+
+.buttons {
+    color: white;
+    background-color: #3f2119;
+}
+
+p {
+    color: #110907;
+}
+
+.taste-board {
+    width: 75%;
+}
+
+.album-title {
+    color: #3f2119;
+}
+
+.profile-card {
+    background-color: #ec7a5d;
+    color: #3f2119;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    width: 75%;
+    margin: auto;
 }
