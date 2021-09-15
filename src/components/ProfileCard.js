@@ -6,7 +6,7 @@ const ProfileCard = () => {
     return <>
         <div className="container mt-5">
             <div className="card profile-card d-flex justify-content-center" style={{ width: '18rem' }}>
-                <img src={profilePicture} className="card-img-top profile-picture mt-2" alt="..." />
+                <img src={profilePicture} className="card-img-top profile-picture mt-2" alt="Profile Picture" />
                 <div className="card-body">
                     <h5 className="card-title">Mary Rankin</h5>
                     <p className="card-text">Student at UF who likes to listen to music</p>
