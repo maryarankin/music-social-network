@@ -2,9 +2,11 @@ import React from 'react';
 import ArtistCard from '../components/ArtistCard'
 import { artistData } from '../data/artistData'
 
-const Artist = () => {
+const Artist = (props) => {
+    let accessToken = props.accessToken;
+
     return <>
-        <ArtistCard {...artistData} />
+        <ArtistCard accessToken={accessToken} {...artistData} />
     </>
 }
 

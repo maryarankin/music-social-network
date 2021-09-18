@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+const axios = require('axios');
 
-const ArtistCard = ({ artistName, artistPicture, artistGenre, artistAlbums, artistSongs }) => {
+const ArtistCard = ({ artistPicture, artistGenre, artistAlbums, artistSongs, accessToken }) => {
+    const getArtist = (accessToken) => {
+        var options = {
+            method: 'GET',
+            url: 'https://api.spotify.com/v1/artists/06HL4z0CvFAxyc27GXpf02',
+            headers: { 'content-type': 'application/json', authorization: 'Bearer ' + accessToken }
+        };
+
+        axios.request(options).then(function (response) {
+            console.log(response.data);
+            return response.data;
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }
+
+    const [artistName, setArtistName] = useState("")
+
+    useEffect(() => {
+        let artist = getArtist(accessToken);
+        setArtistName(artist.name)
+    }, [])
+
     return <>
         <div className="container mt-5">
             <div className="card profile-card d-flex justify-content-center" style={{ width: '18rem' }}>
@@ -21,6 +44,7 @@ const ArtistCard = ({ artistName, artistPicture, artistGenre, artistAlbums, arti
             </div>
         </div>
     </>
+
 }
 
 export default ArtistCard;

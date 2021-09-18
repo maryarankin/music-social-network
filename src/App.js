@@ -5,7 +5,9 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Artist from './pages/Artist'
 
-const App = () => {
+const App = (props) => {
+    let accessToken = props.accessToken;
+
     return <Router>
         <Navbar />
         <Switch>
@@ -16,7 +18,7 @@ const App = () => {
                 <Profile />
             </Route>
             <Route path="/artist">
-                <Artist />
+                <Artist accessToken={accessToken} />
             </Route>
         </Switch>
     </Router>
