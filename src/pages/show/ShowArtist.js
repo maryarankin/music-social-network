@@ -1,8 +1,8 @@
 import React from 'react';
-import ArtistCard from '../components/ArtistCard'
+import ArtistCard from '../../components/ArtistCard'
 //import { artistData } from '../data/artistData'
 
-const Artist = (props) => {
+const ShowArtist = (props) => {
     let accessToken = props.accessToken;
 
     return <>
@@ -10,4 +10,4 @@ const Artist = (props) => {
     </>
 }
 
-export default Artist;
+export default ShowArtist;

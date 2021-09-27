@@ -3,7 +3,12 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import Artist from './pages/Artist';
+import ArtistSearch from './pages/search/ArtistSearch';
+import AlbumSearch from './pages/search/AlbumSearch';
+import TrackSearch from './pages/search/TrackSearch';
+import ShowArtist from './pages/show/ShowArtist';
+import ShowAlbum from './pages/show/ShowAlbum';
+import ShowTrack from './pages/show/ShowTrack';
 
 const App = (props) => {
     let accessToken = props.accessToken;
@@ -17,8 +22,23 @@ const App = (props) => {
             <Route path="/profile">
                 <Profile />
             </Route>
+            <Route path="/artistsearch">
+                <ArtistSearch />
+            </Route>
             <Route path="/artist">
-                <Artist accessToken={accessToken} />
+                <ShowArtist accessToken={accessToken} />
+            </Route>
+            <Route path="/albumsearch">
+                <AlbumSearch />
+            </Route>
+            <Route path="/album">
+                <ShowAlbum />
+            </Route>
+            <Route path="/tracksearch">
+                <TrackSearch />
+            </Route>
+            <Route path="/track">
+                <ShowTrack />
             </Route>
         </Switch>
     </Router>
