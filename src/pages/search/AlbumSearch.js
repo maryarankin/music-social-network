@@ -1,7 +1,12 @@
 import React from 'react';
+import SearchBar from '../../components/SearchBar';
 
-const AlbumSearch = () => {
-    return <h1>album</h1>
+const AlbumSearch = (props) => {
+    let accessToken = props.accessToken;
+
+    return <div>
+        <SearchBar searchType="album" accessToken={accessToken} />
+    </div>
 }
 
 export default AlbumSearch;

@@ -19,20 +19,23 @@ const Navbar = () => {
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
+                                Search
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a className="dropdown-item" href="#">Action</a></li>
-                                <li><a className="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <Link to="/artistsearch" className="dropdown-item">By Artist</Link>
+                                </li>
                                 <li><hr className="dropdown-divider" /></li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                <li>
+                                    <Link to="/albumsearch" className="dropdown-item">By Album</Link>
+                                </li>
+                                <li><hr className="dropdown-divider" /></li>
+                                <li>
+                                    <Link to="/tracksearch" className="dropdown-item">By Track</Link>
+                                </li>
                             </ul>
                         </li>
                     </ul>
-                    <form className="d-flex">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-dark" type="submit">Search</button>
-                    </form>
                 </div>
             </div>
         </nav>

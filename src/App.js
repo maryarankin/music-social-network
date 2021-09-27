@@ -23,19 +23,19 @@ const App = (props) => {
                 <Profile />
             </Route>
             <Route path="/artistsearch">
-                <ArtistSearch />
+                <ArtistSearch accessToken={accessToken} />
             </Route>
             <Route path="/artist">
                 <ShowArtist accessToken={accessToken} />
             </Route>
             <Route path="/albumsearch">
-                <AlbumSearch />
+                <AlbumSearch accessToken={accessToken} />
             </Route>
             <Route path="/album">
                 <ShowAlbum />
             </Route>
             <Route path="/tracksearch">
-                <TrackSearch />
+                <TrackSearch accessToken={accessToken} />
             </Route>
             <Route path="/track">
                 <ShowTrack />

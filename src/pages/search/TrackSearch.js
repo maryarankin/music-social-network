@@ -1,7 +1,12 @@
 import React from 'react';
+import SearchBar from '../../components/SearchBar';
 
-const TrackSearch = () => {
-    return <h1>track</h1>
+const TrackSearch = (props) => {
+    let accessToken = props.accessToken;
+
+    return <div>
+        <SearchBar searchType="track" accessToken={accessToken} />
+    </div>
 }
 
 export default TrackSearch;
