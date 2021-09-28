@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { querySpotify } from '../data/querySpotify';
+const axios = require('axios');
+//import { querySpotify } from '../data/querySpotify';
 
 const SearchBar = (props) => {
     let searchType = props.searchType;
@@ -10,6 +11,7 @@ const SearchBar = (props) => {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,13 +19,23 @@ const SearchBar = (props) => {
         if (searchTerm) {
             setSearchQuery(searchTerm);
             setSearchTerm('');
+            //setSearchResults(querySpotify(accessToken, searchType, searchQuery));
+
+            //put the api call into separate file (ie, querySpotify.js file)
+            let options = {
+                method: 'GET',
+                url: `https://api.spotify.com/v1/search?q=${searchQuery}&type=${searchType}&market=US&limit=10`,
+                headers: { 'content-type': 'application/json', authorization: 'Bearer ' + accessToken }
+            };
+
+            axios.request(options).then(function (response) {
+                console.log(response.data);
+                return response.data;
+            }).catch(function (error) {
+                console.error(error);
+            });
         }
     }
-
-    useEffect(() => {
-        let searchResults = querySpotify(accessToken, searchType, searchQuery);
-        console.log(searchResults);
-    }, [searchQuery])
 
     return <div className="container mt-5">
         <div className="container">
