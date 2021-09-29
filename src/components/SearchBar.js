@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { querySpotify } from '../data/querySpotify';
-import ArtistSearchResult from './ArtistSearchResult';
-import AlbumSearchResult from './ArtistSearchResult';
-import TrackSearchResult from './ArtistSearchResult';
+// import ArtistSearchResult from './ArtistSearchResult';
+// import AlbumSearchResult from './ArtistSearchResult';
+// import TrackSearchResult from './ArtistSearchResult';
+import SearchResult from './SearchResult';
 const axios = require('axios');
 
 
@@ -141,21 +142,9 @@ const SearchBar = ({ searchType, accessToken }) => {
             </form>
         </div>
 
-        {(searchQuery && isArtist) && <div>
+        {searchQuery && <div>
             {searchResults.map((result) => {
-                return <ArtistSearchResult key={result.id} {...result} />
-            })}
-        </div>}
-
-        {(searchQuery && isAlbum) && <div>
-            {searchResults.map((result) => {
-                return <AlbumSearchResult key={result.id} {...result} />
-            })}
-        </div>}
-
-        {(searchQuery && isTrack) && <div>
-            {searchResults.map((result) => {
-                return <TrackSearchResult key={result.id} {...result} />
+                return <SearchResult key={result.id} {...result} searchType={searchType} />
             })}
         </div>}
 

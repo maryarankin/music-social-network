@@ -73,3 +73,23 @@ p {
     width: 75%;
     margin: auto;
 }
+
+.search-result-card {
+    background-color: #ec7a5d;
+    width: 65%;
+}
+
+.search-result-link {
+    text-decoration: none;
+}
+
+.search-result-picture {
+    border-radius: 50%;
+    width: 25%;
+    margin: auto;
+}
+
+.search-result-name {
+    color: #3f2119;
+    font-size: 1.5rem;
+}
