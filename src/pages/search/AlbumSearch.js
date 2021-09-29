@@ -4,10 +4,10 @@ import SearchBar from '../../components/SearchBar';
 const AlbumSearch = (props) => {
     let accessToken = props.accessToken;
 
-
+    const [search, setSearch] = useState('');
 
     return <div>
-        <SearchBar searchType="album" accessToken={accessToken} />
+        <SearchBar searchType="album" accessToken={accessToken} passSearch={setSearch} />
     </div>
 }
 
