@@ -9,6 +9,7 @@ import TrackSearch from './pages/search/TrackSearch';
 import ShowArtist from './pages/show/ShowArtist';
 import ShowAlbum from './pages/show/ShowAlbum';
 import ShowTrack from './pages/show/ShowTrack';
+//import SearchBar from './components/SearchBar';
 
 const App = (props) => {
     let accessToken = props.accessToken;

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { querySpotify } from '../data/querySpotify';
 import ArtistSearchResult from './ArtistSearchResult';
+import AlbumSearchResult from './ArtistSearchResult';
+import TrackSearchResult from './ArtistSearchResult';
 const axios = require('axios');
 
 
@@ -8,6 +10,23 @@ const SearchBar = ({ searchType, accessToken }) => {
     console.log(accessToken)
     let searchTypeString = searchType;
     searchTypeString = searchTypeString.charAt(0).toUpperCase() + searchTypeString.substring(1);
+
+    //create booleans for searchType:
+    let isArtist = false;
+    let isAlbum = false;
+    let isTrack = false;
+
+    if (searchType == 'artist') {
+        isArtist = true;
+    }
+    else if (searchType == 'album') {
+        isAlbum = true;
+    }
+    else {
+        isTrack = true;
+    }
+
+    console.log("album: " + isAlbum + "; artist: " + isArtist + "; track: " + isTrack);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
@@ -75,7 +94,16 @@ const SearchBar = ({ searchType, accessToken }) => {
         // });
 
         axios.request(options).then(function (response) {
-            setSearchResults(response.data.artists.items);
+            if (searchType == 'artist') {
+                setSearchResults(response.data.artists.items);
+            }
+            else if (searchType == 'album') {
+                setSearchResults(response.data.albums.items);
+            }
+            else {
+                setSearchResults(response.data.tracks.items);
+            }
+
             console.log(response.data);
             //return response.data;
         }).catch(function (error) {
@@ -86,8 +114,6 @@ const SearchBar = ({ searchType, accessToken }) => {
     useEffect(() => {
         querySpotify(accessToken, searchType, searchQuery);
     }, [searchQuery])
-
-
 
     // useEffect(() => {
     //     setSearchResults(querySpotify(accessToken, searchType, searchQuery));
@@ -114,11 +140,25 @@ const SearchBar = ({ searchType, accessToken }) => {
                 <button className="btn-sm buttons">Search</button>
             </form>
         </div>
-        {searchQuery && <div>
+
+        {(searchQuery && isArtist) && <div>
             {searchResults.map((result) => {
                 return <ArtistSearchResult key={result.id} {...result} />
             })}
         </div>}
+
+        {(searchQuery && isAlbum) && <div>
+            {searchResults.map((result) => {
+                return <AlbumSearchResult key={result.id} {...result} />
+            })}
+        </div>}
+
+        {(searchQuery && isTrack) && <div>
+            {searchResults.map((result) => {
+                return <TrackSearchResult key={result.id} {...result} />
+            })}
+        </div>}
+
     </div>
 }
 
