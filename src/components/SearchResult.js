@@ -17,7 +17,7 @@ const SearchResult = (props) => {
     }
 
     return <>
-        <Link to={`/${searchType}`} className="search-result-link">
+        <Link to={`/${searchType}/${id}`} className="search-result-link">
             <div className="card mt-3 search-result-card">
                 <div className="card-body">
                     <div className="row">

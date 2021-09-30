@@ -10,6 +10,4 @@ const AlbumSearchResult = ({ artists, images, name, release_date, id }) => {
     </>
 }
 
-//artists, images, name, release_date, total_tracks, id
-
 export default AlbumSearchResult;

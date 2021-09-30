@@ -26,20 +26,17 @@ const App = (props) => {
             <Route path="/artistsearch">
                 <ArtistSearch accessToken={accessToken} />
             </Route>
-            <Route path="/artist">
-                <ShowArtist accessToken={accessToken} />
+            <Route path="/artist/:id" children={<ShowArtist accessToken={accessToken} />}>
             </Route>
             <Route path="/albumsearch">
                 <AlbumSearch accessToken={accessToken} />
             </Route>
-            <Route path="/album">
-                <ShowAlbum />
+            <Route path="/album/:id" children={<ShowAlbum accessToken={accessToken} />}>
             </Route>
             <Route path="/tracksearch">
                 <TrackSearch accessToken={accessToken} />
             </Route>
-            <Route path="/track">
-                <ShowTrack />
+            <Route path="/track/:id" children={<ShowTrack accessToken={accessToken} />}>
             </Route>
         </Switch>
     </Router>
