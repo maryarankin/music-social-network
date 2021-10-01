@@ -22,7 +22,7 @@ const SearchResult = (props) => {
                 <div className="card-body">
                     <div className="row">
                         <div className="col">
-                            <img className="search-result-picture" src={image ? image.url : defaultAlbumCover} />
+                            <img className={`search-result-picture-${searchType}`} src={image ? image.url : defaultAlbumCover} />
                         </div>
                         <div className="col">
                             <p className="search-result-name">{name}</p>

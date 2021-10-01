@@ -8,10 +8,12 @@ const ShowTrack = ({ accessToken }) => {
 
     const [trackName, setTrackName] = useState('');
     const [albumCover, setAlbumCover] = useState('');
-    const [trackArtist, setTrackArtist] = useState('');
+    const [trackArtist, setTrackArtist] = useState([]);
     const [albumName, setAlbumName] = useState('');
     const [trackDuration, setTrackDuration] = useState('');
     const [trackPopularity, setTrackPopularity] = useState(0);
+    const [artistId, setArtistId] = useState(0);
+    const [albumId, setAlbumId] = useState(0);
 
     const getArtist = (accessToken, id) => {
         var options = {
@@ -27,6 +29,8 @@ const ShowTrack = ({ accessToken }) => {
             setAlbumName(response.data.album.name);
             setTrackDuration(response.data.duration_ms);
             setTrackPopularity(response.data.popularity);
+            setArtistId(response.data.artists[0].id);
+            setAlbumId(response.data.album.id);
         }).catch(function (error) {
             console.error(error);
         });
@@ -36,9 +40,9 @@ const ShowTrack = ({ accessToken }) => {
         getArtist(accessToken, id);
     }, [])
 
-    return <>
-        <TrackCard trackName={trackName} albumCover={albumCover} trackArtist={trackArtist} albumName={albumName} trackDuration={trackDuration} trackPopularity={trackPopularity} />
-    </>
+    return <div>
+        <TrackCard trackName={trackName} albumCover={albumCover} trackArtist={trackArtist} albumName={albumName} trackDuration={trackDuration} trackPopularity={trackPopularity} artistId={artistId} albumId={albumId} />
+    </div>
 }
 
 export default ShowTrack;

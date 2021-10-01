@@ -83,8 +83,18 @@ p {
     text-decoration: none;
 }
 
-.search-result-picture {
+.search-result-picture-artist {
     border-radius: 50%;
+    width: 25%;
+    margin: auto;
+}
+
+.search-result-picture-album {
+    width: 25%;
+    margin: auto;
+}
+
+.search-result-picture-track {
     width: 25%;
     margin: auto;
 }
@@ -92,4 +102,17 @@ p {
 .search-result-name {
     color: #3f2119;
     font-size: 1.5rem;
+}
+
+.album-cover {
+    width: 75%;
+    margin: auto;
+}
+
+.track-page-link {
+    color: #3f2119;
+}
+
+.track-page-link:hover {
+    color: #3f2119;
 }

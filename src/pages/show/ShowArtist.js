@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ArtistCard from '../../components/ArtistCard';
+import Album from '../../components/Album';
 const axios = require('axios');
 //import ArtistCard from '../../components/ArtistCard'
 //import { artistData } from '../data/artistData'
@@ -59,9 +60,26 @@ const ShowArtist = ({ accessToken }) => {
         getArtistAlbums(accessToken, id);
     }, [])
 
-    return <>
-        <ArtistCard artistName={artistName} artistImage={artistImage} artistGenre={artistGenre} artistFollowers={artistFollowers} artistPopularity={artistPopularity} artistAlbums={artistAlbums} />
-    </>
+    return <div>
+        <div className="row">
+            <div className="col">
+                <ArtistCard artistName={artistName} artistImage={artistImage} artistGenre={artistGenre} artistFollowers={artistFollowers} artistPopularity={artistPopularity} />
+            </div>
+
+            <div className="col-9 d-flex justify-content-center">
+                <div className="taste-board">
+                    <div className="row mt-5 mx-4">
+                        {artistAlbums.map((album) => {
+                            return <div className="col-3 mb-5" key={album.id}>
+                                <Album {...album} />
+                            </div>
+                        })}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 }
 
 export default ShowArtist;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import AlbumCard from '../../components/AlbumCard';
 const axios = require('axios');
 
@@ -36,9 +36,37 @@ const ShowAlbum = ({ accessToken }) => {
         getArtist(accessToken, id);
     }, [])
 
-    return <>
-        <AlbumCard albumName={albumName} albumCover={albumCover} albumArtist={albumArtist} albumTracks={albumTracks} albumReleaseDate={albumReleaseDate} albumPopularity={albumPopularity} />
-    </>
+    return <div>
+        <div className="row">
+            <div className="col-5 mx-5">
+                <AlbumCard albumName={albumName} albumCover={albumCover} albumArtist={albumArtist} albumReleaseDate={albumReleaseDate} albumPopularity={albumPopularity} />
+            </div>
+
+            <div className="col-6 mt-5">
+                <div className="card border-dark" style={{ width: '50rem' }}>
+                    <div className="card-header border-dark">
+                        Track Listing
+                    </div>
+                    <ul className="list-group list-group-flush">
+                        {albumTracks.map((track, index) => {
+                            return <li key={track.id} className="list-group-item">
+                                <div className="row">
+                                    <div className="col-11">
+                                        {index + 1}. {track.name}
+                                    </div>
+                                    <div className="col-1 d-flex justify-content-end">
+                                        <Link to="" className="btn buttons btn-sm">+</Link>
+                                    </div>
+                                </div>
+                            </li>
+                        })}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
 }
 
 export default ShowAlbum;
+
