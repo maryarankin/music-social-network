@@ -134,21 +134,24 @@ const SearchBar = ({ searchType, accessToken }) => {
     // }, [searchResults])
 
     return <div className="container mt-5">
-        <div className="container">
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="searchTerm">{searchTypeString} Name: </label>
-                <input className="mx-3" type="text" id="searchTerm" name="searchTerm" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}></input>
-                <button className="btn-sm buttons">Search</button>
-            </form>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="searchTerm">{searchTypeString} Name: </label>
+            <input className="mx-3" type="text" id="searchTerm" name="searchTerm" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}></input>
+            <button className="btn-sm buttons">Search</button>
+        </form>
+
+        {searchQuery && <div className="d-flex justify-content-center">
+            <div className="row mt-5 mx-4">
+                {searchResults.map((result) => {
+                    return <div className="col-4 mb-5" key={result.id}>
+                        <SearchResult {...result} searchType={searchType} />
+                    </div>
+                })}
+            </div>
         </div>
+        }
 
-        {searchQuery && <div>
-            {searchResults.map((result) => {
-                return <SearchResult key={result.id} {...result} searchType={searchType} />
-            })}
-        </div>}
-
-    </div>
+    </div >
 }
 
 export default SearchBar;

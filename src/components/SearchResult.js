@@ -18,16 +18,10 @@ const SearchResult = (props) => {
 
     return <>
         <Link to={`/${searchType}/${id}`} className="search-result-link">
-            <div className="card mt-3 search-result-card">
+            <div className="card mt-3 search-result">
                 <div className="card-body">
-                    <div className="row">
-                        <div className="col">
-                            <img className={`search-result-picture-${searchType}`} src={image ? image.url : defaultAlbumCover} />
-                        </div>
-                        <div className="col">
-                            <p className="search-result-name">{name}</p>
-                        </div>
-                    </div>
+                    <img className={`search-result-picture-${searchType}`} src={image ? image.url : defaultAlbumCover} />
+                    <p className="search-result-name">{name}</p>
                 </div>
             </div>
         </Link>

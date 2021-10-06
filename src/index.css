@@ -74,9 +74,13 @@ p {
     margin: auto;
 }
 
-.search-result-card {
+/* .search-result-card {
     background-color: #ec7a5d;
     width: 65%;
+} */
+
+.search-result {
+    width: 75%;
 }
 
 .search-result-link {
@@ -85,17 +89,17 @@ p {
 
 .search-result-picture-artist {
     border-radius: 50%;
-    width: 25%;
+    width: 50%;
     margin: auto;
 }
 
 .search-result-picture-album {
-    width: 25%;
+    width: 50%;
     margin: auto;
 }
 
 .search-result-picture-track {
-    width: 25%;
+    width: 50%;
     margin: auto;
 }
 
