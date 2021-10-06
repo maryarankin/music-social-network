@@ -42,7 +42,7 @@ const ShowArtist = ({ accessToken }) => {
     const getArtistAlbums = (accessToken, id) => {
         var options = {
             method: 'GET',
-            url: `https://api.spotify.com/v1/artists/${id}/albums?market=US&limit=10&include_groups=album`,
+            url: `https://api.spotify.com/v1/artists/${id}/albums?market=US&limit=50&include_groups=album`,
             headers: {
                 'content-type': 'application/json', authorization: 'Bearer ' + accessToken
             }

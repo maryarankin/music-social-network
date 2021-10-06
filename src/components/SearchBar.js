@@ -92,7 +92,7 @@ const SearchBar = ({ searchType, accessToken }) => {
         //     return response.data;
         // }).catch(function (error) {
         //     console.error(error);
-        // });
+        // }); 
 
         axios.request(options).then(function (response) {
             if (searchType == 'artist') {
@@ -141,7 +141,7 @@ const SearchBar = ({ searchType, accessToken }) => {
         </form>
 
         {searchQuery && <div className="d-flex justify-content-center">
-            <div className="row mt-5 mx-4">
+            <div className="row mt-5">
                 {searchResults.map((result) => {
                     return <div className="col-4 mb-5" key={result.id}>
                         <SearchResult {...result} searchType={searchType} />
