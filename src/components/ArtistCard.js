@@ -10,7 +10,10 @@ const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, art
                     <h5 className="card-title">{artistName}</h5>
                     <p className="card-text">Genre: {artistGenre}</p>
                     <p className="card-text">Followers: {artistFollowers}</p>
-                    <p className="card-text">Popularity: {artistPopularity}</p>
+                    <p className="card-text">Popularity:</p>
+                    <div className="progress">
+                        <div className="progress-bar progress-bar-striped bg-dark" role="progressbar" style={{ width: `${artistPopularity}%` }} aria-valuenow={artistPopularity} aria-valuemin="0" aria-valuemax="100">{artistPopularity}%</div>
+                    </div>
                 </div>
                 <div className="card-body">
                     <Link to="/" type="button" className="btn buttons mx-3">Add Artist to Board</Link>

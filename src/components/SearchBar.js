@@ -83,7 +83,7 @@ const SearchBar = ({ searchType, accessToken }) => {
     const querySpotify = (accessToken, searchType, searchQuery) => {
         let options = {
             method: 'GET',
-            url: `https://api.spotify.com/v1/search?q=${searchQuery}&type=${searchType}&market=US&limit=10`,
+            url: `https://api.spotify.com/v1/search?q=${searchQuery}&type=${searchType}&market=US&limit=12`,
             headers: { 'content-type': 'application/json', authorization: 'Bearer ' + accessToken }
         };
 

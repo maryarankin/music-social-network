@@ -14,9 +14,6 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link to="/profile" className="nav-link">Profile</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link to="/artist" className="nav-link">Artist</Link>
-                        </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Search

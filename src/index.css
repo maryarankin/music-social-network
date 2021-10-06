@@ -120,3 +120,13 @@ p {
 .track-page-link:hover {
     color: #3f2119;
 }
+
+.artist-name-link {
+    color: #3f2119;
+    text-decoration: none;
+}
+
+.artist-name-link:hover {
+    color: #3f2119;
+    text-decoration: none;
+}

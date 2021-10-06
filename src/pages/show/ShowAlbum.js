@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import AlbumCard from '../../components/AlbumCard';
+import Track from '../../components/Track';
 const axios = require('axios');
 
 const ShowAlbum = ({ accessToken }) => {
@@ -9,11 +10,12 @@ const ShowAlbum = ({ accessToken }) => {
     const [albumName, setAlbumName] = useState('');
     const [albumCover, setAlbumCover] = useState('');
     const [albumArtist, setAlbumArtist] = useState('');
+    const [albumArtistId, setAlbumArtistId] = useState('');
     const [albumTracks, setAlbumTracks] = useState([]);
     const [albumReleaseDate, setAlbumReleaseDate] = useState('');
     const [albumPopularity, setAlbumPopularity] = useState(0);
 
-    const getArtist = (accessToken, id) => {
+    const getAlbum = (accessToken, id) => {
         var options = {
             method: 'GET',
             url: `https://api.spotify.com/v1/albums/${id}`,
@@ -24,6 +26,7 @@ const ShowAlbum = ({ accessToken }) => {
             setAlbumName(response.data.name);
             setAlbumCover(response.data.images[0].url);
             setAlbumArtist(response.data.artists[0].name);
+            setAlbumArtistId(response.data.artists[0].id);
             setAlbumTracks(response.data.tracks.items);
             setAlbumReleaseDate(response.data.release_date);
             setAlbumPopularity(response.data.popularity);
@@ -33,37 +36,26 @@ const ShowAlbum = ({ accessToken }) => {
     }
 
     useEffect(() => {
-        getArtist(accessToken, id);
+        getAlbum(accessToken, id);
     }, [])
 
     return <div>
         <div className="row">
-            <div className="col-5 mx-5">
-                <AlbumCard albumName={albumName} albumCover={albumCover} albumArtist={albumArtist} albumReleaseDate={albumReleaseDate} albumPopularity={albumPopularity} />
+            <div className="col">
+                <AlbumCard albumName={albumName} albumCover={albumCover} albumArtist={albumArtist} albumArtistId={albumArtistId} albumReleaseDate={albumReleaseDate} albumPopularity={albumPopularity} />
             </div>
 
-            <div className="col-6 mt-5">
-                <div className="card border-dark" style={{ width: '50rem' }}>
-                    <div className="card-header border-dark">
-                        Track Listing
-                    </div>
-                    <ul className="list-group list-group-flush">
-                        {albumTracks.map((track, index) => {
-                            return <li key={track.id} className="list-group-item">
-                                <div className="row">
-                                    <div className="col-11">
-                                        {index + 1}. {track.name}
-                                    </div>
-                                    <div className="col-1 d-flex justify-content-end">
-                                        <Link to="" className="btn buttons btn-sm">+</Link>
-                                    </div>
-                                </div>
-                            </li>
+            <div className="col-9 d-flex justify-content-center">
+                <div className="taste-board">
+                    <div className="row mt-5 mx-4">
+                        {albumTracks.map((track) => {
+                            return <div className="col-3 mb-5" key={track.id}>
+                                <Track accessToken={accessToken} {...track} />
+                            </div>
                         })}
-                    </ul>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 }

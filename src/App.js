@@ -13,6 +13,7 @@ import ShowTrack from './pages/show/ShowTrack';
 
 const App = (props) => {
     let accessToken = props.accessToken;
+    console.log(accessToken);
 
     return <Router>
         <Navbar />

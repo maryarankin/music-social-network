@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const AlbumCard = ({ albumName, albumCover, albumArtist, albumReleaseDate, albumPopularity }) => {
+const AlbumCard = ({ albumName, albumCover, albumArtist, albumArtistId, albumReleaseDate, albumPopularity }) => {
     return <>
-        <div className="container mt-5">
+        <div className="container mt-5 mx-5">
             <div className="card profile-card d-flex justify-content-center" style={{ width: '25rem' }}>
                 <img src={albumCover} className="card-img-top album-cover mt-4" alt={albumName} />
                 <div className="card-body">
                     <h5 className="card-title">{albumName}</h5>
-                    <p className="card-text">Artist: {albumArtist}</p>
+                    <p><Link to={`/artist/${albumArtistId}`} className="card-text artist-name-link">Artist: {albumArtist}</Link></p>
                     <p className="card-text">Release Date: {albumReleaseDate.substring(0, 4)}</p>
                     <p className="card-text">Popularity: {albumPopularity}</p>
                 </div>
