@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import Login from './pages/user/Login';
+import Register from './pages/user/Register';
 import Profile from './pages/Profile';
 import ArtistSearch from './pages/search/ArtistSearch';
 import AlbumSearch from './pages/search/AlbumSearch';
@@ -18,8 +20,14 @@ const App = ({ accessToken }) => {
             <Route exact path="/">
                 <Home />
             </Route>
+            <Route path="/login">
+                <Login />
+            </Route>
             <Route path="/profile">
                 <Profile />
+            </Route>
+            <Route path="/register">
+                <Register />
             </Route>
             <Route path="/artistsearch">
                 <ArtistSearch accessToken={accessToken} />
