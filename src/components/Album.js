@@ -1,6 +1,6 @@
 /* Album component that will display the title, artist, release year, and cover art */
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultAlbumCover from '../assets/default-album-cover.png';
 

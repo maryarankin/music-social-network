@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const AlbumCard = ({ albumName, albumCover, albumArtist, albumArtistId, albumReleaseDate, albumPopularity }) => {
     return <>
-        <div className="container mt-5 mx-5">
+        <div className="container mt-5 mx-5 d-flex justify-content-center">
             <div className="card profile-card d-flex justify-content-center" style={{ width: '25rem' }}>
                 <img src={albumCover} className="card-img-top album-cover mt-4" alt={albumName} />
                 <div className="card-body">

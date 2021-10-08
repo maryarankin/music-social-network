@@ -1,3 +1,5 @@
+/* not using anymore */
+
 import React from 'react';
 
 const ArtistSearchResult = ({ images, name, id }) => {
@@ -9,7 +11,5 @@ const ArtistSearchResult = ({ images, name, id }) => {
         </div>
     </>
 }
-
-//followers, genres, images, name, popularity, id
 
 export default ArtistSearchResult;

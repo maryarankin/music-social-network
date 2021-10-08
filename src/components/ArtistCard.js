@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, artistPopularity }) => {
     return <>
-        <div className="container mt-5 mx-5">
+        <div className="container mt-5 mx-5 d-flex justify-content-center">
             <div className="card profile-card d-flex justify-content-center" style={{ width: '25rem' }}>
                 <img src={artistImage} className="card-img-top profile-picture mt-2" alt={artistName} />
                 <div className="card-body">

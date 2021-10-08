@@ -3,12 +3,6 @@ import { useParams } from 'react-router-dom';
 import ArtistCard from '../../components/ArtistCard';
 import Album from '../../components/Album';
 const axios = require('axios');
-//import ArtistCard from '../../components/ArtistCard'
-//import { artistData } from '../data/artistData'
-
-
-//GET ARTIST'S TOP SONGS
-
 
 const ShowArtist = ({ accessToken }) => {
     const { id } = useParams();

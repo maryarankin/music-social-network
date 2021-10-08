@@ -1,3 +1,5 @@
+/* not using anymore */
+
 import React from 'react';
 
 const AlbumSearchResult = ({ artists, images, name, release_date, id }) => {

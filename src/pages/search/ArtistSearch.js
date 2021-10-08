@@ -1,9 +1,7 @@
 import React from 'react';
 import SearchBar from '../../components/SearchBar';
 
-const ArtistSearch = (props) => {
-    let accessToken = props.accessToken;
-
+const ArtistSearch = ({ accessToken }) => {
     return <div>
         <SearchBar searchType="artist" accessToken={accessToken} />
     </div>

@@ -9,12 +9,9 @@ import TrackSearch from './pages/search/TrackSearch';
 import ShowArtist from './pages/show/ShowArtist';
 import ShowAlbum from './pages/show/ShowAlbum';
 import ShowTrack from './pages/show/ShowTrack';
-//import SearchBar from './components/SearchBar';
+import NotFound from './components/NotFound';
 
-const App = (props) => {
-    let accessToken = props.accessToken;
-    console.log(accessToken);
-
+const App = ({ accessToken }) => {
     return <Router>
         <Navbar />
         <Switch>
@@ -38,6 +35,9 @@ const App = (props) => {
                 <TrackSearch accessToken={accessToken} />
             </Route>
             <Route path="/track/:id" children={<ShowTrack accessToken={accessToken} />}>
+            </Route>
+            <Route path="*">
+                <NotFound />
             </Route>
         </Switch>
     </Router>

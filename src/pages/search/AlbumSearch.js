@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SearchBar from '../../components/SearchBar';
 
-const AlbumSearch = (props) => {
-    let accessToken = props.accessToken;
-
-    //const [search, setSearch] = useState('');
-
+const AlbumSearch = ({ accessToken }) => {
     return <div>
         <SearchBar searchType="album" accessToken={accessToken} />
     </div>

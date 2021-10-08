@@ -1,13 +1,10 @@
 .navbar {
     background-color: #ec7a5d;
-    /* #f9bf86 */
-    /* #0ec094 */
 }
 
 .navbar-brand {
     font-family: 'Orbitron', sans-serif;
     color: #3f2119;
-    /* rgb(104, 99, 95) */
 }
 
 .navbar-brand:hover {
@@ -28,6 +25,10 @@
 
 .nav-link:visited {
     color: #3f2119;
+}
+
+.navbar-toggler {
+    background-color: #3f2119;
 }
 
 .title-div {
@@ -81,6 +82,7 @@ p {
 
 .search-result {
     width: 75%;
+    margin: auto;
 }
 
 .search-result-link {
@@ -90,22 +92,18 @@ p {
 .search-result-picture-artist {
     border-radius: 50%;
     width: 50%;
-    margin: auto;
 }
 
 .search-result-picture-album {
     width: 50%;
-    margin: auto;
 }
 
 .search-result-picture-track {
     width: 50%;
-    margin: auto;
 }
 
 .search-result-name {
     color: #3f2119;
-    margin: auto;
 }
 
 .album-cover {

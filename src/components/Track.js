@@ -12,6 +12,10 @@ const Track = ({ accessToken, track_number, name, duration_ms, id }) => {
     }
     let duration = min + ':' + sec;
 
+    if (name.length > 21) {
+        name = name.substring(0, 20) + '...';
+    }
+
     const [popularity, setPopularity] = useState(0);
 
     const getTrack = (accessToken, id) => {

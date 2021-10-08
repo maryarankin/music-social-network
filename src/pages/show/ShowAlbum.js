@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import AlbumCard from '../../components/AlbumCard';
 import Track from '../../components/Track';
 const axios = require('axios');
