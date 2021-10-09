@@ -13,7 +13,7 @@ const ShowArtist = ({ accessToken }) => {
     const [artistFollowers, setArtistFollowers] = useState();
     const [artistPopularity, setArtistPopularity] = useState();
     const [artistAlbums, setArtistAlbums] = useState([]);
-    const [artistTopSongs, setArtistTopSongs] = useState([]);
+    const [artistTopTracks, setArtistTopTracks] = useState([]);
 
     const getArtist = (accessToken, id) => {
         var options = {
@@ -49,15 +49,32 @@ const ShowArtist = ({ accessToken }) => {
         });
     }
 
+    const getArtistTopTracks = (accessToken, id) => {
+        var options = {
+            method: 'GET',
+            url: `https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`,
+            headers: {
+                'content-type': 'application/json', authorization: 'Bearer ' + accessToken
+            }
+        };
+
+        axios.request(options).then(function (response) {
+            setArtistTopTracks(response.data.tracks);
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }
+
     useEffect(() => {
         getArtist(accessToken, id);
         getArtistAlbums(accessToken, id);
+        getArtistTopTracks(accessToken, id);
     }, [])
 
     return <div>
         <div className="row">
             <div className="col">
-                <ArtistCard artistName={artistName} artistImage={artistImage} artistGenre={artistGenre} artistFollowers={artistFollowers} artistPopularity={artistPopularity} />
+                <ArtistCard artistName={artistName} artistImage={artistImage} artistGenre={artistGenre} artistFollowers={artistFollowers} artistPopularity={artistPopularity} artistTopTracks={artistTopTracks} />
             </div>
 
             <div className="col-9 d-flex justify-content-center">

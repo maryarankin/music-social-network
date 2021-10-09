@@ -122,9 +122,54 @@ p {
 .artist-name-link {
     color: #3f2119;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .artist-name-link:hover {
+    color: #ec7a5d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.artist-card {
+    background-color: #ec7a5d;
+    color: #3f2119;
+}
+
+.top-songs-header {
+    background-color:#3f2119;
+    color: white;
+}
+
+.top-songs-list {
+    color: #3f2119;
+}
+
+.top-songs-link {
     color: #3f2119;
     text-decoration: none;
+    font-weight: bold;
+}
+
+.top-songs-link:hover {
+    color: #ec7a5d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.album-card {
+    background-color: #ec7a5d;
+    color: #3f2119;
+}
+
+.album-card-artist-link {
+    color: #3f2119;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.album-card-artist-link:hover {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }

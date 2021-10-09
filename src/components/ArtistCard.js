@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, artistPopularity }) => {
+const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks }) => {
+    artistTopTracks.forEach(track => {
+        if (track.name.length > 38) {
+            track.name = track.name.substring(0, 37) + '...';
+        }
+    })
+
     return <>
         <div className="container mt-5 mx-5 d-flex justify-content-center">
-            <div className="card profile-card d-flex justify-content-center" style={{ width: '25rem' }}>
+            <div className="card artist-card d-flex justify-content-center" style={{ width: '25rem' }}>
                 <img src={artistImage} className="card-img-top profile-picture mt-2" alt={artistName} />
                 <div className="card-body">
                     <h5 className="card-title">{artistName}</h5>
@@ -18,6 +24,23 @@ const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, art
                 <div className="card-body">
                     <Link to="/" type="button" className="btn buttons mx-3">Add Artist to Board</Link>
                 </div>
+                <div className="card-header top-songs-header mt-3">
+                    Top Songs
+                </div>
+                <ul className="list-group list-group-flush">
+                    {artistTopTracks.map((track) => {
+                        return <li key={track.id} className="list-group-item top-songs-list">
+                            <div className="row">
+                                <div className="col-11">
+                                    <Link to={`/album/${track.album.id}`} className="top-songs-link">{track.name}</Link>
+                                </div>
+                                <div className="col-1 d-flex justify-content-end">
+                                    <Link to="" className="btn buttons btn-sm">+</Link>
+                                </div>
+                            </div>
+                        </li>
+                    })}
+                </ul>
             </div>
         </div>
     </>
