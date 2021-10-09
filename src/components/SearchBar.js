@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Context } from '../Context';
 import SearchResult from './SearchResult';
 const axios = require('axios');
 
 
-const SearchBar = ({ searchType, accessToken }) => {
+const SearchBar = ({ searchType }) => {
+    const { accessToken } = useContext(Context);
+
     let searchTypeString = searchType;
     searchTypeString = searchTypeString.charAt(0).toUpperCase() + searchTypeString.substring(1);
 

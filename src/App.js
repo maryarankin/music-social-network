@@ -30,19 +30,17 @@ const App = ({ accessToken }) => {
                 <Register />
             </Route>
             <Route path="/artistsearch">
-                <ArtistSearch accessToken={accessToken} />
+                <ArtistSearch />
             </Route>
-            <Route path="/artist/:id" children={<ShowArtist accessToken={accessToken} />}>
+            <Route path="/artist/:id" children={<ShowArtist />}>
             </Route>
             <Route path="/albumsearch">
-                <AlbumSearch accessToken={accessToken} />
+                <AlbumSearch />
             </Route>
-            <Route path="/album/:id" children={<ShowAlbum accessToken={accessToken} />}>
+            <Route path="/album/:id" children={<ShowAlbum />}>
             </Route>
             <Route path="/tracksearch">
-                <TrackSearch accessToken={accessToken} />
-            </Route>
-            <Route path="/track/:id" children={<ShowTrack accessToken={accessToken} />}>
+                <TrackSearch />
             </Route>
             <Route path="*">
                 <NotFound />

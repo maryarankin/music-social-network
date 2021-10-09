@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { Context } from '../Context';
 import defaultAlbumCoverDark from '../assets/default-album-cover-dark.png';
 const axios = require('axios');
 
-const Track = ({ accessToken, track_number, name, duration_ms, id }) => {
+const Track = ({ track_number, name, duration_ms, id }) => {
+    const { accessToken } = useContext(Context);
+
     let minutes = duration_ms / 60000;
     let min = Math.floor(minutes);
     let sec = Math.floor((minutes * 60) % 60);

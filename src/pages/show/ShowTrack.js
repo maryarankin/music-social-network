@@ -18,7 +18,7 @@ const ShowTrack = ({ accessToken }) => {
     const [albumId, setAlbumId] = useState(0);
 
     const getArtist = (accessToken, id) => {
-        var options = {
+        let options = {
             method: 'GET',
             url: `https://api.spotify.com/v1/tracks/${id}`,
             headers: { 'content-type': 'application/json', authorization: 'Bearer ' + accessToken }

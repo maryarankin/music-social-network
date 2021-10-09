@@ -1,9 +1,9 @@
 import React from 'react';
 import SearchBar from '../../components/SearchBar';
 
-const TrackSearch = ({ accessToken }) => {
+const TrackSearch = () => {
     return <div>
-        <SearchBar searchType="track" accessToken={accessToken} />
+        <SearchBar searchType="track" />
     </div>
 }
 

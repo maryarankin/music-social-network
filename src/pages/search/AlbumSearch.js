@@ -1,9 +1,9 @@
 import React from 'react';
 import SearchBar from '../../components/SearchBar';
 
-const AlbumSearch = ({ accessToken }) => {
+const AlbumSearch = () => {
     return <div>
-        <SearchBar searchType="album" accessToken={accessToken} />
+        <SearchBar searchType="album" />
     </div>
 }
 

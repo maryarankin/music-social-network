@@ -75,11 +75,6 @@ p {
     margin: auto;
 }
 
-/* .search-result-card {
-    background-color: #ec7a5d;
-    width: 65%;
-} */
-
 .search-result {
     width: 75%;
     margin: auto;
@@ -111,14 +106,6 @@ p {
     margin: auto;
 }
 
-.track-page-link {
-    color: #3f2119;
-}
-
-.track-page-link:hover {
-    color: #3f2119;
-}
-
 .artist-name-link {
     color: #3f2119;
     text-decoration: none;
@@ -136,22 +123,22 @@ p {
     color: #3f2119;
 }
 
-.top-songs-header {
+.artist-card-list-header {
     background-color:#3f2119;
     color: white;
 }
 
-.top-songs-list {
+.artist-card-list {
     color: #3f2119;
 }
 
-.top-songs-link {
+.artist-card-link {
     color: #3f2119;
     text-decoration: none;
     font-weight: bold;
 }
 
-.top-songs-link:hover {
+.artist-card-link:hover {
     color: #ec7a5d;
     text-decoration: none;
     font-weight: bold;

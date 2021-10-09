@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { Context } from '../../Context';
 import AlbumCard from '../../components/AlbumCard';
 import Track from '../../components/Track';
 const axios = require('axios');
 
-const ShowAlbum = ({ accessToken }) => {
+const ShowAlbum = () => {
     const { id } = useParams();
+    const { accessToken } = useContext(Context);
 
     const [albumName, setAlbumName] = useState('');
     const [albumCover, setAlbumCover] = useState('');
@@ -16,7 +18,7 @@ const ShowAlbum = ({ accessToken }) => {
     const [albumPopularity, setAlbumPopularity] = useState(0);
 
     const getAlbum = (accessToken, id) => {
-        var options = {
+        let options = {
             method: 'GET',
             url: `https://api.spotify.com/v1/albums/${id}`,
             headers: { 'content-type': 'application/json', authorization: 'Bearer ' + accessToken }
@@ -50,7 +52,7 @@ const ShowAlbum = ({ accessToken }) => {
                     <div className="row mt-5 mx-4">
                         {albumTracks.map((track) => {
                             return <div className="col-3 mb-5" key={track.id}>
-                                <Track accessToken={accessToken} {...track} />
+                                <Track {...track} />
                             </div>
                         })}
                     </div>

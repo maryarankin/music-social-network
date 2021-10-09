@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import './index.css';
+import { Context } from './Context';
 import App from './App';
 import { spotifyAuthorization } from './data/spotifyAuthorization'
 
@@ -9,7 +10,9 @@ import { spotifyAuthorization } from './data/spotifyAuthorization'
 
   ReactDom.render(
     <React.StrictMode>
-      <App accessToken={accessToken} />
+      <Context.Provider value={{ accessToken }}>
+        <App accessToken={accessToken} />
+      </Context.Provider>
     </React.StrictMode>,
     document.getElementById('root')
   );

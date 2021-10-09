@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks }) => {
+const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks, relatedArtists }) => {
     artistTopTracks.forEach(track => {
         if (track.name.length > 38) {
             track.name = track.name.substring(0, 37) + '...';
@@ -24,15 +24,34 @@ const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, art
                 <div className="card-body">
                     <Link to="/" type="button" className="btn buttons mx-3">Add Artist to Board</Link>
                 </div>
-                <div className="card-header top-songs-header mt-3">
+
+                <div className="card-header artist-card-list-header mt-3">
                     Top Songs
                 </div>
                 <ul className="list-group list-group-flush">
                     {artistTopTracks.map((track) => {
-                        return <li key={track.id} className="list-group-item top-songs-list">
+                        return <li key={track.id} className="list-group-item artist-card-list">
                             <div className="row">
                                 <div className="col-11">
-                                    <Link to={`/album/${track.album.id}`} className="top-songs-link">{track.name}</Link>
+                                    <Link to={`/album/${track.album.id}`} className="artist-card-link">{track.name}</Link>
+                                </div>
+                                <div className="col-1 d-flex justify-content-end">
+                                    <Link to="" className="btn buttons btn-sm">+</Link>
+                                </div>
+                            </div>
+                        </li>
+                    })}
+                </ul>
+
+                <div className="card-header artist-card-list-header">
+                    Related Artists
+                </div>
+                <ul className="list-group list-group-flush">
+                    {relatedArtists.map((artist) => {
+                        return <li key={artist.id} className="list-group-item artist-card-list">
+                            <div className="row">
+                                <div className="col-11">
+                                    <Link to={`/artist/${artist.id}`} className="artist-card-link">{artist.name}</Link>
                                 </div>
                                 <div className="col-1 d-flex justify-content-end">
                                     <Link to="" className="btn buttons btn-sm">+</Link>
