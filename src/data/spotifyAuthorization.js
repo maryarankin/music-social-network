@@ -1,3 +1,5 @@
+/* get access token from spotify */
+
 import { credentials } from './credentials'
 const axios = require('axios');
 const qs = require('qs');

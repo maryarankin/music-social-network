@@ -1,3 +1,5 @@
+/* 404 page */
+
 import React from 'react';
 
 const NotFound = () => {

@@ -1,3 +1,5 @@
+/* component to display search results for artists, albums, or tracks */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultAlbumCover from '../assets/default-album-cover.png';
@@ -19,6 +21,7 @@ const SearchResult = (props) => {
     let linkSearchType = searchType;
     let linkId = id;
 
+    //each search type returns different information
     if (searchType === 'artist') {
         isArtist = true;
         image = props.images[0];
@@ -30,7 +33,7 @@ const SearchResult = (props) => {
         isAlbum = true;
         image = props.images[0];
         artist = props.artists[0];
-        releaseDate = props.release_date.substring(0, 4);
+        releaseDate = props.release_date.substring(0, 4);  //show year only
     }
 
     if (searchType === 'track') {

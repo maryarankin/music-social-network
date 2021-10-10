@@ -1,7 +1,11 @@
+/* card component to display artist info on artist show page */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks, relatedArtists }) => {
+
+    //abbreviate top track names if too long
     artistTopTracks.forEach(track => {
         if (track.name.length > 38) {
             track.name = track.name.substring(0, 37) + '...';

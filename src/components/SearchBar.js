@@ -1,3 +1,5 @@
+/* search bar component that queries spotify & returns results */
+
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../Context';
 import SearchResult from './SearchResult';

@@ -1,3 +1,5 @@
+/* component for an individual track on album show page */
+
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../Context';
@@ -7,6 +9,7 @@ const axios = require('axios');
 const Track = ({ track_number, name, duration_ms, id }) => {
     const { accessToken } = useContext(Context);
 
+    //convert duration from ms to 00:00 format
     let minutes = duration_ms / 60000;
     let min = Math.floor(minutes);
     let sec = Math.floor((minutes * 60) % 60);
@@ -15,10 +18,12 @@ const Track = ({ track_number, name, duration_ms, id }) => {
     }
     let duration = min + ':' + sec;
 
+    //abbreviate name if too long
     if (name.length > 21) {
         name = name.substring(0, 20) + '...';
     }
 
+    //have to make another api call to get the track's popularity
     const [popularity, setPopularity] = useState(0);
 
     const getTrack = (accessToken, id) => {

@@ -1,3 +1,5 @@
+/* card component that displays user information */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import profilePicture from '../assets/profile-picture.png'

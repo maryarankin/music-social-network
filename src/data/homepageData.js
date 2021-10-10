@@ -1,3 +1,5 @@
+/* blurbs & images used for homepage components */
+
 export const homepageData = [
     {
         id: 0,

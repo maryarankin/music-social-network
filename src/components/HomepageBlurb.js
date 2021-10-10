@@ -1,3 +1,5 @@
+/* homepage blurb component */
+
 import React from 'react';
 
 const HomepageBlurb = ({ image, header, blurb }) => {

@@ -1,3 +1,5 @@
+/* user registration form */
+
 import React from 'react';
 
 const Register = () => {

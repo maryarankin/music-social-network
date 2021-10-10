@@ -1,3 +1,5 @@
+/* card component for album info on album show page */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
