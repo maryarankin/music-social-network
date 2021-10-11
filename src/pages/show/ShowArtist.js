@@ -21,6 +21,8 @@ const ShowArtist = () => {
     const [relatedArtists, setRelatedArtists] = useState([]);
 
     let albums = [];
+    let topTracks = [];
+    let relatedArt = [];
 
     const getArtist = (accessToken, id) => {
         let options = {
@@ -50,6 +52,7 @@ const ShowArtist = () => {
         };
 
         axios.request(options).then(function (response) {
+            //remove duplicate albums with same name
             response.data.items.forEach((album) => {
                 if ((albums.find(element => element.name === album.name)) === undefined) {
                     albums.push(album);
@@ -71,7 +74,11 @@ const ShowArtist = () => {
         };
 
         axios.request(options).then(function (response) {
-            setArtistTopTracks(response.data.tracks);
+            //limit top tracks to 5
+            for (let i = 0; i < 5; i++) {
+                topTracks.push(response.data.tracks[i]);
+            }
+            setArtistTopTracks(topTracks);
         }).catch(function (error) {
             console.error(error);
         });
@@ -87,7 +94,11 @@ const ShowArtist = () => {
         };
 
         axios.request(options).then(function (response) {
-            setRelatedArtists(response.data.artists);
+            //limit related artists to 5
+            for (let i = 0; i < 5; i++) {
+                relatedArt.push(response.data.artists[i]);
+            }
+            setRelatedArtists(relatedArt);
         }).catch(function (error) {
             console.error(error);
         });
