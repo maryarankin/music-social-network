@@ -20,6 +20,8 @@ const ShowArtist = () => {
     const [artistTopTracks, setArtistTopTracks] = useState([]);
     const [relatedArtists, setRelatedArtists] = useState([]);
 
+    let albums = [];
+
     const getArtist = (accessToken, id) => {
         let options = {
             method: 'GET',
@@ -38,7 +40,7 @@ const ShowArtist = () => {
         });
     }
 
-    const getArtistAlbums = (accessToken, id) => {
+    const getArtistAlbums = (accessToken, id, albums) => {
         let options = {
             method: 'GET',
             url: `https://api.spotify.com/v1/artists/${id}/albums?market=US&limit=50&include_groups=album`,
@@ -48,7 +50,12 @@ const ShowArtist = () => {
         };
 
         axios.request(options).then(function (response) {
-            setArtistAlbums(response.data.items);
+            response.data.items.forEach((album) => {
+                if ((albums.find(element => element.name === album.name)) === undefined) {
+                    albums.push(album);
+                }
+            })
+            setArtistAlbums(albums);
         }).catch(function (error) {
             console.error(error);
         });
@@ -88,7 +95,7 @@ const ShowArtist = () => {
 
     useEffect(() => {
         getArtist(accessToken, id);
-        getArtistAlbums(accessToken, id);
+        getArtistAlbums(accessToken, id, albums);
         getArtistTopTracks(accessToken, id);
         getRelatedArtists(accessToken, id);
     }, [id])
