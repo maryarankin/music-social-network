@@ -15,6 +15,7 @@ const SearchBar = ({ searchType }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [moreThanOneResult, setMoreThanOneResult] = useState(true);
 
     //const [foundResults, setFoundResults] = useState(false);
     //const [error, setError] = useState();
@@ -73,12 +74,30 @@ const SearchBar = ({ searchType }) => {
         axios.request(options).then(function (response) {
             if (searchType === 'artist') {
                 setSearchResults(response.data.artists.items);
+                if (response.data.artists.items.length === 1) {
+                    setMoreThanOneResult(false);
+                }
+                else {
+                    setMoreThanOneResult(true);
+                }
             }
             else if (searchType === 'album') {
                 setSearchResults(response.data.albums.items);
+                if (response.data.artists.items.length === 1) {
+                    setMoreThanOneResult(false);
+                }
+                else {
+                    setMoreThanOneResult(true);
+                }
             }
             else {
                 setSearchResults(response.data.tracks.items);
+                if (response.data.artists.items.length === 1) {
+                    setMoreThanOneResult(false);
+                }
+                else {
+                    setMoreThanOneResult(true);
+                }
             }
         }).catch(function (error) {
             console.error(error);
@@ -113,10 +132,21 @@ const SearchBar = ({ searchType }) => {
             <button className="btn-sm buttons">Search</button>
         </form>
 
-        {searchQuery && <div className="d-flex justify-content-center">
+        {(searchQuery && moreThanOneResult) && <div className="d-flex justify-content-center">
             <div className="row mt-5">
                 {searchResults.map((result) => {
-                    return <div className="col-4 mb-5" key={result.id}>
+                    return <div className="col-12 col-md-6 col-lg-4 mb-5" key={result.id}>
+                        <SearchResult {...result} searchType={searchType} />
+                    </div>
+                })}
+            </div>
+        </div>
+        }
+
+        {(searchQuery && !moreThanOneResult) && <div className="d-flex justify-content-center">
+            <div className="row mt-5">
+                {searchResults.map((result) => {
+                    return <div className="col-12 mb-5" key={result.id}>
                         <SearchResult {...result} searchType={searchType} />
                     </div>
                 })}

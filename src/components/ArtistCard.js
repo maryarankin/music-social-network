@@ -14,7 +14,7 @@ const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, art
 
     return <>
         <div className="container mt-5 mx-5 d-flex justify-content-center">
-            <div className="card artist-card d-flex justify-content-center" style={{ width: '25rem' }}>
+            <div className="card artist-card d-flex justify-content-center" style={{ width: '75%' }}>
                 <img src={artistImage} className="card-img-top profile-picture mt-2" alt={artistName} />
                 <div className="card-body">
                     <h5 className="card-title">{artistName}</h5>
@@ -26,7 +26,7 @@ const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, art
                     </div>
                 </div>
                 <div className="card-body">
-                    <Link to="/" type="button" className="btn buttons mx-3">Add Artist to Board</Link>
+                    <Link to="/" type="button" className="btn buttons mx-3">Add Artist</Link>
                 </div>
 
                 <div className="card-header artist-card-list-header mt-3">
@@ -36,11 +36,11 @@ const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, art
                     {artistTopTracks.map((track) => {
                         return <li key={track.id} className="list-group-item artist-card-list">
                             <div className="row">
-                                <div className="col-11">
+                                <div className="col-10">
                                     <Link to={`/album/${track.album.id}`} className="artist-card-link">{track.name}</Link>
                                 </div>
-                                <div className="col-1 d-flex justify-content-end">
-                                    <Link to="" className="btn buttons btn-sm">+</Link>
+                                <div className="col-2 d-flex justify-content-end">
+                                    <Link to="" className="btn buttons btn-sm d-none d-xl-block">+</Link>
                                 </div>
                             </div>
                         </li>
@@ -54,11 +54,11 @@ const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, art
                     {relatedArtists.map((artist) => {
                         return <li key={artist.id} className="list-group-item artist-card-list">
                             <div className="row">
-                                <div className="col-11">
+                                <div className="col-10">
                                     <Link to={`/artist/${artist.id}`} className="artist-card-link">{artist.name}</Link>
                                 </div>
-                                <div className="col-1 d-flex justify-content-end">
-                                    <Link to="" className="btn buttons btn-sm">+</Link>
+                                <div className="col-2 d-flex justify-content-end">
+                                    <Link to="" className="btn buttons btn-sm d-none d-xl-block">+</Link>
                                 </div>
                             </div>
                         </li>

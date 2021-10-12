@@ -13,6 +13,14 @@ const Navbar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li className="nav-item d-lg-none">
+                            <Link to="/login" className="nav-link">Login</Link>
+                        </li>
+                        <li className="nav-item d-lg-none">
+                            <Link to="/register" className="nav-link">Register</Link>
+                        </li>
+
+
                         <li className="nav-item">
                             <Link to="/profile" className="nav-link">Profile</Link>
                         </li>
@@ -37,10 +45,10 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
+                    <li className="nav-item d-none d-lg-block">
                         <Link to="/login" className="nav-link">Login</Link>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item d-none d-lg-block">
                         <Link to="/register" className="nav-link">Register</Link>
                     </li>
                 </ul>

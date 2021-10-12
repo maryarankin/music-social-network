@@ -11,7 +11,7 @@ const Album = ({ id, artists, images, name, release_date }) => {
     }
 
     return (
-        <div className="card" style={{ width: '18rem' }}>
+        <div className="card" style={{ width: '75%' }}>
             <img src={images[0].url || defaultAlbumCover} className="card-img-top" alt={name} />
             <div className="card-body">
                 <h5 className="card-title album-title">{name} ({release_date.substring(0, 4)})</h5>

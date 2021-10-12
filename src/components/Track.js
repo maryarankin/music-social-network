@@ -45,7 +45,7 @@ const Track = ({ track_number, name, duration_ms, id }) => {
     }, [])
 
     return (
-        <div className="card" style={{ width: '18rem' }}>
+        <div className="card" style={{ width: '75%' }}>
             <img src={defaultAlbumCoverDark} className="card-img-top album-cover my-4" alt={name} />
             <div className="card-body">
                 <h5 className="card-title album-title">{track_number}. {name}</h5>

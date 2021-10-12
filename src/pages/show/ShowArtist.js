@@ -113,15 +113,15 @@ const ShowArtist = () => {
 
     return <div>
         <div className="row">
-            <div className="col">
+            <div className="col-lg-3 col-sm-12">
                 <ArtistCard artistName={artistName} artistImage={artistImage} artistGenre={artistGenre} artistFollowers={artistFollowers} artistPopularity={artistPopularity} artistTopTracks={artistTopTracks} relatedArtists={relatedArtists} />
             </div>
 
-            <div className="col-9 d-flex justify-content-center">
+            <div className="col-lg-9 col-sm-12 d-flex justify-content-center">
                 <div className="taste-board">
                     <div className="row mt-5 mx-4">
                         {artistAlbums.map((album) => {
-                            return <div className="col-3 mb-5" key={album.id}>
+                            return <div className="col-xl-4 col-xs-12 mb-5" key={album.id}>
                                 <Album {...album} />
                             </div>
                         })}
