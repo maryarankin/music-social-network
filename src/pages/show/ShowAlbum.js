@@ -19,6 +19,8 @@ const ShowAlbum = () => {
     const [albumReleaseDate, setAlbumReleaseDate] = useState('');
     const [albumPopularity, setAlbumPopularity] = useState(0);
 
+    const [isError, setIsError] = useState(false);
+
     const getAlbum = (accessToken, id) => {
         let options = {
             method: 'GET',
@@ -34,8 +36,10 @@ const ShowAlbum = () => {
             setAlbumTracks(response.data.tracks.items);
             setAlbumReleaseDate(response.data.release_date);
             setAlbumPopularity(response.data.popularity);
+            setIsError(false);
         }).catch(function (error) {
             console.error(error);
+            setIsError(true);
         });
     }
 
@@ -44,23 +48,28 @@ const ShowAlbum = () => {
     }, [])
 
     return <div>
-        <div className="row">
-            <div className="col-lg-3 col-sm-12">
-                <AlbumCard albumName={albumName} albumCover={albumCover} albumArtist={albumArtist} albumArtistId={albumArtistId} albumReleaseDate={albumReleaseDate} albumPopularity={albumPopularity} />
-            </div>
 
-            <div className="col-lg-9 col-sm-12 d-flex justify-content-center">
-                <div className="taste-board">
-                    <div className="row mt-5 mx-4">
-                        {albumTracks.map((track) => {
-                            return <div className="col-xl-4 col-xs-12 mb-5" key={track.id}>
-                                <Track {...track} />
-                            </div>
-                        })}
+        {isError && <h1>Error</h1>}
+
+        {!isError &&
+            <div className="row">
+                <div className="col-lg-3 col-sm-12">
+                    <AlbumCard albumName={albumName} albumCover={albumCover} albumArtist={albumArtist} albumArtistId={albumArtistId} albumReleaseDate={albumReleaseDate} albumPopularity={albumPopularity} />
+                </div>
+
+                <div className="col-lg-9 col-sm-12 d-flex justify-content-center">
+                    <div className="grid">
+                        <div className="row mt-5 mx-4">
+                            {albumTracks.map((track) => {
+                                return <div className="col-xl-4 col-xs-12 mb-5" key={track.id}>
+                                    <Track {...track} />
+                                </div>
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 }
 

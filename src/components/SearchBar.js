@@ -15,6 +15,7 @@ const SearchBar = ({ searchType }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [noResults, setNoResults] = useState(false);
     const [moreThanOneResult, setMoreThanOneResult] = useState(true);
 
     //const [foundResults, setFoundResults] = useState(false);
@@ -74,28 +75,46 @@ const SearchBar = ({ searchType }) => {
         axios.request(options).then(function (response) {
             if (searchType === 'artist') {
                 setSearchResults(response.data.artists.items);
-                if (response.data.artists.items.length === 1) {
+                if (response.data.artists.items.length === 0) {
+                    setNoResults(true);
+                    setMoreThanOneResult(false);
+                }
+                else if (response.data.artists.items.length === 1) {
+                    setNoResults(false);
                     setMoreThanOneResult(false);
                 }
                 else {
+                    setNoResults(false);
                     setMoreThanOneResult(true);
                 }
             }
             else if (searchType === 'album') {
                 setSearchResults(response.data.albums.items);
-                if (response.data.artists.items.length === 1) {
+                if (response.data.artists.items.length === 0) {
+                    setNoResults(true);
+                    setMoreThanOneResult(false);
+                }
+                else if (response.data.artists.items.length === 1) {
+                    setNoResults(false);
                     setMoreThanOneResult(false);
                 }
                 else {
+                    setNoResults(false);
                     setMoreThanOneResult(true);
                 }
             }
             else {
                 setSearchResults(response.data.tracks.items);
-                if (response.data.artists.items.length === 1) {
+                if (response.data.artists.items.length === 0) {
+                    setNoResults(true);
+                    setMoreThanOneResult(false);
+                }
+                else if (response.data.artists.items.length === 1) {
+                    setNoResults(false);
                     setMoreThanOneResult(false);
                 }
                 else {
+                    setNoResults(false);
                     setMoreThanOneResult(true);
                 }
             }
@@ -132,7 +151,9 @@ const SearchBar = ({ searchType }) => {
             <button className="btn-sm buttons">Search</button>
         </form>
 
-        {(searchQuery && moreThanOneResult) && <div className="d-flex justify-content-center">
+        {noResults && <h1>no results</h1>}
+
+        {(!noResults && searchQuery && moreThanOneResult) && <div className="d-flex justify-content-center">
             <div className="row mt-5">
                 {searchResults.map((result) => {
                     return <div className="col-12 col-md-6 col-lg-4 mb-5" key={result.id}>
@@ -143,7 +164,7 @@ const SearchBar = ({ searchType }) => {
         </div>
         }
 
-        {(searchQuery && !moreThanOneResult) && <div className="d-flex justify-content-center">
+        {(!noResults && searchQuery && !moreThanOneResult) && <div className="d-flex justify-content-center">
             <div className="row mt-5">
                 {searchResults.map((result) => {
                     return <div className="col-12 mb-5" key={result.id}>

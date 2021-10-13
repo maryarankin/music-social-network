@@ -118,7 +118,7 @@ const ShowArtist = () => {
             </div>
 
             <div className="col-lg-9 col-sm-12 d-flex justify-content-center">
-                <div className="taste-board">
+                <div className="grid">
                     <div className="row mt-5 mx-4">
                         {artistAlbums.map((album) => {
                             return <div className="col-xl-4 col-xs-12 mb-5" key={album.id}>

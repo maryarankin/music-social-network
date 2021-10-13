@@ -15,7 +15,7 @@ const Profile = () => {
 
                     <div className="col-9 d-flex justify-content-center">
 
-                        <div className="taste-board">
+                        <div className="grid">
                             <div className="row mt-5 mx-4">
                                 {
                                     albums.map((album) => {
