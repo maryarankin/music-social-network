@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DarkStars from './DarkStars';
 
 const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks, relatedArtists }) => {
 
@@ -20,13 +21,11 @@ const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, art
                     <h5 className="card-title">{artistName}</h5>
                     <p className="card-text">Genre: {artistGenre}</p>
                     <p className="card-text">Followers: {artistFollowers}</p>
-                    <p className="card-text">Popularity:</p>
-                    <div className="progress">
-                        <div className="progress-bar progress-bar-striped bg-dark" role="progressbar" style={{ width: `${artistPopularity}%` }} aria-valuenow={artistPopularity} aria-valuemin="0" aria-valuemax="100">{artistPopularity}%</div>
-                    </div>
+                    <p className="card-text d-inline"><span>Popularity: </span></p>
+                    <DarkStars popularity={artistPopularity} />
                 </div>
                 <div className="card-body">
-                    <Link to="/" type="button" className="btn buttons mx-3">Add Artist</Link>
+                    <Link to="/" type="button" className="btn buttons">Add Artist</Link>
                 </div>
 
                 <div className="card-header artist-card-list-header mt-3">

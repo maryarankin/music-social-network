@@ -15,7 +15,7 @@ const AlbumCard = ({ albumName, albumCover, albumArtist, albumArtistId, albumRel
                     <p className="card-text">Popularity: {albumPopularity}</p>
                 </div>
                 <div className="card-body">
-                    <Link to="/" type="button" className="btn buttons mx-3">Add Album</Link>
+                    <Link to="/" type="button" className="btn buttons mb-3">Add Album</Link>
                 </div>
             </div>
         </div>

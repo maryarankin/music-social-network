@@ -111,6 +111,14 @@ p {
     color: #3f2119;
 }
 
+.star-icon {
+    color: #ec7a5d;
+}
+
+.star-icon-dark {
+    color: #3f2119;
+}
+
 .album-cover {
     width: 75%;
     margin: auto;

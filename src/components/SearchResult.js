@@ -3,6 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultAlbumCover from '../assets/default-album-cover.png';
+import Stars from './Stars';
 
 const SearchResult = (props) => {
     let name = props.name;
@@ -69,9 +70,8 @@ const SearchResult = (props) => {
                     <li className="list-group-item">Genre: {genre || '. . .'}</li>
 
                     <li className="list-group-item">
-                        <div className="progress">
-                            <div className="progress-bar progress-bar-striped bg-success" role="progressbar" style={{ width: `${popularity}%` }} aria-valuenow={popularity} aria-valuemin="0" aria-valuemax="100">{popularity}%</div>
-                        </div>
+                        <span>Popularity: </span>
+                        <Stars popularity={popularity} />
                     </li>
                 </ul>
             }
@@ -89,9 +89,8 @@ const SearchResult = (props) => {
                     <Link to={`/artist/${artist.id}`} className="list-group-item artist-name-link">{artist.name}</Link>
 
                     <li className="list-group-item">
-                        <div className="progress">
-                            <div className="progress-bar progress-bar-striped bg-success" role="progressbar" style={{ width: `${popularity}%` }} aria-valuenow={popularity} aria-valuemin="0" aria-valuemax="100">{popularity}%</div>
-                        </div>
+                        <span>Popularity: </span>
+                        <Stars popularity={popularity} />
                     </li>
                 </ul>
             }

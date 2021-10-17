@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../Context';
+import Stars from './Stars'
 import defaultAlbumCoverDark from '../assets/default-album-cover-dark.png';
 const axios = require('axios');
 
@@ -42,7 +43,7 @@ const Track = ({ track_number, name, duration_ms, id }) => {
 
     useEffect(() => {
         getTrack(accessToken, id);
-    }, [])
+    }, [accessToken, id])
 
     return (
         <div className="card" style={{ width: '75%' }}>
@@ -50,11 +51,11 @@ const Track = ({ track_number, name, duration_ms, id }) => {
             <div className="card-body">
                 <h5 className="card-title album-title">{track_number}. {name}</h5>
                 <p className="card-text mt-3">Duration: {duration}</p>
-                <p className="card-text">Popularity:</p>
-                <div className="progress mb-3">
-                    <div className="progress-bar progress-bar-striped bg-success" role="progressbar" style={{ width: `${popularity}%` }} aria-valuenow={popularity} aria-valuemin="0" aria-valuemax="100">{popularity}%</div>
+                <p className="card-text d-inline"><span>Popularity: </span></p>
+                <Stars popularity={popularity} />
+                <div className="mt-3">
+                    <Link to="" className="btn buttons">+</Link>
                 </div>
-                <Link to="" className="btn buttons">+</Link>
             </div>
         </div>
     )
