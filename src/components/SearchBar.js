@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../Context';
 import SearchResult from './SearchResult';
+import ApiError from './ApiError';
+import NoSearchResults from './NoSearchResults';
 const axios = require('axios');
 
 
@@ -17,6 +19,8 @@ const SearchBar = ({ searchType }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [noResults, setNoResults] = useState(false);
     const [moreThanOneResult, setMoreThanOneResult] = useState(true);
+
+    const [isError, setIsError] = useState(false);
 
     //const [foundResults, setFoundResults] = useState(false);
     //const [error, setError] = useState();
@@ -76,6 +80,7 @@ const SearchBar = ({ searchType }) => {
             if (searchType === 'artist') {
                 setSearchResults(response.data.artists.items);
                 if (response.data.artists.items.length === 0) {
+                    console.log(response.data.artists.items.length);
                     setNoResults(true);
                     setMoreThanOneResult(false);
                 }
@@ -90,11 +95,11 @@ const SearchBar = ({ searchType }) => {
             }
             else if (searchType === 'album') {
                 setSearchResults(response.data.albums.items);
-                if (response.data.artists.items.length === 0) {
+                if (response.data.albums.items.length === 0) {
                     setNoResults(true);
                     setMoreThanOneResult(false);
                 }
-                else if (response.data.artists.items.length === 1) {
+                else if (response.data.albums.items.length === 1) {
                     setNoResults(false);
                     setMoreThanOneResult(false);
                 }
@@ -105,11 +110,11 @@ const SearchBar = ({ searchType }) => {
             }
             else {
                 setSearchResults(response.data.tracks.items);
-                if (response.data.artists.items.length === 0) {
+                if (response.data.tracks.items.length === 0) {
                     setNoResults(true);
                     setMoreThanOneResult(false);
                 }
-                else if (response.data.artists.items.length === 1) {
+                else if (response.data.tracks.items.length === 1) {
                     setNoResults(false);
                     setMoreThanOneResult(false);
                 }
@@ -120,6 +125,9 @@ const SearchBar = ({ searchType }) => {
             }
         }).catch(function (error) {
             console.error(error);
+            if (searchQuery) {
+                setIsError(true);
+            }
         });
     }
 
@@ -151,31 +159,37 @@ const SearchBar = ({ searchType }) => {
             <button className="btn-sm buttons">Search</button>
         </form>
 
-        {noResults && <h1>no results</h1>}
+        {isError && <ApiError />}
 
-        {(!noResults && searchQuery && moreThanOneResult) && <div className="d-flex justify-content-center">
-            <div className="row mt-5">
-                {searchResults.map((result) => {
-                    return <div className="col-12 col-md-6 col-lg-4 mb-5" key={result.id}>
-                        <SearchResult {...result} searchType={searchType} />
-                    </div>
-                })}
+        {!isError && <div>
+
+            {noResults && <NoSearchResults />}
+
+            {(!noResults && searchQuery && moreThanOneResult) && <div className="d-flex justify-content-center">
+                <div className="row mt-5">
+                    {searchResults.map((result) => {
+                        return <div className="col-12 col-md-6 col-lg-4 mb-5" key={result.id}>
+                            <SearchResult {...result} searchType={searchType} />
+                        </div>
+                    })}
+                </div>
             </div>
+            }
+
+            {(!noResults && searchQuery && !moreThanOneResult) && <div className="d-flex justify-content-center">
+                <div className="row mt-5">
+                    {searchResults.map((result) => {
+                        return <div className="col-12 mb-5" key={result.id}>
+                            <SearchResult {...result} searchType={searchType} />
+                        </div>
+                    })}
+                </div>
+            </div>
+            }
+
         </div>
         }
-
-        {(!noResults && searchQuery && !moreThanOneResult) && <div className="d-flex justify-content-center">
-            <div className="row mt-5">
-                {searchResults.map((result) => {
-                    return <div className="col-12 mb-5" key={result.id}>
-                        <SearchResult {...result} searchType={searchType} />
-                    </div>
-                })}
-            </div>
-        </div>
-        }
-
-    </div >
+    </div>
 }
 
 export default SearchBar;

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Context } from '../../Context';
 import ArtistCard from '../../components/ArtistCard';
 import Album from '../../components/Album';
+import ApiError from '../../components/ApiError';
 const axios = require('axios');
 
 const ShowArtist = () => {
@@ -19,6 +20,8 @@ const ShowArtist = () => {
     const [artistAlbums, setArtistAlbums] = useState([]);
     const [artistTopTracks, setArtistTopTracks] = useState([]);
     const [relatedArtists, setRelatedArtists] = useState([]);
+
+    const [isError, setIsError] = useState(false);
 
     let albums = [];
     let topTracks = [];
@@ -39,6 +42,7 @@ const ShowArtist = () => {
             setArtistPopularity(response.data.popularity);
         }).catch(function (error) {
             console.error(error);
+            setIsError(true);
         });
     }
 
@@ -61,6 +65,7 @@ const ShowArtist = () => {
             setArtistAlbums(albums);
         }).catch(function (error) {
             console.error(error);
+            setIsError(true);
         });
     }
 
@@ -81,6 +86,7 @@ const ShowArtist = () => {
             setArtistTopTracks(topTracks);
         }).catch(function (error) {
             console.error(error);
+            setIsError(true);
         });
     }
 
@@ -101,6 +107,7 @@ const ShowArtist = () => {
             setRelatedArtists(relatedArt);
         }).catch(function (error) {
             console.error(error);
+            setIsError(true);
         });
     }
 
@@ -112,24 +119,28 @@ const ShowArtist = () => {
     }, [id])
 
     return <div>
-        <div className="row">
-            <div className="col-lg-3 col-sm-12">
-                <ArtistCard artistName={artistName} artistImage={artistImage} artistGenre={artistGenre} artistFollowers={artistFollowers} artistPopularity={artistPopularity} artistTopTracks={artistTopTracks} relatedArtists={relatedArtists} />
-            </div>
 
-            <div className="col-lg-9 col-sm-12 d-flex justify-content-center">
-                <div className="grid">
-                    <div className="row mt-5 mx-4">
-                        {artistAlbums.map((album) => {
-                            return <div className="col-xl-4 col-xs-12 mb-5" key={album.id}>
-                                <Album {...album} />
-                            </div>
-                        })}
+        {isError && <ApiError />}
+
+        {!isError &&
+            <div className="row">
+                <div className="col-lg-3 col-sm-12">
+                    <ArtistCard artistName={artistName} artistImage={artistImage} artistGenre={artistGenre} artistFollowers={artistFollowers} artistPopularity={artistPopularity} artistTopTracks={artistTopTracks} relatedArtists={relatedArtists} />
+                </div>
+
+                <div className="col-lg-9 col-sm-12 d-flex justify-content-center">
+                    <div className="grid">
+                        <div className="row mt-5 mx-4">
+                            {artistAlbums.map((album) => {
+                                return <div className="col-xl-4 col-xs-12 mb-5" key={album.id}>
+                                    <Album {...album} />
+                                </div>
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>
-
-        </div>
+        }
     </div>
 }
 

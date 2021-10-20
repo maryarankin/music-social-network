@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Context } from '../../Context';
 import AlbumCard from '../../components/AlbumCard';
 import Track from '../../components/Track';
+import ApiError from '../../components/ApiError';
 const axios = require('axios');
 
 const ShowAlbum = () => {
@@ -49,7 +50,7 @@ const ShowAlbum = () => {
 
     return <div>
 
-        {isError && <h1>Error</h1>}
+        {isError && <ApiError />}
 
         {!isError &&
             <div className="row">
