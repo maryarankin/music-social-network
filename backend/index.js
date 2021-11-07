@@ -14,7 +14,7 @@ try {
 
 app.use(cors());
 app.use(express.json());
-app.use('/users', userRoutes);
+app.use('/api/users', userRoutes);
 
-app.listen(3000, () => console.log('server running at port 3000'));
+app.listen(3001, () => console.log('server running at port 3001'));
 

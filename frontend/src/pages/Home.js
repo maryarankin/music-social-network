@@ -5,9 +5,16 @@ import { Link } from 'react-router-dom';
 import HomepageBlurb from '../components/HomepageBlurb';
 import { homepageData } from '../data/homepageData';
 
+
+import UserTest from '../components/UserTest';
+
 const Home = () => {
     return <div className="container mt-5">
         <div className="title-div mx-auto">
+
+
+            <UserTest />
+
             <h1 className="main-title text-start d-none d-xl-block">welcome to</h1>
             <h1 className="main-title text-end d-none d-xl-block">music mates</h1>
 
