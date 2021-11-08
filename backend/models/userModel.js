@@ -9,6 +9,15 @@ const User = db.define('users', {
     },
     password: {
         type: DataTypes.STRING
+    },
+    favoriteTracks: {
+        type: DataTypes.STRING
+    },
+    favoriteArtists: {
+        type: DataTypes.STRING
+    },
+    favoriteAlbums: {
+        type: DataTypes.STRING
     }
 },
     {
