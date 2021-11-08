@@ -1,13 +1,17 @@
-/* Profile page where all of a user's information is shown; also where they can display their favorite albums, songs, and artists */
+/* Page where a user can edit their profile */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+//import { Context } from '../Context';
 import FaveAlbum from '../components/FaveAlbum';
 import FaveTrack from '../components/FaveTrack';
 import FaveArtist from '../components/FaveArtist';
 //import { albumData } from '../data/albumData';
 import ProfileCard from '../components/ProfileCard';
+//const axios = require('axios');
 
 const Profile = () => {
+    //const { accessToken } = useContext(Context);
+
     //REMOVE THIS LATER - JUST FOR TESTING
     const [userId, setUserId] = useState(0);
 
@@ -21,6 +25,7 @@ const Profile = () => {
                 return res.json();
             }
         }).then(jsonResponse => {
+            //setFavoriteAlbum(jsonResponse[0].favoriteAlbums);
             setUserId(jsonResponse[0].id);
         })
     }, [userId])

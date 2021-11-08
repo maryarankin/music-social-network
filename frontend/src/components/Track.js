@@ -45,6 +45,12 @@ const Track = ({ track_number, name, duration_ms, id }) => {
         getTrack(accessToken, id);
     }, [accessToken, id])
 
+    const addTrackToProfile = async () => {
+        await axios.post('/api/faves/tracks', {
+            trackId: id
+        });
+    }
+
     return (
         <div className="card" style={{ width: '75%' }}>
             <img src={defaultAlbumCoverDark} className="card-img-top album-cover my-4" alt={name} />
@@ -54,7 +60,7 @@ const Track = ({ track_number, name, duration_ms, id }) => {
                 <p className="card-text d-inline"><span>Popularity: </span></p>
                 <Stars popularity={popularity} />
                 <div className="mt-3">
-                    <Link to="" className="btn buttons">+</Link>
+                    <button onClick={addTrackToProfile} type="button" className="btn buttons">+</button>
                 </div>
             </div>
         </div>

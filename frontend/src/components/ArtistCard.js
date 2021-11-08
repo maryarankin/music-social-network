@@ -3,8 +3,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import DarkStars from './DarkStars';
+import axios from 'axios';
 
-const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks, relatedArtists }) => {
+const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks, relatedArtists }) => {
+    const addArtistToProfile = async () => {
+        await axios.post('/api/faves/artists', {
+            artistId: id
+        });
+    }
 
     //abbreviate top track names if too long
     artistTopTracks.forEach(track => {
@@ -25,7 +31,7 @@ const ArtistCard = ({ artistName, artistImage, artistGenre, artistFollowers, art
                     <DarkStars popularity={artistPopularity} />
                 </div>
                 <div className="card-body">
-                    <Link to="/" type="button" className="btn buttons">Add Artist</Link>
+                    <button onClick={addArtistToProfile} type="button" className="btn buttons">Add Artist</button>
                 </div>
 
                 <div className="card-header artist-card-list-header mt-3">

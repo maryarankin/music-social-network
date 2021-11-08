@@ -1,0 +1,23 @@
+import FaveArtist from '../models/faveArtistModel.js';
+
+export const getAllFaveArtists = async (req, res) => {
+    try {
+        const faveArtists = await FaveArtist.findAll({
+            where: {
+                userId: 1
+            }
+        });
+        res.json(faveArtists);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+export const addFaveArtist = async (req, res) => {
+    try {
+        await FaveArtist.create({ artistId: req.body.artistId, userId: 1 });
+        res.json({ "message": "artist added" });
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}

@@ -1,9 +1,16 @@
 /* card component for album info on album show page */
 
 import React from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const AlbumCard = ({ albumName, albumCover, albumArtist, albumArtistId, albumReleaseDate, albumPopularity }) => {
+const AlbumCard = ({ id, albumName, albumCover, albumArtist, albumArtistId, albumReleaseDate, albumPopularity }) => {
+    const addAlbumToProfile = async () => {
+        await axios.post('/api/faves/albums', {
+            albumId: id
+        });
+    }
+
     return <>
         <div className="container mt-5 mx-5 d-flex justify-content-center">
             <div className="card album-card d-flex justify-content-center" style={{ width: '75%' }}>
@@ -15,7 +22,7 @@ const AlbumCard = ({ albumName, albumCover, albumArtist, albumArtistId, albumRel
                     <p className="card-text">Popularity: {albumPopularity}</p>
                 </div>
                 <div className="card-body">
-                    <Link to="/" type="button" className="btn buttons mb-3">Add Album</Link>
+                    <button onClick={addAlbumToProfile} type="button" className="btn buttons mb-3">Add Album</button>
                 </div>
             </div>
         </div>

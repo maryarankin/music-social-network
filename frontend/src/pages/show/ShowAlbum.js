@@ -55,7 +55,7 @@ const ShowAlbum = () => {
         {!isError &&
             <div className="row">
                 <div className="col-lg-3 col-sm-12">
-                    <AlbumCard albumName={albumName} albumCover={albumCover} albumArtist={albumArtist} albumArtistId={albumArtistId} albumReleaseDate={albumReleaseDate} albumPopularity={albumPopularity} />
+                    <AlbumCard id={id} albumName={albumName} albumCover={albumCover} albumArtist={albumArtist} albumArtistId={albumArtistId} albumReleaseDate={albumReleaseDate} albumPopularity={albumPopularity} />
                 </div>
 
                 <div className="col-lg-9 col-sm-12 d-flex justify-content-center">

@@ -3,20 +3,20 @@ import db from '../config/database.js';
 
 const { DataTypes } = Sequelize;
 
-const User = db.define('users', {
+const FaveAlbum = db.define('faveAlbums', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true
     },
-    username: {
-        type: DataTypes.STRING
+    albumId: {
+        type: DataTypes.STRING,
     },
-    password: {
-        type: DataTypes.STRING
+    userId: {
+        type: DataTypes.INTEGER
     }
 },
     {
         freezeTableName: true
     });
 
-export default User;
+export default FaveAlbum;

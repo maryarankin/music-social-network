@@ -125,7 +125,7 @@ const ShowArtist = () => {
         {!isError &&
             <div className="row">
                 <div className="col-lg-3 col-sm-12">
-                    <ArtistCard artistName={artistName} artistImage={artistImage} artistGenre={artistGenre} artistFollowers={artistFollowers} artistPopularity={artistPopularity} artistTopTracks={artistTopTracks} relatedArtists={relatedArtists} />
+                    <ArtistCard id={id} artistName={artistName} artistImage={artistImage} artistGenre={artistGenre} artistFollowers={artistFollowers} artistPopularity={artistPopularity} artistTopTracks={artistTopTracks} relatedArtists={relatedArtists} />
                 </div>
 
                 <div className="col-lg-9 col-sm-12 d-flex justify-content-center">

@@ -7,7 +7,7 @@ import profilePicture from '../assets/profile-picture.png'
 const ProfileCard = () => {
     return <>
         <div className="container mt-5">
-            <div className="card profile-card d-flex justify-content-center" style={{ width: '18rem' }}>
+            <div className="card profile-card d-flex justify-content-center" style={{ width: '75%' }}>
                 <img src={profilePicture} className="card-img-top profile-picture mt-2" alt="Mary" />
                 <div className="card-body">
                     <h5 className="card-title">Mary Rankin</h5>
