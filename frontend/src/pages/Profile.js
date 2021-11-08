@@ -8,6 +8,12 @@ import FaveArtist from '../components/FaveArtist';
 import ProfileCard from '../components/ProfileCard';
 
 const Profile = () => {
+    const [inEditMode, setInEditMode] = useState(false);
+
+    const editMode = () => {
+        setInEditMode(!inEditMode);
+    }
+
     //REMOVE THIS LATER - JUST FOR TESTING
     const [userId, setUserId] = useState(0);
 
@@ -33,7 +39,7 @@ const Profile = () => {
         }).then(jsonResponse => {
             setFavoriteAlbums(jsonResponse);
         })
-    }, [favoriteAlbums])
+    }, [favoriteAlbums, inEditMode])
 
     useEffect(() => {
         fetch('/api/faves/artists').then(res => {
@@ -43,7 +49,7 @@ const Profile = () => {
         }).then(jsonResponse => {
             setFavoriteArtists(jsonResponse);
         })
-    }, [favoriteArtists])
+    }, [favoriteArtists, inEditMode])
 
     useEffect(() => {
         fetch('/api/faves/tracks').then(res => {
@@ -53,7 +59,7 @@ const Profile = () => {
         }).then(jsonResponse => {
             setFavoriteTracks(jsonResponse);
         })
-    }, [favoriteTracks])
+    }, [favoriteTracks, inEditMode])
 
     return (
         <>
@@ -63,12 +69,11 @@ const Profile = () => {
                     <div className="col-9 d-flex justify-content-center">
 
                         <div className="grid">
-
                             <div className="row mt-5">
                                 <h1 className="favorite-title mb-4">favorite artists</h1>
                                 {favoriteArtists.map((faveArtist) => {
                                     return <div className="col-3">
-                                        <FaveArtist key={faveArtist.artistId} id={faveArtist.artistId} />
+                                        <FaveArtist key={faveArtist.artistId} id={faveArtist.artistId} editMode={inEditMode} />
                                     </div>
                                 })}
                             </div>
@@ -77,7 +82,7 @@ const Profile = () => {
                                 <h1 className="favorite-title mb-4">favorite tracks</h1>
                                 {favoriteTracks.map((faveTrack) => {
                                     return <div className="col-3">
-                                        <FaveTrack key={faveTrack.trackId} id={faveTrack.trackId} />
+                                        <FaveTrack key={faveTrack.trackId} id={faveTrack.trackId} editMode={inEditMode} />
                                     </div>
                                 })}
                             </div>
@@ -86,7 +91,7 @@ const Profile = () => {
                                 <h1 className="favorite-title mb-4">favorite albums</h1>
                                 {favoriteAlbums.map((faveAlbum) => {
                                     return <div className="col-3">
-                                        <FaveAlbum key={faveAlbum.albumId} id={faveAlbum.albumId} />
+                                        <FaveAlbum key={faveAlbum.albumId} id={faveAlbum.albumId} editMode={inEditMode} />
                                     </div>
                                 })}
                             </div>
@@ -96,6 +101,15 @@ const Profile = () => {
 
                     <div className="col">
                         <ProfileCard />
+
+                        <div className="container">
+                            <div className="card profile-card d-flex justify-content-center" style={{ width: '75%' }}>
+                                <div className="card-body">
+                                    <button onClick={editMode} type="button" className="btn buttons mx-3">{inEditMode ? 'Stop Editing' : 'Edit Profile'}</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>

@@ -4,7 +4,7 @@ import { Context } from '../Context';
 import defaultAlbumCoverDark from '../assets/default-album-cover-dark.png';
 const axios = require('axios');
 
-const FaveTrack = ({ id }) => {
+const FaveTrack = ({ id, editMode }) => {
     const { accessToken } = useContext(Context);
 
     const [name, setName] = useState('');
@@ -44,6 +44,7 @@ const FaveTrack = ({ id }) => {
                 <img src={image || defaultAlbumCoverDark} className="card-img-top" alt={name} />
                 <div className="card-body d-flex justify-content-center">
                     <h5 className="card-title favorite-name">{name}</h5>
+                    {editMode && <button type="button" class="btn-close remove-button" aria-label="Close"></button>}
                 </div>
             </Link>
         </div>

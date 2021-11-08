@@ -104,6 +104,10 @@ p {
     margin: auto;
 }
 
+.remove-button {
+    background-color: #ecaf9f;
+}
+
 .search-result {
     width: 75%;
     margin: auto;
