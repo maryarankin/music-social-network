@@ -6,6 +6,8 @@ import { addFaveAlbum } from '../controllers/FaveAlbums.js';
 import { addFaveArtist } from '../controllers/FaveArtists.js';
 import { addFaveTrack } from '../controllers/FaveTracks.js';
 import { removeFaveAlbum } from '../controllers/FaveAlbums.js';
+import { removeFaveArtist } from '../controllers/FaveArtists.js';
+import { removeFaveTrack } from '../controllers/FaveTracks.js';
 
 const router = express.Router();
 
@@ -22,5 +24,9 @@ router.post('/artists', addFaveArtist);
 router.post('/tracks', addFaveTrack);
 
 router.delete('/albums/:id', removeFaveAlbum);
+
+router.delete('/artists/:id', removeFaveArtist);
+
+router.delete('/tracks/:id', removeFaveTrack);
 
 export default router;

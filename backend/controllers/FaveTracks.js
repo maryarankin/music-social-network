@@ -21,3 +21,17 @@ export const addFaveTrack = async (req, res) => {
         res.json({ message: error.message });
     }
 }
+
+export const removeFaveTrack = async (req, res) => {
+    try {
+        await FaveTrack.destroy({
+            where: {
+                trackId: req.params.id,
+                userId: 1
+            }
+        });
+        res.json({ "message": "track removed" });
+    } catch (error) {
+        res.json({ message: error.message })
+    }
+}

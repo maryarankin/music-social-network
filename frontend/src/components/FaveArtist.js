@@ -37,15 +37,19 @@ const FaveArtist = ({ id, editMode }) => {
     //     name = name.substring(0, 20) + '...';
     // }
 
+    const removeArtist = async () => {
+        await axios.delete(`/api/faves/artists/${id}`);
+    }
+
     return (
         <div className="card">
             <Link to={`/artist/${id}`} className="favorite-link">
                 <img src={image || defaultAlbumCover} className="card-img-top" alt={name} />
-                <div className="card-body d-flex justify-content-center">
-                    <h5 className="card-title favorite-name">{name}</h5>
-                    {editMode && <button type="button" class="btn-close remove-button" aria-label="Close"></button>}
-                </div>
             </Link>
+            <div className="card-body d-flex justify-content-center">
+                <h5 className="card-title favorite-name">{name}</h5>
+                {editMode && <button onClick={removeArtist} type="button" class="btn-close remove-button" aria-label="Close"></button>}
+            </div>
         </div>
     )
 }

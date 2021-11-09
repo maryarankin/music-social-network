@@ -6,9 +6,15 @@ import DarkStars from './DarkStars';
 import axios from 'axios';
 
 const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks, relatedArtists }) => {
-    const addArtistToProfile = async () => {
+    const addArtistToProfile = async (idToAdd) => {
         await axios.post('/api/faves/artists', {
-            artistId: id
+            artistId: idToAdd
+        });
+    }
+
+    const addTrackToProfile = async (idToAdd) => {
+        await axios.post('/api/faves/tracks', {
+            trackId: idToAdd
         });
     }
 
@@ -31,7 +37,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                     <DarkStars popularity={artistPopularity} />
                 </div>
                 <div className="card-body">
-                    <button onClick={addArtistToProfile} type="button" className="btn buttons">Add Artist</button>
+                    <button onClick={() => addArtistToProfile(id)} type="button" className="btn buttons">Add Artist</button>
                 </div>
 
                 <div className="card-header artist-card-list-header mt-3">
@@ -45,7 +51,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                                     <Link to={`/album/${track.album.id}`} className="artist-card-link">{track.name}</Link>
                                 </div>
                                 <div className="col-2 d-flex justify-content-end">
-                                    <Link to="" className="btn buttons btn-sm d-none d-xl-block">+</Link>
+                                    <button onClick={() => addTrackToProfile(track.id)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>
                                 </div>
                             </div>
                         </li>
@@ -63,7 +69,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                                     <Link to={`/artist/${artist.id}`} className="artist-card-link">{artist.name}</Link>
                                 </div>
                                 <div className="col-2 d-flex justify-content-end">
-                                    <Link to="" className="btn buttons btn-sm d-none d-xl-block">+</Link>
+                                    <button onClick={() => addArtistToProfile(artist.id)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>
                                 </div>
                             </div>
                         </li>

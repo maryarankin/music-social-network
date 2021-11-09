@@ -21,3 +21,17 @@ export const addFaveArtist = async (req, res) => {
         res.json({ message: error.message });
     }
 }
+
+export const removeFaveArtist = async (req, res) => {
+    try {
+        await FaveArtist.destroy({
+            where: {
+                artistId: req.params.id,
+                userId: 1
+            }
+        });
+        res.json({ "message": "artist removed" });
+    } catch (error) {
+        res.json({ message: error.message })
+    }
+}

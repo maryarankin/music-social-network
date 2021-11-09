@@ -38,15 +38,19 @@ const FaveTrack = ({ id, editMode }) => {
     //     name = name.substring(0, 20) + '...';
     // }
 
+    const removeTrack = async () => {
+        await axios.delete(`/api/faves/tracks/${id}`);
+    }
+
     return (
         <div className="card">
             <Link to={`/album/${albumId}`} className="favorite-link">
                 <img src={image || defaultAlbumCoverDark} className="card-img-top" alt={name} />
-                <div className="card-body d-flex justify-content-center">
-                    <h5 className="card-title favorite-name">{name}</h5>
-                    {editMode && <button type="button" class="btn-close remove-button" aria-label="Close"></button>}
-                </div>
             </Link>
+            <div className="card-body d-flex justify-content-center">
+                <h5 className="card-title favorite-name">{name}</h5>
+                {editMode && <button onClick={removeTrack} type="button" class="btn-close remove-button" aria-label="Close"></button>}
+            </div>
         </div>
     )
 }

@@ -39,7 +39,7 @@ const Profile = () => {
         }).then(jsonResponse => {
             setFavoriteAlbums(jsonResponse);
         })
-    }, [favoriteAlbums, inEditMode])
+    }, [favoriteAlbums])
 
     useEffect(() => {
         fetch('/api/faves/artists').then(res => {
@@ -49,7 +49,7 @@ const Profile = () => {
         }).then(jsonResponse => {
             setFavoriteArtists(jsonResponse);
         })
-    }, [favoriteArtists, inEditMode])
+    }, [favoriteArtists])
 
     useEffect(() => {
         fetch('/api/faves/tracks').then(res => {
@@ -59,7 +59,7 @@ const Profile = () => {
         }).then(jsonResponse => {
             setFavoriteTracks(jsonResponse);
         })
-    }, [favoriteTracks, inEditMode])
+    }, [favoriteTracks])
 
     return (
         <>
@@ -109,7 +109,6 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
