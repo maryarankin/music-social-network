@@ -134,6 +134,11 @@ p {
     color: #3f2119;
 }
 
+.search-result-button {
+    padding-top: 2px;
+    margin: 0;
+}
+
 .star-icon {
     color: #ec7a5d;
 }

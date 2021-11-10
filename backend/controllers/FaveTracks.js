@@ -15,8 +15,17 @@ export const getAllFaveTracks = async (req, res) => {
 
 export const addFaveTrack = async (req, res) => {
     try {
-        await FaveTrack.create({ trackId: req.body.trackId, userId: 1 });
-        res.json({ "message": "added track" });
+        const faveTracks = await FaveTrack.findAll({
+            where: {
+                trackId: req.body.trackId,
+                userId: 1
+            }
+        });
+
+        if (faveTracks[0] == undefined) {
+            await FaveTrack.create({ trackId: req.body.trackId, userId: 1 });
+            res.json({ "message": "added track" });
+        }
     } catch (error) {
         res.json({ message: error.message });
     }

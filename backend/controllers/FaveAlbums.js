@@ -15,8 +15,17 @@ export const getAllFaveAlbums = async (req, res) => {
 
 export const addFaveAlbum = async (req, res) => {
     try {
-        await FaveAlbum.create({ albumId: req.body.albumId, userId: 1 });
-        res.json({ "message": "album added" });
+        const faveAlbums = await FaveAlbum.findAll({
+            where: {
+                albumId: req.body.albumId,
+                userId: 1
+            }
+        });
+
+        if (faveAlbums[0] == undefined) {
+            await FaveAlbum.create({ albumId: req.body.albumId, userId: 1 });
+            res.json({ "message": "added album" });
+        }
     } catch (error) {
         res.json({ message: error.message });
     }

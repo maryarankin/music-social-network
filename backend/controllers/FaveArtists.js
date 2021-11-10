@@ -15,8 +15,17 @@ export const getAllFaveArtists = async (req, res) => {
 
 export const addFaveArtist = async (req, res) => {
     try {
-        await FaveArtist.create({ artistId: req.body.artistId, userId: 1 });
-        res.json({ "message": "artist added" });
+        const faveArtists = await FaveArtist.findAll({
+            where: {
+                artistId: req.body.artistId,
+                userId: 1
+            }
+        });
+
+        if (faveArtists[0] == undefined) {
+            await FaveArtist.create({ artistId: req.body.artistId, userId: 1 });
+            res.json({ "message": "added artist" });
+        }
     } catch (error) {
         res.json({ message: error.message });
     }

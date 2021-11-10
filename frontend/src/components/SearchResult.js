@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultAlbumCover from '../assets/default-album-cover.png';
 import Stars from './Stars';
+import axios from 'axios';
 
 const SearchResult = (props) => {
     let name = props.name;
@@ -50,6 +51,24 @@ const SearchResult = (props) => {
         name = name.substring(0, 29) + '...';
     }
 
+    const addArtistToProfile = async () => {
+        await axios.post(`/api/faves/artists`, {
+            artistId: id
+        });
+    }
+
+    const addAlbumToProfile = async () => {
+        await axios.post('/api/faves/albums', {
+            albumId: id
+        });
+    }
+
+    const addTrackToProfile = async () => {
+        await axios.post('/api/faves/tracks', {
+            trackId: id
+        });
+    }
+
     return <>
         <div className="card mt-3 search-result">
             <Link to={`/${linkSearchType}/${linkId}`} className="search-result-link">
@@ -70,8 +89,15 @@ const SearchResult = (props) => {
                     <li className="list-group-item">Genre: {genre || '. . .'}</li>
 
                     <li className="list-group-item">
-                        <span>Popularity: </span>
-                        <Stars popularity={popularity} />
+                        <div className="row">
+                            <div className="col-10">
+                                <span>Popularity: </span>
+                                <Stars popularity={popularity} />
+                            </div>
+                            <div className="col-2 d-flex justify-content-end">
+                                <button onClick={addArtistToProfile} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             }
@@ -80,7 +106,16 @@ const SearchResult = (props) => {
                 <ul className="list-group list-group-flush">
                     <Link to={`/artist/${artist.id}`} className="list-group-item artist-name-link">{artist.name}</Link>
 
-                    <li className="list-group-item">Release Date: {releaseDate}</li>
+                    <li className="list-group-item">
+                        <div className="row">
+                            <div className="col-10">
+                                Release Date: {releaseDate}
+                            </div>
+                            <div className="col-2 d-flex justify-content-end">
+                                <button onClick={addAlbumToProfile} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             }
 
@@ -89,8 +124,15 @@ const SearchResult = (props) => {
                     <Link to={`/artist/${artist.id}`} className="list-group-item artist-name-link">{artist.name}</Link>
 
                     <li className="list-group-item">
-                        <span>Popularity: </span>
-                        <Stars popularity={popularity} />
+                        <div className="row">
+                            <div className="col-10">
+                                <span>Popularity: </span>
+                                <Stars popularity={popularity} />
+                            </div>
+                            <div className="col-2 d-flex justify-content-end">
+                                <button onClick={addTrackToProfile} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             }

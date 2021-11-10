@@ -6,6 +6,7 @@ import FaveTrack from '../components/FaveTrack';
 import FaveArtist from '../components/FaveArtist';
 //import { albumData } from '../data/albumData';
 import ProfileCard from '../components/ProfileCard';
+import EditProfileCard from '../components/EditProfileCard';
 
 const Profile = () => {
     const [inEditMode, setInEditMode] = useState(false);
@@ -100,12 +101,13 @@ const Profile = () => {
 
 
                     <div className="col">
-                        <ProfileCard />
+                        {inEditMode && <EditProfileCard />}
+                        {!inEditMode && <ProfileCard />}
 
                         <div className="container">
                             <div className="card profile-card d-flex justify-content-center" style={{ width: '75%' }}>
                                 <div className="card-body">
-                                    <button onClick={editMode} type="button" className="btn buttons mx-3">{inEditMode ? 'Stop Editing' : 'Edit Profile'}</button>
+                                    <button onClick={editMode} type="button" className="btn buttons">{inEditMode ? 'Done Editing' : 'Edit Profile'}</button>
                                 </div>
                             </div>
                         </div>
