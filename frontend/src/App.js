@@ -5,12 +5,13 @@ import Home from './pages/Home';
 import Login from './pages/user/Login';
 import Register from './pages/user/Register';
 import Profile from './pages/Profile';
+import EditProfileCard from './components/EditProfileCard';
 import ArtistSearch from './pages/search/ArtistSearch';
 import AlbumSearch from './pages/search/AlbumSearch';
 import TrackSearch from './pages/search/TrackSearch';
 import ShowArtist from './pages/show/ShowArtist';
 import ShowAlbum from './pages/show/ShowAlbum';
-import ShowTrack from './pages/show/ShowTrack';
+//import ShowTrack from './pages/show/ShowTrack';
 import NotFound from './components/NotFound';
 
 const App = ({ accessToken }) => {
@@ -23,8 +24,11 @@ const App = ({ accessToken }) => {
             <Route path="/login">
                 <Login />
             </Route>
-            <Route path="/profile">
+            <Route exact path="/profile">
                 <Profile />
+            </Route>
+            <Route path="/profile/edit">
+                <EditProfileCard />
             </Route>
             <Route path="/register">
                 <Register />

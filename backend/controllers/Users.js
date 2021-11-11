@@ -11,9 +11,10 @@ export const getAllUsers = async (req, res) => {
 
 export const updateName = async (req, res) => {
     try {
-        await User.update({ username: req.body.name }, {
+        console.log('here');
+        await User.update(req.body, {
             where: {
-                userId: req.params.id
+                userId: 1
             }
         });
         res.json({ "message": "name updated" });
