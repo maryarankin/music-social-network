@@ -1,6 +1,7 @@
 /* user login form */
 
 import React from 'react';
+import LoginButton from '../../components/LoginButton';
 
 const Login = () => {
     return <div className="container mt-5 d-flex justify-content-center">
@@ -17,7 +18,7 @@ const Login = () => {
                         <label for="exampleInputPassword1" className="form-label">Password</label>
                         <input type="password" className="form-control" id="exampleInputPassword1" />
                     </div>
-                    <button type="submit" className="btn buttons">Submit</button>
+                    <LoginButton className="btn buttons" />
                 </form>
             </div>
         </div>

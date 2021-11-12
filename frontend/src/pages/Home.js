@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HomepageBlurb from '../components/HomepageBlurb';
 import { homepageData } from '../data/homepageData';
+import ProfileTest from '../components/ProfileTest';
 
 const Home = () => {
     return <div className="container mt-5">
@@ -24,10 +25,7 @@ const Home = () => {
                 })}
             </div>
 
-            <div className="mt-5 d-flex justify-content-center">
-                <Link to="/" type="button" className="btn buttons mx-3">Login</Link>
-                <Link to="/" type="button" className="btn buttons mx-3">Register</Link>
-            </div>
+            <ProfileTest />
         </div>
     </div>
 }

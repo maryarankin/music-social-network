@@ -2,8 +2,13 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LogoutButton from './LogoutButton';
+import LoginButton from './LoginButton';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
+    const { user, isAuthenticated, isLoading } = useAuth0();
+
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="container-fluid">
@@ -20,10 +25,11 @@ const Navbar = () => {
                             <Link to="/register" className="nav-link">Register</Link>
                         </li>
 
-
-                        <li className="nav-item">
-                            <Link to="/profile" className="nav-link">Profile</Link>
-                        </li>
+                        {isAuthenticated &&
+                            <li className="nav-item">
+                                <Link to="/profile" className="nav-link">Profile</Link>
+                            </li>
+                        }
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Search
@@ -45,12 +51,11 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item d-none d-lg-block">
-                        <Link to="/login" className="nav-link">Login</Link>
-                    </li>
-                    <li className="nav-item d-none d-lg-block">
-                        <Link to="/register" className="nav-link">Register</Link>
-                    </li>
+                    {isAuthenticated && <div>
+                        <p>Welcome, {user.name}</p>
+                        <LogoutButton />
+                    </div>}
+                    {!isAuthenticated && <LoginButton />}
                 </ul>
             </div>
         </nav>
