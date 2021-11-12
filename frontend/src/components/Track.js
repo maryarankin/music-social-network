@@ -1,7 +1,6 @@
 /* component for an individual track on album show page */
 
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { Context } from '../Context';
 import Stars from './Stars'
 import defaultAlbumCoverDark from '../assets/default-album-cover-dark.png';

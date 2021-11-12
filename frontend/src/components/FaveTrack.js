@@ -49,7 +49,7 @@ const FaveTrack = ({ id, editMode }) => {
             </Link>
             <div className="card-body d-flex justify-content-center">
                 <h5 className="card-title favorite-name">{name}</h5>
-                {editMode && <button onClick={removeTrack} type="button" class="btn-close remove-button" aria-label="Close"></button>}
+                {editMode && <button onClick={removeTrack} type="button" className="btn-close remove-button" aria-label="Close"></button>}
             </div>
         </div>
     )

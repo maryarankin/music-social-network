@@ -49,7 +49,7 @@ const FaveAlbum = ({ id, editMode }) => {
             </Link>
             <div className="card-body d-flex justify-content-center">
                 <h5 className="favorite-name">{name}</h5>
-                {editMode && <button onClick={removeAlbum} type="button" class="btn-close remove-button" aria-label="Close"></button>}
+                {editMode && <button onClick={removeAlbum} type="button" className="btn-close remove-button" aria-label="Close"></button>}
             </div>
         </div>
     )
