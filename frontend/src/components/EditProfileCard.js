@@ -8,16 +8,18 @@ import axios from 'axios';
 const EditProfileCard = () => {
     const history = useHistory();
     const [name, setName] = useState('');
-    //const [bio, setBio] = useState('');
+    const [bio, setBio] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         await axios.patch('/api/users/edit', {
-            username: name
+            name: name,
+            bio: bio
         });
         history.push("/profile");
-        setName("");
+        setName('');
+        setBio('');
     }
 
     return <>
@@ -28,6 +30,9 @@ const EditProfileCard = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="col-auto mb-3">
                             <input type="text" id="name" name="name" className="form-control" aria-describedby="name" value={name} onChange={(e) => setName(e.target.value)} />
+                        </div>
+                        <div className="col-auto mb-3">
+                            <input type="text" id="name" name="bio" className="form-control" aria-describedby="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
                         </div>
 
                         <button type="submit" className="btn buttons">Save</button>
@@ -44,12 +49,3 @@ const EditProfileCard = () => {
 }
 
 export default EditProfileCard;
-
-
-/*
-
-<div className="col-auto mb-3">
-                            <input type="text" id="bio" name="bio" className="form-control" aria-describedby="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
-                        </div>
-
-*/

@@ -10,13 +10,13 @@ import ProfileCard from '../components/ProfileCard';
 
 const Profile = () => {
     const [inEditMode, setInEditMode] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const editMode = () => {
         setInEditMode(!inEditMode);
     }
 
-    //REMOVE THIS LATER - JUST FOR TESTING
-    const [userId, setUserId] = useState(0);
+    const [user, setUser] = useState();
 
     const [favoriteAlbums, setFavoriteAlbums] = useState([]);
     const [favoriteTracks, setFavoriteTracks] = useState([]);
@@ -24,8 +24,9 @@ const Profile = () => {
 
     useEffect(() => {
         let cancel = false;
+        setLoading(true);
 
-        fetch('/api/users').then(res => {
+        fetch('/api/users/1').then(res => {
             if (cancel) {
                 return;
             }
@@ -33,13 +34,14 @@ const Profile = () => {
                 return res.json();
             }
         }).then(jsonResponse => {
-            setUserId(jsonResponse[0].id);
+            setUser(jsonResponse[0]);
+            setLoading(false);
         })
 
         return () => {
             cancel = true;
         }
-    }, [userId])
+    }, [])
 
     useEffect(() => {
         fetch('/api/faves/albums').then(res => {
@@ -110,10 +112,11 @@ const Profile = () => {
 
 
                     <div className="col">
-                        <ProfileCard />
+                        {loading && <h1>loading</h1>}
+                        {!loading && <ProfileCard user={user} />}
 
                         <div className="container">
-                            <div className="card profile-card d-flex justify-content-center" style={{ width: '75%' }}>
+                            <div className="card d-flex justify-content-center" style={{ width: '75%' }}>
                                 <div className="card-body">
                                     <button onClick={editMode} type="button" className="btn buttons mx-5">{inEditMode ? 'Done Editing' : 'Edit Favorites'}</button>
                                     <Link to="/profile/edit" type="button" className="btn buttons">Edit Profile</Link>

@@ -9,12 +9,25 @@ export const getAllUsers = async (req, res) => {
     }
 }
 
+export const getUser = async (req, res) => {
+    try {
+        const user = await User.findAll({
+            where: {
+                id: 1
+            }
+        });
+        res.json(user);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
 export const updateName = async (req, res) => {
     try {
         console.log('here');
         await User.update(req.body, {
             where: {
-                userId: 1
+                id: 1
             }
         });
         res.json({ "message": "name updated" });
