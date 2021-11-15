@@ -1,4 +1,4 @@
-/* user login form */
+/* not using this page anymore */
 
 import React from 'react';
 import LoginButton from '../../components/LoginButton';

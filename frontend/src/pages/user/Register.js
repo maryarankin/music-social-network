@@ -1,4 +1,4 @@
-/* user registration form */
+/* not using this page anymore */
 
 import React from 'react';
 
