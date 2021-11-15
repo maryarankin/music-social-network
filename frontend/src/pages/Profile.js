@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 //import firebase from '../firebase';
 import { useAuth0 } from "@auth0/auth0-react";
-import { ref, onValue } from 'firebase/database';
+import { ref, onValue, query, orderByChild, equalTo, limitToLast } from 'firebase/database';
 import { FirebaseContext } from '../components/firebase/FirebaseContext';
 import FaveAlbum from '../components/FaveAlbum';
 import FaveTrack from '../components/FaveTrack';
@@ -50,14 +50,40 @@ const Profile = () => {
     //     }
     // }, [])
 
+    // const query = async () => {
+    //     const queryUser = await database.collection('user').orderBy('username').limit(1).get();
+    //     if (queryUser.size > 0) {
+    //         const data = queryUser.docs[0].data();
+    //         console.log(data);
+    //     }
+    // }
+
+
+
     useEffect(() => {
-        const userRef = ref(database, 'user/' + '-MoLD_VaT1S9xAAU3eOO');
+        let cancel = false;
+        setLoading(true);
+
+        const userRef = query(ref(database, 'user'), orderByChild('email'), equalTo(user.email));
+
         onValue(userRef, (snapshot) => {
-            const data = snapshot.val();
-            console.log(data.username);
-            setLoggedInUser(data.username);
+            snapshot.forEach((childSnapshot) => {
+                setLoggedInUser(childSnapshot.val());
+                setLoading(false);
+
+                // const childKey = childSnapshot.key;
+                // const childData = childSnapshot.val();
+                // console.log(childData);
+                // if (user && childData.email == user.email) {
+                //     setLoggedInUser(childData.email);
+                // }
+            })
         })
-    }, [])
+
+        return () => {
+            cancel = true;
+        }
+    })
 
     // useEffect(() => {
     //     fetch('/api/faves/albums').then(res => {
