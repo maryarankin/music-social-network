@@ -1,15 +1,33 @@
 /* card component to display artist info on artist show page */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { ref, set } from 'firebase/database';
+import { FirebaseContext } from './firebase/FirebaseContext';
+import { UserContext } from '../UserContext';
+import { useAuth0 } from "@auth0/auth0-react";
 import DarkStars from './DarkStars';
 import axios from 'axios';
 
 const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks, relatedArtists }) => {
+    // const addArtistToProfile = async (idToAdd) => {
+    //     await axios.post('/api/faves/artists', {
+    //         artistId: idToAdd
+    //     });
+    // }
+    const { isAuthenticated, isLoading } = useAuth0();
+
+    const { loggedInUser } = useContext(UserContext);
+    const { database } = useContext(FirebaseContext);
+
     const addArtistToProfile = async (idToAdd) => {
-        await axios.post('/api/faves/artists', {
-            artistId: idToAdd
-        });
+        if (isAuthenticated && !isLoading) {
+            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
+            set(ref(database, `faveArtist/${idToAdd}${dbId}`), {
+                artistId: idToAdd,
+                user: loggedInUser.email
+            })
+        }
     }
 
     const addTrackToProfile = async (idToAdd) => {

@@ -1,12 +1,20 @@
 /* component to display search results for artists, albums, or tracks */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { FirebaseContext } from './firebase/FirebaseContext';
+import { UserContext } from '../UserContext';
+import { useAuth0 } from "@auth0/auth0-react";
+import { ref, set } from 'firebase/database';
 import defaultAlbumCover from '../assets/default-album-cover.png';
 import Stars from './Stars';
 import axios from 'axios';
 
 const SearchResult = (props) => {
+    const { isAuthenticated, isLoading } = useAuth0();
+    const { loggedInUser } = useContext(UserContext);
+    const { database } = useContext(FirebaseContext);
+
     let name = props.name;
     let id = props.id;
     let image = '';
@@ -52,9 +60,13 @@ const SearchResult = (props) => {
     }
 
     const addArtistToProfile = async () => {
-        await axios.post(`/api/faves/artists`, {
-            artistId: id
-        });
+        if (isAuthenticated && !isLoading) {
+            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
+            set(ref(database, `faveArtist/${id}${dbId}`), {
+                artistId: id,
+                user: loggedInUser.email
+            })
+        }
     }
 
     const addAlbumToProfile = async () => {

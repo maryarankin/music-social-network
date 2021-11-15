@@ -14,9 +14,9 @@ import FaveArtist from '../components/FaveArtist';
 import ProfileCard from '../components/ProfileCard';
 
 const Profile = () => {
+    const { isAuthenticated, isLoading } = useAuth0();
     const { database } = useContext(FirebaseContext);
     const { loggedInUser } = useContext(UserContext);
-    const { user, isAuthenticated, isLoading } = useAuth0();
 
     const [inEditMode, setInEditMode] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -30,6 +30,18 @@ const Profile = () => {
     const [favoriteAlbums, setFavoriteAlbums] = useState([]);
     const [favoriteTracks, setFavoriteTracks] = useState([]);
     const [favoriteArtists, setFavoriteArtists] = useState([]);
+
+    useEffect(() => {
+        if (isAuthenticated && !isLoading && loggedInUser) {
+            const artistRef = query(ref(database, 'faveArtist'), orderByChild('user'), equalTo(loggedInUser.email));
+
+            onValue(artistRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    setFavoriteArtists(favoriteArtists => [...favoriteArtists, childSnapshot.val()]);
+                })
+            })
+        }
+    }, [isAuthenticated, isLoading, loggedInUser])
 
     // useEffect(() => {
     //     let cancel = false;
