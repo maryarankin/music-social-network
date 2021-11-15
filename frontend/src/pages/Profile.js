@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import { ref, onValue, query, orderByChild, equalTo, limitToLast } from 'firebase/database';
 import { FirebaseContext } from '../components/firebase/FirebaseContext';
+import { UserContext } from '../UserContext';
 import FaveAlbum from '../components/FaveAlbum';
 import FaveTrack from '../components/FaveTrack';
 import FaveArtist from '../components/FaveArtist';
@@ -14,6 +15,7 @@ import ProfileCard from '../components/ProfileCard';
 
 const Profile = () => {
     const { database } = useContext(FirebaseContext);
+    const { loggedInUser } = useContext(UserContext);
     const { user, isAuthenticated, isLoading } = useAuth0();
 
     const [inEditMode, setInEditMode] = useState(false);
@@ -23,7 +25,7 @@ const Profile = () => {
         setInEditMode(!inEditMode);
     }
 
-    const [loggedInUser, setLoggedInUser] = useState();
+    //const [loggedInUser, setLoggedInUser] = useState();
 
     const [favoriteAlbums, setFavoriteAlbums] = useState([]);
     const [favoriteTracks, setFavoriteTracks] = useState([]);
@@ -58,32 +60,38 @@ const Profile = () => {
     //     }
     // }
 
+    // const getUser = async () => {
+    //     if (!isLoading) {
+    //         const userRef = query(ref(database, 'user'), orderByChild('email'), equalTo(user.email));
+
+    //         onValue(userRef, (snapshot) => {
+    //             snapshot.forEach((childSnapshot) => {
+    //                 setLoggedInUser(childSnapshot.val());
+    //                 setLoading(false);
+
+    //                 // const childKey = childSnapshot.key;
+    //                 // const childData = childSnapshot.val();
+    //                 // console.log(childData);
+    //                 // if (user && childData.email == user.email) {
+    //                 //     setLoggedInUser(childData.email);
+    //                 // }
+    //             })
+    //         })
+    //     }
+    // }
 
 
-    useEffect(() => {
-        let cancel = false;
-        setLoading(true);
 
-        const userRef = query(ref(database, 'user'), orderByChild('email'), equalTo(user.email));
+    // useEffect(() => {
+    //     const userRef = query(ref(database, 'user'), orderByChild('email'), equalTo(user.email));
 
-        onValue(userRef, (snapshot) => {
-            snapshot.forEach((childSnapshot) => {
-                setLoggedInUser(childSnapshot.val());
-                setLoading(false);
-
-                // const childKey = childSnapshot.key;
-                // const childData = childSnapshot.val();
-                // console.log(childData);
-                // if (user && childData.email == user.email) {
-                //     setLoggedInUser(childData.email);
-                // }
-            })
-        })
-
-        return () => {
-            cancel = true;
-        }
-    })
+    //     onValue(userRef, (snapshot) => {
+    //         snapshot.forEach((childSnapshot) => {
+    //             setLoggedInUser(childSnapshot.val());
+    //             setLoading(false);
+    //         })
+    //     })
+    // })
 
     // useEffect(() => {
     //     fetch('/api/faves/albums').then(res => {
@@ -154,8 +162,8 @@ const Profile = () => {
 
 
                     <div className="col">
-                        {loading && <h1>loading</h1>}
-                        {!loading && <ProfileCard user={loggedInUser} />}
+                        {!loggedInUser && <h1>loading</h1>}
+                        {loggedInUser && <ProfileCard user={loggedInUser} />}
 
                         <div className="container">
                             <div className="card d-flex justify-content-center" style={{ width: '75%' }}>

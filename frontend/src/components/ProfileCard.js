@@ -11,7 +11,7 @@ const ProfileCard = ({ user }) => {
                 <img src={profilePicture} className="card-img-top profile-picture mt-2" alt="Mary" />
                 <div className="card-body">
                     <h5 className="card-title">{user.name}</h5>
-                    <p className="card-text">{user.bio}</p>
+                    <p className="card-text">{user.bio || 'welcome to my page'}</p>
                 </div>
             </div>
         </div>

@@ -1,13 +1,15 @@
 /* navbar on each page */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import LogoutButton from './LogoutButton';
 import LoginButton from './LoginButton';
 import { useAuth0 } from "@auth0/auth0-react";
+import { UserContext } from '../UserContext';
 
 const Navbar = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
+    const { loggedInUser } = useContext(UserContext);
 
     return (
         <nav className="navbar navbar-expand-lg">
@@ -52,7 +54,7 @@ const Navbar = () => {
                 </div>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     {isAuthenticated && <div>
-                        <span className="mx-4">Welcome, {user.name}</span>
+                        <span className="mx-4">Welcome, {loggedInUser ? loggedInUser.name : 'loading'}</span>
                         <LogoutButton />
                     </div>}
                     {!isAuthenticated && <LoginButton />}
