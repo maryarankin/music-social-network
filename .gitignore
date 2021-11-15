@@ -27,3 +27,4 @@ yarn-error.log*
 /frontend/src/.env
 /frontend/src/data/credentials.js
 /node_modules/
+/frontend/src/components/Firebase/firebaseCredentials.js

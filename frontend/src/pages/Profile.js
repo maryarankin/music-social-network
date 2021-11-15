@@ -1,7 +1,11 @@
 /* Profile page where all of a user's information is shown; also where they can display their favorite albums, songs, and artists */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+//import firebase from '../firebase';
+import { useAuth0 } from "@auth0/auth0-react";
+import { ref, onValue } from 'firebase/database';
+import { FirebaseContext } from '../components/firebase/FirebaseContext';
 import FaveAlbum from '../components/FaveAlbum';
 import FaveTrack from '../components/FaveTrack';
 import FaveArtist from '../components/FaveArtist';
@@ -9,6 +13,9 @@ import FaveArtist from '../components/FaveArtist';
 import ProfileCard from '../components/ProfileCard';
 
 const Profile = () => {
+    const { database } = useContext(FirebaseContext);
+    const { user, isAuthenticated, isLoading } = useAuth0();
+
     const [inEditMode, setInEditMode] = useState(false);
     const [loading, setLoading] = useState(true);
 
@@ -16,62 +23,71 @@ const Profile = () => {
         setInEditMode(!inEditMode);
     }
 
-    const [user, setUser] = useState();
+    const [loggedInUser, setLoggedInUser] = useState();
 
     const [favoriteAlbums, setFavoriteAlbums] = useState([]);
     const [favoriteTracks, setFavoriteTracks] = useState([]);
     const [favoriteArtists, setFavoriteArtists] = useState([]);
 
+    // useEffect(() => {
+    //     let cancel = false;
+    //     setLoading(true);
+
+    //     fetch('/api/users/1').then(res => {
+    //         if (cancel) {
+    //             return;
+    //         }
+    //         if (res.ok) {
+    //             return res.json();
+    //         }
+    //     }).then(jsonResponse => {
+    //         setUser(jsonResponse[0]);
+    //         setLoading(false);
+    //     })
+
+    //     return () => {
+    //         cancel = true;
+    //     }
+    // }, [])
+
     useEffect(() => {
-        let cancel = false;
-        setLoading(true);
-
-        fetch('/api/users/1').then(res => {
-            if (cancel) {
-                return;
-            }
-            if (res.ok) {
-                return res.json();
-            }
-        }).then(jsonResponse => {
-            setUser(jsonResponse[0]);
-            setLoading(false);
+        const userRef = ref(database, 'user/' + '-MoLD_VaT1S9xAAU3eOO');
+        onValue(userRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log(data.username);
+            setLoggedInUser(data.username);
         })
-
-        return () => {
-            cancel = true;
-        }
     }, [])
 
-    useEffect(() => {
-        fetch('/api/faves/albums').then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-        }).then(jsonResponse => {
-            setFavoriteAlbums(jsonResponse);
-        })
-    }, [favoriteAlbums])
+    // useEffect(() => {
+    //     fetch('/api/faves/albums').then(res => {
+    //         if (res.ok) {
+    //             return res.json();
+    //         }
+    //     }).then(jsonResponse => {
+    //         setFavoriteAlbums(jsonResponse);
+    //     })
+    // }, [favoriteAlbums])
 
-    useEffect(() => {
-        fetch('/api/faves/artists').then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-        }).then(jsonResponse => {
-            setFavoriteArtists(jsonResponse);
-        })
-    }, [favoriteArtists])
+    // useEffect(() => {
+    //     fetch('/api/faves/artists').then(res => {
+    //         if (res.ok) {
+    //             return res.json();
+    //         }
+    //     }).then(jsonResponse => {
+    //         setFavoriteArtists(jsonResponse);
+    //     })
+    // }, [favoriteArtists])
 
-    useEffect(() => {
-        fetch('/api/faves/tracks').then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-        }).then(jsonResponse => {
-            setFavoriteTracks(jsonResponse);
-        })
-    }, [favoriteTracks])
+    // useEffect(() => {
+    //     fetch('/api/faves/tracks').then(res => {
+    //         if (res.ok) {
+    //             return res.json();
+    //         }
+    //     }).then(jsonResponse => {
+    //         setFavoriteTracks(jsonResponse);
+    //     })
+    // }, [favoriteTracks])
 
     return (
         <>
@@ -113,7 +129,7 @@ const Profile = () => {
 
                     <div className="col">
                         {loading && <h1>loading</h1>}
-                        {!loading && <ProfileCard user={user} />}
+                        {!loading && <ProfileCard user={loggedInUser} />}
 
                         <div className="container">
                             <div className="card d-flex justify-content-center" style={{ width: '75%' }}>
