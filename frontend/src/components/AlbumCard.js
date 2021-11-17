@@ -1,15 +1,17 @@
 /* card component for album info on album show page */
 
-import React from 'react';
-import axios from 'axios';
+import React, { useContext } from 'react';
+//import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FirebaseContext } from './firebase/FirebaseContext';
+import { UserContext } from '../UserContext';
+import { useAuth0 } from "@auth0/auth0-react";
+import { addAlbumToProfile } from '../functions/addFavorites';
 
 const AlbumCard = ({ id, albumName, albumCover, albumArtist, albumArtistId, albumReleaseDate, albumPopularity }) => {
-    const addAlbumToProfile = async () => {
-        await axios.post('/api/faves/albums', {
-            albumId: id
-        });
-    }
+    const { isAuthenticated, isLoading } = useAuth0();
+    const { loggedInUser } = useContext(UserContext);
+    const { database } = useContext(FirebaseContext);
 
     return <>
         <div className="container mt-5 mx-5 d-flex justify-content-center">
@@ -22,7 +24,7 @@ const AlbumCard = ({ id, albumName, albumCover, albumArtist, albumArtistId, albu
                     <p className="card-text">Popularity: {albumPopularity}</p>
                 </div>
                 <div className="card-body">
-                    <button onClick={addAlbumToProfile} type="button" className="btn buttons mb-3">Add Album</button>
+                    <button onClick={() => addAlbumToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons mb-3">Add Album</button>
                 </div>
             </div>
         </div>

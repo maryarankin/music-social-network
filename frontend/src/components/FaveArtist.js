@@ -4,7 +4,7 @@ import { Context } from '../Context';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
-import { ref, query } from 'firebase/database';
+import { ref, remove } from 'firebase/database';
 import defaultAlbumCover from '../assets/default-album-cover.png';
 const axios = require('axios');
 
@@ -44,16 +44,11 @@ const FaveArtist = ({ id, editMode }) => {
     //     name = name.substring(0, 20) + '...';
     // }
 
-    // const removeArtist = async () => {
-    //     await axios.delete(`/api/faves/artists/${id}`);
-    // }
-
     const removeArtist = async () => {
         if (isAuthenticated && !isLoading) {
             let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
 
-            const artistRef = query(ref(database, `faveArtist/${id}${dbId}`));
-            //artistRef.removeValue();
+            remove(ref(database, 'faveArtist/' + `${id}${dbId}`));
         }
     }
 

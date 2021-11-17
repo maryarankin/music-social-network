@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../Context';
+import { FirebaseContext } from './firebase/FirebaseContext';
+import { UserContext } from '../UserContext';
+import { useAuth0 } from "@auth0/auth0-react";
+import { ref, remove } from 'firebase/database';
 import defaultAlbumCoverDark from '../assets/default-album-cover-dark.png';
 const axios = require('axios');
 
 const FaveTrack = ({ id, editMode }) => {
     const { accessToken } = useContext(Context);
+    const { isAuthenticated, isLoading } = useAuth0();
+    const { loggedInUser } = useContext(UserContext);
+    const { database } = useContext(FirebaseContext);
 
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
@@ -39,7 +46,11 @@ const FaveTrack = ({ id, editMode }) => {
     // }
 
     const removeTrack = async () => {
-        await axios.delete(`/api/faves/tracks/${id}`);
+        if (isAuthenticated && !isLoading) {
+            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
+
+            remove(ref(database, 'faveTrack/' + `${id}${dbId}`));
+        }
     }
 
     return (

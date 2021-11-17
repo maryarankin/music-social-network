@@ -19,23 +19,22 @@ const Profile = () => {
     const { loggedInUser } = useContext(UserContext);
 
     const [inEditMode, setInEditMode] = useState(false);
-    const [loading, setLoading] = useState(true);
 
     const editMode = () => {
         setInEditMode(!inEditMode);
     }
 
-    //const [loggedInUser, setLoggedInUser] = useState();
-
     const [favoriteAlbums, setFavoriteAlbums] = useState([]);
     const [favoriteTracks, setFavoriteTracks] = useState([]);
     const [favoriteArtists, setFavoriteArtists] = useState([]);
 
+    //favorite artists
     useEffect(() => {
         if (isAuthenticated && !isLoading && loggedInUser) {
             const artistRef = query(ref(database, 'faveArtist'), orderByChild('user'), equalTo(loggedInUser.email));
 
             onValue(artistRef, (snapshot) => {
+                setFavoriteArtists([]);
                 snapshot.forEach((childSnapshot) => {
                     setFavoriteArtists(favoriteArtists => [...favoriteArtists, childSnapshot.val()]);
                 })
@@ -43,97 +42,33 @@ const Profile = () => {
         }
     }, [isAuthenticated, isLoading, loggedInUser])
 
-    // useEffect(() => {
-    //     let cancel = false;
-    //     setLoading(true);
+    //favorite tracks
+    useEffect(() => {
+        if (isAuthenticated && !isLoading && loggedInUser) {
+            const trackRef = query(ref(database, 'faveTrack'), orderByChild('user'), equalTo(loggedInUser.email));
 
-    //     fetch('/api/users/1').then(res => {
-    //         if (cancel) {
-    //             return;
-    //         }
-    //         if (res.ok) {
-    //             return res.json();
-    //         }
-    //     }).then(jsonResponse => {
-    //         setUser(jsonResponse[0]);
-    //         setLoading(false);
-    //     })
+            onValue(trackRef, (snapshot) => {
+                setFavoriteTracks([]);
+                snapshot.forEach((childSnapshot) => {
+                    setFavoriteTracks(favoriteTracks => [...favoriteTracks, childSnapshot.val()]);
+                })
+            })
+        }
+    }, [isAuthenticated, isLoading, loggedInUser])
 
-    //     return () => {
-    //         cancel = true;
-    //     }
-    // }, [])
+    //favorite albums
+    useEffect(() => {
+        if (isAuthenticated && !isLoading && loggedInUser) {
+            const albumRef = query(ref(database, 'faveAlbum'), orderByChild('user'), equalTo(loggedInUser.email));
 
-    // const query = async () => {
-    //     const queryUser = await database.collection('user').orderBy('username').limit(1).get();
-    //     if (queryUser.size > 0) {
-    //         const data = queryUser.docs[0].data();
-    //         console.log(data);
-    //     }
-    // }
-
-    // const getUser = async () => {
-    //     if (!isLoading) {
-    //         const userRef = query(ref(database, 'user'), orderByChild('email'), equalTo(user.email));
-
-    //         onValue(userRef, (snapshot) => {
-    //             snapshot.forEach((childSnapshot) => {
-    //                 setLoggedInUser(childSnapshot.val());
-    //                 setLoading(false);
-
-    //                 // const childKey = childSnapshot.key;
-    //                 // const childData = childSnapshot.val();
-    //                 // console.log(childData);
-    //                 // if (user && childData.email == user.email) {
-    //                 //     setLoggedInUser(childData.email);
-    //                 // }
-    //             })
-    //         })
-    //     }
-    // }
-
-
-
-    // useEffect(() => {
-    //     const userRef = query(ref(database, 'user'), orderByChild('email'), equalTo(user.email));
-
-    //     onValue(userRef, (snapshot) => {
-    //         snapshot.forEach((childSnapshot) => {
-    //             setLoggedInUser(childSnapshot.val());
-    //             setLoading(false);
-    //         })
-    //     })
-    // })
-
-    // useEffect(() => {
-    //     fetch('/api/faves/albums').then(res => {
-    //         if (res.ok) {
-    //             return res.json();
-    //         }
-    //     }).then(jsonResponse => {
-    //         setFavoriteAlbums(jsonResponse);
-    //     })
-    // }, [favoriteAlbums])
-
-    // useEffect(() => {
-    //     fetch('/api/faves/artists').then(res => {
-    //         if (res.ok) {
-    //             return res.json();
-    //         }
-    //     }).then(jsonResponse => {
-    //         setFavoriteArtists(jsonResponse);
-    //     })
-    // }, [favoriteArtists])
-
-    // useEffect(() => {
-    //     fetch('/api/faves/tracks').then(res => {
-    //         if (res.ok) {
-    //             return res.json();
-    //         }
-    //     }).then(jsonResponse => {
-    //         setFavoriteTracks(jsonResponse);
-    //     })
-    // }, [favoriteTracks])
+            onValue(albumRef, (snapshot) => {
+                setFavoriteAlbums([]);
+                snapshot.forEach((childSnapshot) => {
+                    setFavoriteAlbums(favoriteAlbums => [...favoriteAlbums, childSnapshot.val()]);
+                })
+            })
+        }
+    }, [isAuthenticated, isLoading, loggedInUser])
 
     return (
         <>

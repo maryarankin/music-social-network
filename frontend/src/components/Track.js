@@ -2,12 +2,19 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../Context';
+import { FirebaseContext } from './firebase/FirebaseContext';
+import { UserContext } from '../UserContext';
+import { useAuth0 } from "@auth0/auth0-react";
+import { addTrackToProfile } from '../functions/addFavorites';
 import Stars from './Stars'
 import defaultAlbumCoverDark from '../assets/default-album-cover-dark.png';
 const axios = require('axios');
 
 const Track = ({ track_number, name, duration_ms, id }) => {
     const { accessToken } = useContext(Context);
+    const { isAuthenticated, isLoading } = useAuth0();
+    const { loggedInUser } = useContext(UserContext);
+    const { database } = useContext(FirebaseContext);
 
     //convert duration from ms to 00:00 format
     let minutes = duration_ms / 60000;
@@ -44,12 +51,6 @@ const Track = ({ track_number, name, duration_ms, id }) => {
         getTrack(accessToken, id);
     }, [accessToken, id])
 
-    const addTrackToProfile = async () => {
-        await axios.post('/api/faves/tracks', {
-            trackId: id
-        });
-    }
-
     return (
         <div className="card" style={{ width: '75%' }}>
             <img src={defaultAlbumCoverDark} className="card-img-top album-cover my-4" alt={name} />
@@ -59,7 +60,7 @@ const Track = ({ track_number, name, duration_ms, id }) => {
                 <p className="card-text d-inline"><span>Popularity: </span></p>
                 <Stars popularity={popularity} />
                 <div className="mt-3">
-                    <button onClick={addTrackToProfile} type="button" className="btn buttons">+</button>
+                    <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons">+</button>
                 </div>
             </div>
         </div>

@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
-import { ref, set } from 'firebase/database';
+import { addArtistToProfile, addTrackToProfile, addAlbumToProfile } from '../functions/addFavorites';
 import defaultAlbumCover from '../assets/default-album-cover.png';
 import Stars from './Stars';
-import axios from 'axios';
 
 const SearchResult = (props) => {
     const { isAuthenticated, isLoading } = useAuth0();
@@ -59,28 +58,6 @@ const SearchResult = (props) => {
         name = name.substring(0, 29) + '...';
     }
 
-    const addArtistToProfile = async () => {
-        if (isAuthenticated && !isLoading) {
-            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
-            set(ref(database, `faveArtist/${id}${dbId}`), {
-                artistId: id,
-                user: loggedInUser.email
-            })
-        }
-    }
-
-    const addAlbumToProfile = async () => {
-        await axios.post('/api/faves/albums', {
-            albumId: id
-        });
-    }
-
-    const addTrackToProfile = async () => {
-        await axios.post('/api/faves/tracks', {
-            trackId: id
-        });
-    }
-
     return <>
         <div className="card mt-3 search-result">
             <Link to={`/${linkSearchType}/${linkId}`} className="search-result-link">
@@ -107,7 +84,7 @@ const SearchResult = (props) => {
                                 <Stars popularity={popularity} />
                             </div>
                             <div className="col-2 d-flex justify-content-end">
-                                <button onClick={addArtistToProfile} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
+                                <button onClick={() => addArtistToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
                             </div>
                         </div>
                     </li>
@@ -124,7 +101,7 @@ const SearchResult = (props) => {
                                 Release Date: {releaseDate}
                             </div>
                             <div className="col-2 d-flex justify-content-end">
-                                <button onClick={addAlbumToProfile} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
+                                <button onClick={() => addAlbumToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
                             </div>
                         </div>
                     </li>
@@ -142,7 +119,7 @@ const SearchResult = (props) => {
                                 <Stars popularity={popularity} />
                             </div>
                             <div className="col-2 d-flex justify-content-end">
-                                <button onClick={addTrackToProfile} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
+                                <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
                             </div>
                         </div>
                     </li>

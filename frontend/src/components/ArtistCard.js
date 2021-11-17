@@ -2,39 +2,17 @@
 
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { ref, set } from 'firebase/database';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
+import { addArtistToProfile, addTrackToProfile } from '../functions/addFavorites';
 import DarkStars from './DarkStars';
-import axios from 'axios';
+//import axios from 'axios';
 
 const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks, relatedArtists }) => {
-    // const addArtistToProfile = async (idToAdd) => {
-    //     await axios.post('/api/faves/artists', {
-    //         artistId: idToAdd
-    //     });
-    // }
     const { isAuthenticated, isLoading } = useAuth0();
-
     const { loggedInUser } = useContext(UserContext);
     const { database } = useContext(FirebaseContext);
-
-    const addArtistToProfile = async (idToAdd) => {
-        if (isAuthenticated && !isLoading) {
-            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
-            set(ref(database, `faveArtist/${idToAdd}${dbId}`), {
-                artistId: idToAdd,
-                user: loggedInUser.email
-            })
-        }
-    }
-
-    const addTrackToProfile = async (idToAdd) => {
-        await axios.post('/api/faves/tracks', {
-            trackId: idToAdd
-        });
-    }
 
     //abbreviate top track names if too long
     artistTopTracks.forEach(track => {
@@ -55,7 +33,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                     <DarkStars popularity={artistPopularity} />
                 </div>
                 <div className="card-body">
-                    <button onClick={() => addArtistToProfile(id)} type="button" className="btn buttons">Add Artist</button>
+                    <button onClick={() => addArtistToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons">Add Artist</button>
                 </div>
 
                 <div className="card-header artist-card-list-header mt-3">
@@ -69,7 +47,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                                     <Link to={`/album/${track.album.id}`} className="artist-card-link">{track.name}</Link>
                                 </div>
                                 <div className="col-2 d-flex justify-content-end">
-                                    <button onClick={() => addTrackToProfile(track.id)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>
+                                    <button onClick={() => addTrackToProfile(track.id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>
                                 </div>
                             </div>
                         </li>
@@ -87,7 +65,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                                     <Link to={`/artist/${artist.id}`} className="artist-card-link">{artist.name}</Link>
                                 </div>
                                 <div className="col-2 d-flex justify-content-end">
-                                    <button onClick={() => addArtistToProfile(artist.id)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>
+                                    <button onClick={() => addArtistToProfile(artist.id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>
                                 </div>
                             </div>
                         </li>
