@@ -4,7 +4,8 @@ import { Context } from '../Context';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
-import { ref, remove } from 'firebase/database';
+import { removeTrack } from '../functions/removeFavorites';
+
 import defaultAlbumCoverDark from '../assets/default-album-cover-dark.png';
 const axios = require('axios');
 
@@ -38,20 +39,10 @@ const FaveTrack = ({ id, editMode }) => {
         getTrack(accessToken, id);
     }, [id])
 
-
-
     //abbreviate name if too long
     // if (name.length > 21) {
     //     name = name.substring(0, 20) + '...';
     // }
-
-    const removeTrack = async () => {
-        if (isAuthenticated && !isLoading) {
-            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
-
-            remove(ref(database, 'faveTrack/' + `${id}${dbId}`));
-        }
-    }
 
     return (
         <div className="card">
@@ -60,7 +51,7 @@ const FaveTrack = ({ id, editMode }) => {
             </Link>
             <div className="card-body d-flex justify-content-center">
                 <h5 className="card-title favorite-name">{name}</h5>
-                {editMode && <button onClick={removeTrack} type="button" className="btn-close remove-button" aria-label="Close"></button>}
+                {editMode && <button onClick={() => removeTrack(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn-close remove-button" aria-label="Close"></button>}
             </div>
         </div>
     )

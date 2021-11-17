@@ -6,7 +6,7 @@ import { Context } from '../Context';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
-import { ref, remove } from 'firebase/database';
+import { removeAlbum } from '../functions/removeFavorites';
 import defaultAlbumCover from '../assets/default-album-cover.png';
 const axios = require('axios');
 
@@ -45,14 +45,6 @@ const FaveAlbum = ({ id, editMode }) => {
     //     setName(name.substring(0, 18) + '...');
     // }
 
-    const removeAlbum = async () => {
-        if (isAuthenticated && !isLoading) {
-            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
-
-            remove(ref(database, 'faveAlbum/' + `${id}${dbId}`));
-        }
-    }
-
     return (
         <div className="card">
             <Link to={`/album/${id}`} className="favorite-link">
@@ -60,7 +52,7 @@ const FaveAlbum = ({ id, editMode }) => {
             </Link>
             <div className="card-body d-flex justify-content-center">
                 <h5 className="favorite-name">{name}</h5>
-                {editMode && <button onClick={removeAlbum} type="button" className="btn-close remove-button" aria-label="Close"></button>}
+                {editMode && <button onClick={() => removeAlbum(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn-close remove-button" aria-label="Close"></button>}
             </div>
         </div>
     )
