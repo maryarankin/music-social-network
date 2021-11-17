@@ -60,7 +60,7 @@ const Track = ({ track_number, name, duration_ms, id }) => {
                 <p className="card-text d-inline"><span>Popularity: </span></p>
                 <Stars popularity={popularity} />
                 <div className="mt-3">
-                    <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons">+</button>
+                    {isAuthenticated && <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons">+</button>}
                 </div>
             </div>
         </div>

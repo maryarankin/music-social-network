@@ -32,9 +32,9 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                     <p className="card-text d-inline"><span>Popularity: </span></p>
                     <DarkStars popularity={artistPopularity} />
                 </div>
-                <div className="card-body">
+                {isAuthenticated && <div className="card-body">
                     <button onClick={() => addArtistToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons">Add Artist</button>
-                </div>
+                </div>}
 
                 <div className="card-header artist-card-list-header mt-3">
                     Top Songs
@@ -47,7 +47,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                                     <Link to={`/album/${track.album.id}`} className="artist-card-link">{track.name}</Link>
                                 </div>
                                 <div className="col-2 d-flex justify-content-end">
-                                    <button onClick={() => addTrackToProfile(track.id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>
+                                    {isAuthenticated && <button onClick={() => addTrackToProfile(track.id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>}
                                 </div>
                             </div>
                         </li>
@@ -65,7 +65,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                                     <Link to={`/artist/${artist.id}`} className="artist-card-link">{artist.name}</Link>
                                 </div>
                                 <div className="col-2 d-flex justify-content-end">
-                                    <button onClick={() => addArtistToProfile(artist.id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>
+                                    {isAuthenticated && <button onClick={() => addArtistToProfile(artist.id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>}
                                 </div>
                             </div>
                         </li>

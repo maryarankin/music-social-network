@@ -54,7 +54,7 @@ const Navbar = () => {
                 </div>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     {isAuthenticated && <div>
-                        <span className="mx-4">Welcome, {loggedInUser ? loggedInUser.name : 'loading'}</span>
+                        <span className="mx-4">Welcome, {loggedInUser ? loggedInUser.username : 'loading'}</span>
                         <LogoutButton />
                     </div>}
                     {!isAuthenticated && <LoginButton />}

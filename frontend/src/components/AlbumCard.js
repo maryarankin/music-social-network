@@ -23,9 +23,9 @@ const AlbumCard = ({ id, albumName, albumCover, albumArtist, albumArtistId, albu
                     <p className="card-text">Release Date: {albumReleaseDate.substring(0, 4)}</p>
                     <p className="card-text">Popularity: {albumPopularity}</p>
                 </div>
-                <div className="card-body">
+                {isAuthenticated && <div className="card-body">
                     <button onClick={() => addAlbumToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons mb-3">Add Album</button>
-                </div>
+                </div>}
             </div>
         </div>
     </>

@@ -84,7 +84,7 @@ const SearchResult = (props) => {
                                 <Stars popularity={popularity} />
                             </div>
                             <div className="col-2 d-flex justify-content-end">
-                                <button onClick={() => addArtistToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
+                                {isAuthenticated && <button onClick={() => addArtistToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>}
                             </div>
                         </div>
                     </li>
@@ -101,7 +101,7 @@ const SearchResult = (props) => {
                                 Release Date: {releaseDate}
                             </div>
                             <div className="col-2 d-flex justify-content-end">
-                                <button onClick={() => addAlbumToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
+                                {isAuthenticated && <button onClick={() => addAlbumToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>}
                             </div>
                         </div>
                     </li>
@@ -119,7 +119,7 @@ const SearchResult = (props) => {
                                 <Stars popularity={popularity} />
                             </div>
                             <div className="col-2 d-flex justify-content-end">
-                                <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>
+                                {isAuthenticated && <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>}
                             </div>
                         </div>
                     </li>
