@@ -48,6 +48,10 @@ const Navbar = () => {
                                 <li>
                                     <Link to="/tracksearch" className="dropdown-item">By Track</Link>
                                 </li>
+                                <li><hr className="dropdown-divider" /></li>
+                                <li>
+                                    <Link to="/usersearch" className="dropdown-item">By User</Link>
+                                </li>
                             </ul>
                         </li>
                     </ul>

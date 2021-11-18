@@ -14,6 +14,7 @@ import EditProfileCard from './components/EditProfileCard';
 import ArtistSearch from './pages/search/ArtistSearch';
 import AlbumSearch from './pages/search/AlbumSearch';
 import TrackSearch from './pages/search/TrackSearch';
+import UserSearch from './pages/search/UserSearch';
 import ShowArtist from './pages/show/ShowArtist';
 import ShowAlbum from './pages/show/ShowAlbum';
 //import ShowTrack from './pages/show/ShowTrack';
@@ -72,6 +73,9 @@ const App = () => {
                     </Route>
                     <Route path="/tracksearch">
                         <TrackSearch />
+                    </Route>
+                    <Route path="/usersearch">
+                        <UserSearch />
                     </Route>
                     <Route path="*">
                         <NotFound />

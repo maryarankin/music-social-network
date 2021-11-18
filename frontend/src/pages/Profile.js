@@ -73,8 +73,9 @@ const Profile = () => {
     return (
         <>
             <div>
-                <div className="row mb-5">
+                {!isAuthenticated && !isLoading && <h2 className="mt-5 mx-5">Please sign in to continue.</h2>}
 
+                {isAuthenticated && <div className="row mb-5">
                     <div className="col-9 d-flex justify-content-center">
 
                         <div className="grid">
@@ -121,8 +122,8 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
+                }
             </div>
         </>
     )

@@ -7,6 +7,7 @@ import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
 import { addArtistToProfile, addTrackToProfile, addAlbumToProfile } from '../functions/addFavorites';
 import defaultAlbumCover from '../assets/default-album-cover.png';
+import profilePicture from '../assets/profile-picture.png'
 import Stars from './Stars';
 
 const SearchResult = (props) => {
@@ -52,6 +53,9 @@ const SearchResult = (props) => {
         popularity = props.popularity;
         linkSearchType = 'album';
         linkId = props.album.id;
+    }
+    if (searchType === 'user') {
+        image = profilePicture;
     }
 
     if (name.length > 30) {

@@ -2,6 +2,10 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../Context';
+import { FirebaseContext } from './firebase/FirebaseContext';
+import { UserContext } from '../UserContext';
+import { useAuth0 } from "@auth0/auth0-react";
+import { ref, onValue, query, orderByChild, equalTo } from 'firebase/database';
 import SearchResult from './SearchResult';
 import ApiError from './ApiError';
 import NoSearchResults from './NoSearchResults';
@@ -10,6 +14,9 @@ const axios = require('axios');
 
 const SearchBar = ({ searchType }) => {
     const { accessToken } = useContext(Context);
+    const { isAuthenticated, isLoading } = useAuth0();
+    const { loggedInUser } = useContext(UserContext);
+    const { database } = useContext(FirebaseContext);
 
     let searchTypeString = searchType;
     searchTypeString = searchTypeString.charAt(0).toUpperCase() + searchTypeString.substring(1);
@@ -131,8 +138,38 @@ const SearchBar = ({ searchType }) => {
         });
     }
 
+    const searchUsers = (searchQuery) => {
+        if (isAuthenticated && !isLoading) {
+            const userRef = query(ref(database, 'user'), orderByChild('username'), equalTo(searchQuery));
+
+            let userResults = [];
+
+            onValue(userRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    userResults = [...userResults, childSnapshot.val()];
+                })
+            })
+            // .then(function () {
+            //     if (searchResults.length === 0) {
+            //         setNoResults(true);
+            //         setMoreThanOneResult(false);
+            //     }
+            //     else {
+            //         setNoResults(false);
+            //         setMoreThanOneResult(false);
+            //     }
+            //     setSearchResults(userResults);
+            // })
+        }
+    }
+
     useEffect(() => {
-        querySpotify(accessToken, searchType, searchQuery);
+        if (searchType == 'user') {
+            searchUsers(searchQuery);
+        }
+        else {
+            querySpotify(accessToken, searchType, searchQuery);
+        }
     }, [searchQuery])
 
     // useEffect(() => {
