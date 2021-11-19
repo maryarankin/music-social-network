@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
+import { ref, onValue } from 'firebase/database';
 import { addArtistToProfile, addTrackToProfile, addAlbumToProfile } from '../functions/addFavorites';
 import defaultAlbumCover from '../assets/default-album-cover.png';
 import profilePicture from '../assets/profile-picture.png'
@@ -15,18 +16,26 @@ const SearchResult = (props) => {
     const { loggedInUser } = useContext(UserContext);
     const { database } = useContext(FirebaseContext);
 
-    let name = props.name;
-    let id = props.id;
+    let searchType = props.searchType;
+    let name = 'undefined';
+    let names = [];
+    let id = 0;
+
+    if (searchType !== 'user') {
+        name = props.name;
+        id = props.id;
+    }
+
     let image = '';
     let genre = '';
     let popularity = 0;
     let artist = '';
     let releaseDate = '';
 
-    let searchType = props.searchType;
     let isArtist = false;
     let isAlbum = false;
     let isTrack = false;
+    let isUser = false;
 
     let linkSearchType = searchType;
     let linkId = id;
@@ -54,11 +63,33 @@ const SearchResult = (props) => {
         linkSearchType = 'album';
         linkId = props.album.id;
     }
-    if (searchType === 'user') {
-        image = profilePicture;
+
+    const getUserData = (id) => {
+        if (isAuthenticated && !isLoading) {
+            const userRef = ref(database, 'user/' + id);
+
+            let userData = [];
+
+            onValue(userRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    userData = [...userData, childSnapshot.key];
+                    console.log(userData[0])
+                })
+            });
+        }
+
+        name = names[0];
     }
 
-    if (name.length > 30) {
+    if (searchType === 'user') {
+        isUser = true;
+        image = profilePicture;
+        linkId = 'abc'
+
+        getUserData(props.userId);
+    }
+
+    if (name && name.length > 30) {
         name = name.substring(0, 29) + '...';
     }
 
@@ -67,12 +98,13 @@ const SearchResult = (props) => {
             <Link to={`/${linkSearchType}/${linkId}`} className="search-result-link">
                 <div className="row">
                     <div className="col d-flex justify-content-center">
-                        <img className={`search-result-picture-${searchType} my-3`} src={image ? image.url : defaultAlbumCover} alt={searchType} />
+                        {!isUser && <img className={`search-result-picture-${searchType} my-3`} src={image ? image.url : defaultAlbumCover} alt={searchType} />}
+                        {isUser && <img className="search-result-picture-user my-3" src={image} alt={searchType} />}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col d-flex justify-content-center">
-                        <h5 className="card-title search-result-name mb-3">{name}</h5>
+                        <h5 className="card-title search-result-name mb-3">{name ? name : 'test'}</h5>
                     </div>
                 </div>
             </Link>

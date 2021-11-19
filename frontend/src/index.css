@@ -130,6 +130,10 @@ p {
     width: 50%;
 }
 
+.search-result-picture-user {
+    width: 100%;
+}
+
 .search-result-name {
     color: #3f2119;
 }

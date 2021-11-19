@@ -20,12 +20,19 @@ const SearchBar = ({ searchType }) => {
 
     let searchTypeString = searchType;
     searchTypeString = searchTypeString.charAt(0).toUpperCase() + searchTypeString.substring(1);
+    let isUser = false;
+
+    if (searchType === 'user') {
+        isUser = true;
+    }
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    const [noResults, setNoResults] = useState(false);
+    //const [noResults, setNoResults] = useState(false);
+    let noResults = false;
     const [moreThanOneResult, setMoreThanOneResult] = useState(true);
+    const [userId, setUserId] = useState(0);
 
     const [isError, setIsError] = useState(false);
 
@@ -88,45 +95,54 @@ const SearchBar = ({ searchType }) => {
                 setSearchResults(response.data.artists.items);
                 if (response.data.artists.items.length === 0) {
                     console.log(response.data.artists.items.length);
-                    setNoResults(true);
+                    //setNoResults(true);
+                    noResults = true;
                     setMoreThanOneResult(false);
                 }
                 else if (response.data.artists.items.length === 1) {
-                    setNoResults(false);
+                    //setNoResults(false);
+                    noResults = false;
                     setMoreThanOneResult(false);
                 }
                 else {
-                    setNoResults(false);
+                    //setNoResults(false);
+                    noResults = false;
                     setMoreThanOneResult(true);
                 }
             }
             else if (searchType === 'album') {
                 setSearchResults(response.data.albums.items);
                 if (response.data.albums.items.length === 0) {
-                    setNoResults(true);
+                    //setNoResults(true);
+                    noResults = true;
                     setMoreThanOneResult(false);
                 }
                 else if (response.data.albums.items.length === 1) {
-                    setNoResults(false);
+                    noResults = false;
+                    //setNoResults(false);
                     setMoreThanOneResult(false);
                 }
                 else {
-                    setNoResults(false);
+                    //setNoResults(false);
+                    noResults = false;
                     setMoreThanOneResult(true);
                 }
             }
             else {
                 setSearchResults(response.data.tracks.items);
                 if (response.data.tracks.items.length === 0) {
-                    setNoResults(true);
+                    //setNoResults(true);
+                    noResults = true;
                     setMoreThanOneResult(false);
                 }
                 else if (response.data.tracks.items.length === 1) {
-                    setNoResults(false);
+                    //setNoResults(false);
+                    noResults = false;
                     setMoreThanOneResult(false);
                 }
                 else {
-                    setNoResults(false);
+                    //setNoResults(false);
+                    noResults = false;
                     setMoreThanOneResult(true);
                 }
             }
@@ -140,31 +156,34 @@ const SearchBar = ({ searchType }) => {
 
     const searchUsers = (searchQuery) => {
         if (isAuthenticated && !isLoading) {
+            setUserId(0);
             const userRef = query(ref(database, 'user'), orderByChild('username'), equalTo(searchQuery));
 
             let userResults = [];
+            //setNoResults(false);
+            noResults = false;
 
             onValue(userRef, (snapshot) => {
                 snapshot.forEach((childSnapshot) => {
-                    userResults = [...userResults, childSnapshot.val()];
+                    userResults = [...userResults, childSnapshot.key];
                 })
             })
-            // .then(function () {
-            //     if (searchResults.length === 0) {
-            //         setNoResults(true);
-            //         setMoreThanOneResult(false);
-            //     }
-            //     else {
-            //         setNoResults(false);
-            //         setMoreThanOneResult(false);
-            //     }
-            //     setSearchResults(userResults);
-            // })
+            if (!userResults[0]) {
+                //setNoResults(true);
+                noResults = true;
+                setMoreThanOneResult(false);
+            }
+            else {
+                //setNoResults(false);
+                noResults = false;
+                setMoreThanOneResult(false);
+            }
+            setUserId(userResults[0]);
         }
     }
 
     useEffect(() => {
-        if (searchType == 'user') {
+        if (searchType === 'user') {
             searchUsers(searchQuery);
         }
         else {
@@ -191,7 +210,8 @@ const SearchBar = ({ searchType }) => {
 
     return <div className="container mt-5">
         <form onSubmit={handleSubmit}>
-            <label htmlFor="searchTerm">{searchTypeString} Name: </label>
+            {searchType != 'user' && <label htmlFor="searchTerm">{searchTypeString} Name: </label>}
+            {searchType == 'user' && <label htmlFor="searchTerm">Username: </label>}
             <input className="mx-3" type="text" id="searchTerm" name="searchTerm" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}></input>
             <button className="btn-sm buttons">Search</button>
         </form>
@@ -202,7 +222,7 @@ const SearchBar = ({ searchType }) => {
 
             {noResults && <NoSearchResults />}
 
-            {(!noResults && searchQuery && moreThanOneResult) && <div className="d-flex justify-content-center">
+            {(!noResults && searchQuery && moreThanOneResult && !isUser) && <div className="d-flex justify-content-center">
                 <div className="row mt-5">
                     {searchResults.map((result) => {
                         return <div className="col-12 col-md-6 col-lg-4 mb-5" key={result.id}>
@@ -213,13 +233,22 @@ const SearchBar = ({ searchType }) => {
             </div>
             }
 
-            {(!noResults && searchQuery && !moreThanOneResult) && <div className="d-flex justify-content-center">
+            {(!noResults && searchQuery && !moreThanOneResult && !isUser) && <div className="d-flex justify-content-center">
                 <div className="row mt-5">
                     {searchResults.map((result) => {
                         return <div className="col-12 mb-5" key={result.id}>
                             <SearchResult {...result} searchType={searchType} />
                         </div>
                     })}
+                </div>
+            </div>
+            }
+
+            {(!noResults && searchQuery && isUser) && <div className="d-flex justify-content-center">
+                <div className="row mt-5">
+                    <div className="col-12 mb-5">
+                        <SearchResult userId={userId} searchType={searchType} />
+                    </div>
                 </div>
             </div>
             }
