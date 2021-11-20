@@ -17,14 +17,16 @@ const SearchResult = (props) => {
     const { database } = useContext(FirebaseContext);
 
     let searchType = props.searchType;
-    let name = 'undefined';
-    let names = [];
-    let id = 0;
+    let name = props.name;
+    let id = props.id;
+    //let name = 'undefined';
+    //let names = [];
+    //let id = 0;
 
-    if (searchType !== 'user') {
-        name = props.name;
-        id = props.id;
-    }
+    // if (searchType !== 'user') {
+    //     name = props.name;
+    //     id = props.id;
+    // }
 
     let image = '';
     let genre = '';
@@ -35,7 +37,7 @@ const SearchResult = (props) => {
     let isArtist = false;
     let isAlbum = false;
     let isTrack = false;
-    let isUser = false;
+    //let isUser = false;
 
     let linkSearchType = searchType;
     let linkId = id;
@@ -64,30 +66,30 @@ const SearchResult = (props) => {
         linkId = props.album.id;
     }
 
-    const getUserData = (id) => {
-        if (isAuthenticated && !isLoading) {
-            const userRef = ref(database, 'user/' + id);
+    // const getUserData = (id) => {
+    //     if (isAuthenticated && !isLoading) {
+    //         const userRef = ref(database, 'user/' + id);
 
-            let userData = [];
+    //         let userData = [];
 
-            onValue(userRef, (snapshot) => {
-                snapshot.forEach((childSnapshot) => {
-                    userData = [...userData, childSnapshot.key];
-                    console.log(userData[0])
-                })
-            });
-        }
+    //         onValue(userRef, (snapshot) => {
+    //             snapshot.forEach((childSnapshot) => {
+    //                 userData = [...userData, childSnapshot.key];
+    //                 console.log(userData[0])
+    //             })
+    //         });
+    //     }
 
-        name = names[0];
-    }
+    //     name = names[0];
+    // }
 
-    if (searchType === 'user') {
-        isUser = true;
-        image = profilePicture;
-        linkId = 'abc'
+    // if (searchType === 'user') {
+    //     isUser = true;
+    //     image = profilePicture;
+    //     linkId = 'abc'
 
-        getUserData(props.userId);
-    }
+    //     getUserData(props.userId);
+    // }
 
     if (name && name.length > 30) {
         name = name.substring(0, 29) + '...';
@@ -98,8 +100,9 @@ const SearchResult = (props) => {
             <Link to={`/${linkSearchType}/${linkId}`} className="search-result-link">
                 <div className="row">
                     <div className="col d-flex justify-content-center">
-                        {!isUser && <img className={`search-result-picture-${searchType} my-3`} src={image ? image.url : defaultAlbumCover} alt={searchType} />}
-                        {isUser && <img className="search-result-picture-user my-3" src={image} alt={searchType} />}
+                        {/* !isUser && <img className={`search-result-picture-${searchType} my-3`} src={image ? image.url : defaultAlbumCover} alt={searchType} /> */}
+                        {/* isUser && <img className="search-result-picture-user my-3" src={image} alt={searchType} /> */}
+                        <img className={`search-result-picture-${searchType} my-3`} src={image ? image.url : defaultAlbumCover} alt={searchType} />
                     </div>
                 </div>
                 <div className="row">

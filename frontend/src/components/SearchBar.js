@@ -20,11 +20,11 @@ const SearchBar = ({ searchType }) => {
 
     let searchTypeString = searchType;
     searchTypeString = searchTypeString.charAt(0).toUpperCase() + searchTypeString.substring(1);
-    let isUser = false;
+    //let isUser = false;
 
-    if (searchType === 'user') {
-        isUser = true;
-    }
+    // if (searchType === 'user') {
+    //     isUser = true;
+    // }
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
@@ -32,7 +32,7 @@ const SearchBar = ({ searchType }) => {
     //const [noResults, setNoResults] = useState(false);
     let noResults = false;
     const [moreThanOneResult, setMoreThanOneResult] = useState(true);
-    const [userId, setUserId] = useState(0);
+    //const [userId, setUserId] = useState(0);
 
     const [isError, setIsError] = useState(false);
 
@@ -154,41 +154,41 @@ const SearchBar = ({ searchType }) => {
         });
     }
 
-    const searchUsers = (searchQuery) => {
-        if (isAuthenticated && !isLoading) {
-            setUserId(0);
-            const userRef = query(ref(database, 'user'), orderByChild('username'), equalTo(searchQuery));
+    // const searchUsers = (searchQuery) => {
+    //     if (isAuthenticated && !isLoading) {
+    //         setUserId(0);
+    //         const userRef = query(ref(database, 'user'), orderByChild('username'), equalTo(searchQuery));
 
-            let userResults = [];
-            //setNoResults(false);
-            noResults = false;
+    //         let userResults = [];
+    //         //setNoResults(false);
+    //         noResults = false;
 
-            onValue(userRef, (snapshot) => {
-                snapshot.forEach((childSnapshot) => {
-                    userResults = [...userResults, childSnapshot.key];
-                })
-            })
-            if (!userResults[0]) {
-                //setNoResults(true);
-                noResults = true;
-                setMoreThanOneResult(false);
-            }
-            else {
-                //setNoResults(false);
-                noResults = false;
-                setMoreThanOneResult(false);
-            }
-            setUserId(userResults[0]);
-        }
-    }
+    //         onValue(userRef, (snapshot) => {
+    //             snapshot.forEach((childSnapshot) => {
+    //                 userResults = [...userResults, childSnapshot.key];
+    //             })
+    //         })
+    //         if (!userResults[0]) {
+    //             //setNoResults(true);
+    //             noResults = true;
+    //             setMoreThanOneResult(false);
+    //         }
+    //         else {
+    //             //setNoResults(false);
+    //             noResults = false;
+    //             setMoreThanOneResult(false);
+    //         }
+    //         setUserId(userResults[0]);
+    //     }
+    // }
 
     useEffect(() => {
-        if (searchType === 'user') {
-            searchUsers(searchQuery);
-        }
-        else {
-            querySpotify(accessToken, searchType, searchQuery);
-        }
+        // if (searchType === 'user') {
+        //     searchUsers(searchQuery);
+        // }
+        //else {
+        querySpotify(accessToken, searchType, searchQuery);
+        //}
     }, [searchQuery])
 
     // useEffect(() => {
@@ -210,8 +210,8 @@ const SearchBar = ({ searchType }) => {
 
     return <div className="container mt-5">
         <form onSubmit={handleSubmit}>
-            {searchType != 'user' && <label htmlFor="searchTerm">{searchTypeString} Name: </label>}
-            {searchType == 'user' && <label htmlFor="searchTerm">Username: </label>}
+            <label htmlFor="searchTerm">{searchTypeString} Name: </label>
+            {/* searchType == 'user' && <label htmlFor="searchTerm">Username: </label> */}
             <input className="mx-3" type="text" id="searchTerm" name="searchTerm" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}></input>
             <button className="btn-sm buttons">Search</button>
         </form>
@@ -222,7 +222,7 @@ const SearchBar = ({ searchType }) => {
 
             {noResults && <NoSearchResults />}
 
-            {(!noResults && searchQuery && moreThanOneResult && !isUser) && <div className="d-flex justify-content-center">
+            {(!noResults && searchQuery && moreThanOneResult) && <div className="d-flex justify-content-center">
                 <div className="row mt-5">
                     {searchResults.map((result) => {
                         return <div className="col-12 col-md-6 col-lg-4 mb-5" key={result.id}>
@@ -233,7 +233,7 @@ const SearchBar = ({ searchType }) => {
             </div>
             }
 
-            {(!noResults && searchQuery && !moreThanOneResult && !isUser) && <div className="d-flex justify-content-center">
+            {(!noResults && searchQuery && !moreThanOneResult) && <div className="d-flex justify-content-center">
                 <div className="row mt-5">
                     {searchResults.map((result) => {
                         return <div className="col-12 mb-5" key={result.id}>
@@ -244,14 +244,14 @@ const SearchBar = ({ searchType }) => {
             </div>
             }
 
-            {(!noResults && searchQuery && isUser) && <div className="d-flex justify-content-center">
+            {/* (!noResults && searchQuery && isUser) && <div className="d-flex justify-content-center">
                 <div className="row mt-5">
                     <div className="col-12 mb-5">
                         <SearchResult userId={userId} searchType={searchType} />
                     </div>
                 </div>
             </div>
-            }
+            */}
 
         </div>
         }

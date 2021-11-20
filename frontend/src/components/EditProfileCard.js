@@ -1,7 +1,7 @@
 /* card component to edit user information */
 
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { update, ref } from 'firebase/database';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { IdContext } from '../IdContext';
@@ -54,13 +54,9 @@ const EditProfileCard = () => {
                         </div>
 
                         <button type="submit" className="btn buttons">Save</button>
+                        <Link to="/profile" className="btn buttons mx-4">Cancel</Link>
                     </form>
                 </div>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item">An item</li>
-                    <li className="list-group-item">A second item</li>
-                    <li className="list-group-item">A third item</li>
-                </ul>
             </div>
         </div>
     </>

@@ -48,12 +48,19 @@ const Navbar = () => {
                                 <li>
                                     <Link to="/tracksearch" className="dropdown-item">By Track</Link>
                                 </li>
-                                <li><hr className="dropdown-divider" /></li>
+
+                                {/* <li><hr className="dropdown-divider" /></li>
                                 <li>
                                     <Link to="/usersearch" className="dropdown-item">By User</Link>
-                                </li>
+                                </li> */}
                             </ul>
                         </li>
+
+                        {isAuthenticated &&
+                            <li className="nav-item">
+                                <Link to="/findfriends" className="nav-link">Find Friends</Link>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">

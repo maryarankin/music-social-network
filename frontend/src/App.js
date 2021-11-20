@@ -14,9 +14,11 @@ import EditProfileCard from './components/EditProfileCard';
 import ArtistSearch from './pages/search/ArtistSearch';
 import AlbumSearch from './pages/search/AlbumSearch';
 import TrackSearch from './pages/search/TrackSearch';
-import UserSearch from './pages/search/UserSearch';
+//import UserSearch from './pages/search/UserSearch';
+import FindFriends from './pages/user/FindFriends';
 import ShowArtist from './pages/show/ShowArtist';
 import ShowAlbum from './pages/show/ShowAlbum';
+import ShowUser from './pages/show/ShowUser';
 //import ShowTrack from './pages/show/ShowTrack';
 import NotFound from './components/NotFound';
 
@@ -74,8 +76,13 @@ const App = () => {
                     <Route path="/tracksearch">
                         <TrackSearch />
                     </Route>
-                    <Route path="/usersearch">
+                    {/*<Route path="/usersearch">
                         <UserSearch />
+                    </Route>*/}
+                    <Route path="/findfriends">
+                        <FindFriends />
+                    </Route>
+                    <Route path="/user/:id" children={<ShowUser />}>
                     </Route>
                     <Route path="*">
                         <NotFound />
