@@ -17,9 +17,9 @@ const DarkStars = ({ popularity }) => {
 
     return <div className="d-inline">
         {starPopularity.map((star, index) => {
-            return <div className="d-inline">
-                {star && <FontAwesomeIcon key={index} className="star-icon-dark" icon={faStar} />}
-                {!star && <FontAwesomeIcon key={index} className="star-icon-dark" icon={farStar} />}
+            return <div className="d-inline" key={index}>
+                {star && <FontAwesomeIcon className="star-icon-dark" icon={faStar} />}
+                {!star && <FontAwesomeIcon className="star-icon-dark" icon={farStar} />}
             </div>
         })}
     </div>

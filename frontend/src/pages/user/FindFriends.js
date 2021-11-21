@@ -13,16 +13,18 @@ const FindFriends = () => {
     const [dbLoading, setDbLoading] = useState(true);
 
     const [allUsers, setAllUsers] = useState([]);
-    //const [allIds, setAllIds] = useState([]);
 
     const searchUsers = () => {
         if (isAuthenticated && !isLoading) {
+            setAllUsers([]);
+
             const userRef = query(ref(database, 'user'));
 
             onValue(userRef, (snapshot) => {
                 snapshot.forEach((childSnapshot) => {
-                    setAllUsers((oldValues) => [...oldValues, childSnapshot.val()]);
-                    //setAllIds((oldValues) => [...oldValues, childSnapshot.key]);
+                    if (childSnapshot.val().username !== loggedInUser.username) {
+                        setAllUsers((oldValues) => [...oldValues, childSnapshot.val()]);
+                    }
                 })
             })
 
@@ -30,9 +32,6 @@ const FindFriends = () => {
             setDbLoading(false);
         }
     }
-
-    //IF ABOVE FXN DOESN'T WORK, USE FXNS FROM PROFILE PAGE
-    //ON THE USER'S PAGE, DO ANOTHER QUERY OF DATABASE BASED ON USERNAME TO GET OTHER INFO LIKE FAVES, NAME, & BIO
 
     useEffect(() => {
         searchUsers();
@@ -42,8 +41,8 @@ const FindFriends = () => {
     return <div>
         {dbLoading && <h1>loading</h1>}
 
-        {allUsers.map((user) => {
-            return <div>
+        {allUsers.map((user, index) => {
+            return <div key={index}>
                 <h1>{user.name}</h1>
                 <Link to={`/user/${user.username}`}>View Profile</Link>
             </div>

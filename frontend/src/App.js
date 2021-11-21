@@ -16,6 +16,7 @@ import AlbumSearch from './pages/search/AlbumSearch';
 import TrackSearch from './pages/search/TrackSearch';
 //import UserSearch from './pages/search/UserSearch';
 import FindFriends from './pages/user/FindFriends';
+import FriendsList from './pages/user/FriendsList';
 import ShowArtist from './pages/show/ShowArtist';
 import ShowAlbum from './pages/show/ShowAlbum';
 import ShowUser from './pages/show/ShowUser';
@@ -81,6 +82,9 @@ const App = () => {
                     </Route>*/}
                     <Route path="/findfriends">
                         <FindFriends />
+                    </Route>
+                    <Route path="/friends">
+                        <FriendsList />
                     </Route>
                     <Route path="/user/:id" children={<ShowUser />}>
                     </Route>

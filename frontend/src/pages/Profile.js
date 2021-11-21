@@ -82,8 +82,8 @@ const Profile = () => {
                             <div className="row mt-5">
                                 <h1 className="favorite-title mb-4">favorite artists</h1>
                                 {favoriteArtists.map((faveArtist) => {
-                                    return <div className="col-3">
-                                        <FaveArtist key={faveArtist.artistId} id={faveArtist.artistId} editMode={inEditMode} />
+                                    return <div className="col-3" key={faveArtist.artistId}>
+                                        <FaveArtist id={faveArtist.artistId} editMode={inEditMode} />
                                     </div>
                                 })}
                             </div>
@@ -91,8 +91,8 @@ const Profile = () => {
                             <div className="row mt-5">
                                 <h1 className="favorite-title mb-4">favorite tracks</h1>
                                 {favoriteTracks.map((faveTrack) => {
-                                    return <div className="col-3">
-                                        <FaveTrack key={faveTrack.trackId} id={faveTrack.trackId} editMode={inEditMode} />
+                                    return <div className="col-3" key={faveTrack.trackId} >
+                                        <FaveTrack id={faveTrack.trackId} editMode={inEditMode} />
                                     </div>
                                 })}
                             </div>
@@ -100,8 +100,8 @@ const Profile = () => {
                             <div className="row mt-5">
                                 <h1 className="favorite-title mb-4">favorite albums</h1>
                                 {favoriteAlbums.map((faveAlbum) => {
-                                    return <div className="col-3">
-                                        <FaveAlbum key={faveAlbum.albumId} id={faveAlbum.albumId} editMode={inEditMode} />
+                                    return <div className="col-3" key={faveAlbum.albumId}>
+                                        <FaveAlbum id={faveAlbum.albumId} editMode={inEditMode} />
                                     </div>
                                 })}
                             </div>
