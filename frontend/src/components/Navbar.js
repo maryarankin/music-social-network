@@ -1,7 +1,7 @@
 /* navbar on each page */
 
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import LogoutButton from './LogoutButton';
 import LoginButton from './LoginButton';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -16,24 +16,37 @@ const Navbar = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
     const { loggedInUser } = useContext(UserContext);
     const { database } = useContext(FirebaseContext);
-    const [hasNotif, setHasNotif] = useState(false);
-    const [notifications, setNotifications] = useState([]);
+    const history = useHistory();
+    const [friendNotifs, setFriendNotifs] = useState([]);
+    const [msgNotifs, setMsgNotifs] = useState([]);
+    const [msgIds, setMsgIds] = useState([]);
 
     const [clickedNotif, setClickedNotif] = useState(false);
 
     //check for notifications
     useEffect(() => {
         if (isAuthenticated && !isLoading && loggedInUser) {
-            setHasNotif(false);
+            setFriendNotifs([]);
+            setMsgNotifs([]);
+            setMsgIds([]);
 
             const notifRef = query(ref(database, 'friends'), orderByChild('toUser'), equalTo(loggedInUser.username));
 
             onValue(notifRef, (snapshot) => {
-                setNotifications([]);
                 snapshot.forEach((childSnapshot) => {
                     if (childSnapshot.val().status === 'pending') {
-                        setNotifications(oldNotifications => [...oldNotifications, childSnapshot.val()]);
-                        setHasNotif(true);
+                        setFriendNotifs(oldNotifications => [...oldNotifications, childSnapshot.val()]);
+                    }
+                })
+            })
+
+            const msgRef = query(ref(database, 'messages'), orderByChild('toUser'), equalTo(loggedInUser.username));
+
+            onValue(msgRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    if (childSnapshot.val().status === 'unread') {
+                        setMsgNotifs(oldNotifications => [...oldNotifications, childSnapshot.val()]);
+                        setMsgIds(oldIds => [...oldIds, childSnapshot.key]);
                     }
                 })
             })
@@ -41,21 +54,27 @@ const Navbar = () => {
     }, [isAuthenticated, !isLoading, loggedInUser, clickedNotif])
 
     const acceptFriendRequest = (fromUser, toUser) => {
-        setClickedNotif(true);
+        setClickedNotif(!clickedNotif);
 
         update(ref(database, 'friends/' + `${fromUser}${toUser}`), {
             status: 'accepted'
         })
-
-        setClickedNotif(false);
     }
 
     const rejectFriendRequest = (fromUser, toUser) => {
-        setClickedNotif(true);
+        setClickedNotif(!clickedNotif);
 
         remove(ref(database, 'friends/' + `${fromUser}${toUser}`));
+    }
 
-        setClickedNotif(false);
+    const viewMessage = (id) => {
+        setClickedNotif(!clickedNotif);
+
+        update(ref(database, 'messages/' + `${id}`), {
+            status: 'read'
+        })
+
+        history.push(`/inbox/${id}`);
     }
 
     return (
@@ -119,19 +138,19 @@ const Navbar = () => {
                 </div>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
-                    {isAuthenticated && notifications[0] &&
+                    {isAuthenticated && (friendNotifs[0] || msgNotifs[0]) &&
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon className="notif-icon-solid" icon={faBell} />
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {!notifications[0] &&
+                                {!friendNotifs[0] && !msgNotifs[0] &&
                                     <li>
                                         <p className="dropdown-item">No Notifications</p>
                                     </li>
                                 }
 
-                                {notifications[0] && notifications.map((notif, index) => {
+                                {(friendNotifs[0]) && friendNotifs.map((notif, index) => {
                                     if (index > 0) {
                                         return <div key={index}>
                                             <li><hr className="dropdown-divider" /></li>
@@ -150,11 +169,27 @@ const Navbar = () => {
                                         </li>
                                     }
                                 })}
+
+                                {(msgNotifs[0]) && msgNotifs.map((notif, index) => {
+                                    if (index > 0 || friendNotifs[0]) {
+                                        return <div key={index}>
+                                            <li><hr className="dropdown-divider" /></li>
+                                            <li className="dropdown-item">
+                                                <button onClick={() => viewMessage(msgIds[index])} className="dropdown-item">Message from {notif.fromUser}</button>
+                                            </li>
+                                        </div>
+                                    }
+                                    else {
+                                        return <li className="dropdown-item" key={index}>
+                                            <button onClick={() => viewMessage(msgIds[index])} className="dropdown-item">Message from {notif.fromUser}</button>
+                                        </li>
+                                    }
+                                })}
                             </ul>
                         </li>
                     }
 
-                    {isAuthenticated && !notifications[0] &&
+                    {isAuthenticated && !friendNotifs[0] && !msgNotifs[0] &&
                         <li className="nav-item mx-3">
                             <FontAwesomeIcon className="notif-icon" icon={farBell} />
                         </li>

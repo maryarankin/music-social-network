@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import { query, ref, onValue, orderByChild, equalTo, set } from 'firebase/database';
 import { FirebaseContext } from '../../components/firebase/FirebaseContext';
@@ -163,7 +163,7 @@ const ShowUser = () => {
                                 <div className="card-body">
                                     {!friends && <button onClick={addFriend} type="button" className="btn buttons mx-2">Add Friend</button>}
                                     {friends && <button type="button" className="btn friend-button mx-2" disabled>Friends &#10004;</button>}
-                                    <button type="button" className="btn buttons mx-2">Send Message</button>
+                                    <Link to={otherUser ? `/message/${otherUser.username}` : ''} className="btn buttons mx-2">Send Message</Link>
                                 </div>
                             </div>
                         </div>

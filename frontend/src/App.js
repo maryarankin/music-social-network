@@ -11,6 +11,7 @@ import Login from './pages/user/Login';
 import Register from './pages/user/Register';
 import Profile from './pages/Profile';
 import EditProfileCard from './components/EditProfileCard';
+import MessageForm from './components/MessageForm';
 import ArtistSearch from './pages/search/ArtistSearch';
 import AlbumSearch from './pages/search/AlbumSearch';
 import TrackSearch from './pages/search/TrackSearch';
@@ -20,6 +21,7 @@ import FriendsList from './pages/user/FriendsList';
 import ShowArtist from './pages/show/ShowArtist';
 import ShowAlbum from './pages/show/ShowAlbum';
 import ShowUser from './pages/show/ShowUser';
+import Inbox from './components/Inbox';
 //import ShowTrack from './pages/show/ShowTrack';
 import NotFound from './components/NotFound';
 
@@ -87,6 +89,10 @@ const App = () => {
                         <FriendsList />
                     </Route>
                     <Route path="/user/:id" children={<ShowUser />}>
+                    </Route>
+                    <Route path="/message/:id" children={<MessageForm />}>
+                    </Route>
+                    <Route path="/inbox/:id" children={<Inbox />}>
                     </Route>
                     <Route path="*">
                         <NotFound />
