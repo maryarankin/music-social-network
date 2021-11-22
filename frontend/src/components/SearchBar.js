@@ -2,10 +2,6 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../Context';
-import { FirebaseContext } from './firebase/FirebaseContext';
-import { UserContext } from '../UserContext';
-import { useAuth0 } from "@auth0/auth0-react";
-import { ref, onValue, query, orderByChild, equalTo } from 'firebase/database';
 import SearchResult from './SearchResult';
 import ApiError from './ApiError';
 import NoSearchResults from './NoSearchResults';
@@ -14,9 +10,6 @@ const axios = require('axios');
 
 const SearchBar = ({ searchType }) => {
     const { accessToken } = useContext(Context);
-    const { isAuthenticated, isLoading } = useAuth0();
-    const { loggedInUser } = useContext(UserContext);
-    const { database } = useContext(FirebaseContext);
 
     let searchTypeString = searchType;
     searchTypeString = searchTypeString.charAt(0).toUpperCase() + searchTypeString.substring(1);

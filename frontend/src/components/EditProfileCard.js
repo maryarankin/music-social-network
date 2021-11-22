@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { update, ref } from 'firebase/database';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { IdContext } from '../IdContext';
-import profilePicture from '../assets/profile-picture.png';
+import profilePicture from '../assets/anon-profile-picture.png';
 
 const EditProfileCard = () => {
     const { userId } = useContext(IdContext);
@@ -47,10 +47,10 @@ const EditProfileCard = () => {
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
                         <div className="col-auto mb-3">
-                            <input type="text" id="name" name="name" className="form-control" aria-describedby="name" value={name} onChange={(e) => setName(e.target.value)} />
+                            <input type="text" id="name" name="name" className="form-control" aria-describedby="name" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
                         </div>
                         <div className="col-auto mb-3">
-                            <input type="text" id="bio" name="bio" className="form-control" aria-describedby="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
+                            <input type="text" id="bio" name="bio" className="form-control" aria-describedby="bio" placeholder="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
                         </div>
 
                         <button type="submit" className="btn buttons">Save</button>

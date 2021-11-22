@@ -89,6 +89,33 @@ const ShowUser = () => {
         }
     }
 
+    //check if already friends
+    useEffect(() => {
+        if (isAuthenticated && !isLoading && loggedInUser) {
+            setFriends(false);
+
+            const toRef = query(ref(database, 'friends'), orderByChild('toUser'), equalTo(loggedInUser.username));
+
+            onValue(toRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    if (otherUser && childSnapshot.val().fromUser === otherUser.username && childSnapshot.val().status === 'accepted') {
+                        setFriends(true);
+                    }
+                })
+            })
+
+            const fromRef = query(ref(database, 'friends'), orderByChild('fromUser'), equalTo(loggedInUser.username));
+
+            onValue(fromRef, (snapshot) => {
+                snapshot.forEach((childSnapshot) => {
+                    if (otherUser && childSnapshot.val().toUser === otherUser.username && childSnapshot.val().status === 'accepted') {
+                        setFriends(true);
+                    }
+                })
+            })
+        }
+    }, [isAuthenticated, !isLoading, loggedInUser, otherUser])
+
     return (
         <>
             <div>
@@ -134,7 +161,9 @@ const ShowUser = () => {
                         <div className="container">
                             <div className="card d-flex justify-content-center" style={{ width: '75%' }}>
                                 <div className="card-body">
-                                    <button onClick={addFriend} type="button" className="btn buttons mx-5">{friends ? 'Send Message' : 'Add Friend'}</button>
+                                    {!friends && <button onClick={addFriend} type="button" className="btn buttons mx-2">Add Friend</button>}
+                                    {friends && <button type="button" className="btn friend-button mx-2" disabled>Friends &#10004;</button>}
+                                    <button type="button" className="btn buttons mx-2">Send Message</button>
                                 </div>
                             </div>
                         </div>

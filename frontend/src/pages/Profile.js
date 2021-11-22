@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 //import firebase from '../firebase';
 import { useAuth0 } from "@auth0/auth0-react";
-import { ref, onValue, query, orderByChild, equalTo, limitToLast } from 'firebase/database';
+import { ref, onValue, query, orderByChild, equalTo } from 'firebase/database';
 import { FirebaseContext } from '../components/firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import FaveAlbum from '../components/FaveAlbum';
@@ -116,7 +116,7 @@ const Profile = () => {
                         <div className="container">
                             <div className="card d-flex justify-content-center" style={{ width: '75%' }}>
                                 <div className="card-body">
-                                    <button onClick={editMode} type="button" className="btn buttons mx-5">{inEditMode ? 'Done Editing' : 'Edit Favorites'}</button>
+                                    <button onClick={editMode} type="button" className="btn buttons mx-2">{inEditMode ? 'Done Editing' : 'Edit Favorites'}</button>
                                     <Link to="/profile/edit" type="button" className="btn buttons">Edit Profile</Link>
                                 </div>
                             </div>

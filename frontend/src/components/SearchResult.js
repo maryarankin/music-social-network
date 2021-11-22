@@ -5,10 +5,8 @@ import { Link } from 'react-router-dom';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
-import { ref, onValue } from 'firebase/database';
 import { addArtistToProfile, addTrackToProfile, addAlbumToProfile } from '../functions/addFavorites';
 import defaultAlbumCover from '../assets/default-album-cover.png';
-import profilePicture from '../assets/profile-picture.png'
 import Stars from './Stars';
 
 const SearchResult = (props) => {

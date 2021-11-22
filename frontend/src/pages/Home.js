@@ -1,10 +1,8 @@
 /* Home page */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import HomepageBlurb from '../components/HomepageBlurb';
 import { homepageData } from '../data/homepageData';
-import ProfileTest from '../components/ProfileTest';
 
 const Home = () => {
     return <div className="container mt-5">
@@ -24,8 +22,6 @@ const Home = () => {
                     </div>
                 })}
             </div>
-
-            <ProfileTest />
         </div>
     </div>
 }

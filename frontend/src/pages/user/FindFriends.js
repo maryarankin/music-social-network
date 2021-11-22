@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { FirebaseContext } from '../../components/firebase/FirebaseContext';
 import { UserContext } from '../../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
 import { query, ref, onValue } from 'firebase/database';
+import User from '../../components/User';
 
 const FindFriends = () => {
     const { isAuthenticated, isLoading } = useAuth0();
@@ -39,16 +39,23 @@ const FindFriends = () => {
 
 
     return <div>
-        {dbLoading && <h1>loading</h1>}
+        {!isAuthenticated && <h1>Sign in to continue</h1>}
 
-        {allUsers.map((user, index) => {
-            return <div key={index}>
-                <h1>{user.name}</h1>
-                <Link to={`/user/${user.username}`}>View Profile</Link>
+        {isAuthenticated && dbLoading && <h1>loading</h1>}
+
+        {isAuthenticated &&
+            <div className="d-flex justify-content-center">
+                <div className="row mt-5">
+                    {allUsers.map((user, index) => {
+                        return <div className="col-3 mx-5" key={index}>
+                            <User friend={user.username} />
+                        </div>
+                    })}
+                </div>
             </div>
-
-        })}
+        }
     </div>
 }
 
 export default FindFriends;
+

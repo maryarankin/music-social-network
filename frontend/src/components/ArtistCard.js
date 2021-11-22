@@ -24,7 +24,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
     return <>
         <div className="container mt-5 mx-5 d-flex justify-content-center">
             <div className="card artist-card d-flex justify-content-center" style={{ width: '75%' }}>
-                <img src={artistImage} className="card-img-top profile-picture mt-2" alt={artistName} />
+                <img src={artistImage} className="card-img-top artist-picture mt-2" alt={artistName} />
                 <div className="card-body">
                     <h5 className="card-title">{artistName}</h5>
                     <p className="card-text">Genre: {artistGenre}</p>

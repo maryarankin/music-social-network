@@ -1,7 +1,7 @@
 /* card component that displays user information */
 
-import React, { useEffect, useState } from 'react';
-import profilePicture from '../assets/profile-picture.png';
+import React from 'react';
+import profilePicture from '../assets/anon-profile-picture.png';
 
 const ProfileCard = ({ user }) => {
 

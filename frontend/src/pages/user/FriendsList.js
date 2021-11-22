@@ -3,7 +3,7 @@ import { FirebaseContext } from '../../components/firebase/FirebaseContext';
 import { UserContext } from '../../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
 import { query, ref, onValue, orderByChild, equalTo } from 'firebase/database';
-import Friend from '../../components/Friend';
+import User from '../../components/User';
 
 const FriendsList = () => {
     const { isAuthenticated, isLoading } = useAuth0();
@@ -39,14 +39,20 @@ const FriendsList = () => {
         }
     }, [isAuthenticated, isLoading, loggedInUser])
 
-    return <div className="d-flex justify-content-center">
-        <div className="row mt-5">
-            {friends.map((friend, index) => {
-                return <div className="col-3" key={index}>
-                    <Friend friend={friend} />
+    return <div>
+        {!isAuthenticated && <h1>Sign in to continue</h1>}
+
+        {isAuthenticated &&
+            <div className="d-flex justify-content-center">
+                <div className="row mt-5">
+                    {friends.map((friend, index) => {
+                        return <div className="col-3" key={index}>
+                            <User friend={friend} />
+                        </div>
+                    })}
                 </div>
-            })}
-        </div>
+            </div>
+        }
     </div>
 }
 

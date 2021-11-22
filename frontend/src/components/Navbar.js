@@ -7,7 +7,7 @@ import LoginButton from './LoginButton';
 import { useAuth0 } from "@auth0/auth0-react";
 import { UserContext } from '../UserContext';
 import { FirebaseContext } from './firebase/FirebaseContext';
-import { query, ref, onValue, orderByChild, equalTo, update } from 'firebase/database';
+import { query, ref, onValue, orderByChild, equalTo, update, remove } from 'firebase/database';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { faBell as farBell } from '@fortawesome/free-regular-svg-icons';
@@ -31,7 +31,7 @@ const Navbar = () => {
             onValue(notifRef, (snapshot) => {
                 setNotifications([]);
                 snapshot.forEach((childSnapshot) => {
-                    if (childSnapshot.val().status == 'pending') {
+                    if (childSnapshot.val().status === 'pending') {
                         setNotifications(oldNotifications => [...oldNotifications, childSnapshot.val()]);
                         setHasNotif(true);
                     }
@@ -46,6 +46,14 @@ const Navbar = () => {
         update(ref(database, 'friends/' + `${fromUser}${toUser}`), {
             status: 'accepted'
         })
+
+        setClickedNotif(false);
+    }
+
+    const rejectFriendRequest = (fromUser, toUser) => {
+        setClickedNotif(true);
+
+        remove(ref(database, 'friends/' + `${fromUser}${toUser}`));
 
         setClickedNotif(false);
     }
@@ -71,6 +79,19 @@ const Navbar = () => {
                                 <Link to="/profile" className="nav-link">Profile</Link>
                             </li>
                         }
+
+                        {isAuthenticated &&
+                            <li className="nav-item">
+                                <Link to="/friends" className="nav-link">My Friends</Link>
+                            </li>
+                        }
+
+                        {isAuthenticated &&
+                            <li className="nav-item">
+                                <Link to="/findfriends" className="nav-link">Connect</Link>
+                            </li>
+                        }
+
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Search
@@ -94,18 +115,6 @@ const Navbar = () => {
                                 </li> */}
                             </ul>
                         </li>
-
-                        {isAuthenticated &&
-                            <li className="nav-item">
-                                <Link to="/findfriends" className="nav-link">Connect</Link>
-                            </li>
-                        }
-
-                        {isAuthenticated &&
-                            <li className="nav-item">
-                                <Link to="/friends" className="nav-link">My Friends</Link>
-                            </li>
-                        }
                     </ul>
                 </div>
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -126,11 +135,19 @@ const Navbar = () => {
                                     if (index > 0) {
                                         return <div key={index}>
                                             <li><hr className="dropdown-divider" /></li>
-                                            <button onClick={() => acceptFriendRequest(notif.fromUser, loggedInUser.username)} className="dropdown-item">Friend request from {notif.fromUser}</button>
+                                            <li className="dropdown-item">
+                                                Friend request from {notif.fromUser}
+                                                <button onClick={() => acceptFriendRequest(notif.fromUser, loggedInUser.username)} className="dropdown-item">Accept</button>
+                                                <button onClick={() => rejectFriendRequest(notif.fromUser, loggedInUser.username)} className="dropdown-item">Reject</button>
+                                            </li>
                                         </div>
                                     }
                                     else {
-                                        return <button onClick={() => acceptFriendRequest(notif.fromUser, loggedInUser.username)} key={index} className="dropdown-item">Friend request from {notif.fromUser}</button>
+                                        return <li className="dropdown-item" key={index}>
+                                            Friend request from {notif.fromUser}
+                                            <button onClick={() => acceptFriendRequest(notif.fromUser, loggedInUser.username)} className="dropdown-item">Accept</button>
+                                            <button onClick={() => rejectFriendRequest(notif.fromUser, loggedInUser.username)} className="dropdown-item">Reject</button>
+                                        </li>
                                     }
                                 })}
                             </ul>
