@@ -92,6 +92,9 @@ const App = () => {
                     </Route>
                     <Route path="/message/:id" children={<MessageForm />}>
                     </Route>
+                    <Route exact path="/inbox">
+                        <Inbox />
+                    </Route>
                     <Route path="/inbox/:id" children={<Inbox />}>
                     </Route>
                     <Route path="*">

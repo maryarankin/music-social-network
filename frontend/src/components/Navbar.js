@@ -107,6 +107,12 @@ const Navbar = () => {
 
                         {isAuthenticated &&
                             <li className="nav-item">
+                                <Link to="/inbox" className="nav-link">Inbox</Link>
+                            </li>
+                        }
+
+                        {isAuthenticated &&
+                            <li className="nav-item">
                                 <Link to="/findfriends" className="nav-link">Connect</Link>
                             </li>
                         }

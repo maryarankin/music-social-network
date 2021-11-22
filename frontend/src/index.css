@@ -236,3 +236,17 @@ p {
     color: #3f2119;
     border: 1px solid #3f2119;
 }
+
+.selected-message {
+    background-color: #ec7a5d;
+}
+
+.msg-link {
+    color: #3f2119;
+    text-decoration: none;
+}
+
+.msg-link:hover {
+    color: #ec7a5d;
+    text-decoration: none;
+}
