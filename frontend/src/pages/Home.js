@@ -3,6 +3,7 @@
 import React from 'react';
 import HomepageBlurb from '../components/HomepageBlurb';
 import { homepageData } from '../data/homepageData';
+import UploadPic from '../components/UploadPic';
 
 const Home = () => {
     return <div className="container mt-5">
@@ -23,6 +24,7 @@ const Home = () => {
                 })}
             </div>
         </div>
+        <UploadPic />
     </div>
 }
 
