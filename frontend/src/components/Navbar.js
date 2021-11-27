@@ -59,12 +59,18 @@ const Navbar = () => {
         update(ref(database, 'friends/' + `${fromUser}${toUser}`), {
             status: 'accepted'
         })
+
+        //refresh page automatically to show friend status
+        window.location.reload(true);
     }
 
     const rejectFriendRequest = (fromUser, toUser) => {
         setClickedNotif(!clickedNotif);
 
         remove(ref(database, 'friends/' + `${fromUser}${toUser}`));
+
+        //refresh page automatically to show friend status
+        window.location.reload(true);
     }
 
     const viewMessage = (id) => {

@@ -6,19 +6,19 @@ const UploadPic = () => {
     const { loggedInUser } = useContext(UserContext);
     const [image, setImage] = useState('');
 
-    const upload = () => {
-        alert('hi')
+    const upload = async () => {
         if (image == null)
             return;
-        fbStorage.ref(`/images/${loggedInUser.username}`).put(image)
-            .on("state_changed", alert("success"), alert);
+        await fbStorage.ref(`/images/${loggedInUser.username}`).put(image);
+
+        //refresh page automatically to show new profile pic once it's uploaded
+        window.location.reload(true);
     }
+
     return (
-        <div className="App">
-            <center>
-                <input type="file" onChange={(e) => { setImage(e.target.files[0]) }} />
-                <button onClick={upload}>Upload</button>
-            </center>
+        <div className="mb-4">
+            <input type="file" onChange={(e) => { setImage(e.target.files[0]) }} />
+            <button onClick={upload} className="btn buttons">Upload</button>
         </div>
     );
 }

@@ -18,6 +18,7 @@ const ShowUser = () => {
     const [otherUser, setOtherUser] = useState();
     const [otherUserId, setOtherUserId] = useState('');
     const [friends, setFriends] = useState(false);
+    const [pending, setPending] = useState(false);
 
     useEffect(() => {
         if (isAuthenticated && !isLoading) {
@@ -93,6 +94,7 @@ const ShowUser = () => {
     useEffect(() => {
         if (isAuthenticated && !isLoading && loggedInUser) {
             setFriends(false);
+            setPending(false);
 
             const toRef = query(ref(database, 'friends'), orderByChild('toUser'), equalTo(loggedInUser.username));
 
@@ -100,6 +102,9 @@ const ShowUser = () => {
                 snapshot.forEach((childSnapshot) => {
                     if (otherUser && childSnapshot.val().fromUser === otherUser.username && childSnapshot.val().status === 'accepted') {
                         setFriends(true);
+                    }
+                    else if (otherUser && childSnapshot.val().fromUser === otherUser.username && childSnapshot.val().status === 'pending') {
+                        setPending(true);
                     }
                 })
             })
@@ -110,6 +115,9 @@ const ShowUser = () => {
                 snapshot.forEach((childSnapshot) => {
                     if (otherUser && childSnapshot.val().toUser === otherUser.username && childSnapshot.val().status === 'accepted') {
                         setFriends(true);
+                    }
+                    else if (otherUser && childSnapshot.val().toUser === otherUser.username && childSnapshot.val().status === 'pending') {
+                        setPending(true);
                     }
                 })
             })
@@ -161,8 +169,9 @@ const ShowUser = () => {
                         <div className="container">
                             <div className="card d-flex justify-content-center" style={{ width: '75%' }}>
                                 <div className="card-body">
-                                    {!friends && <button onClick={addFriend} type="button" className="btn buttons mx-2">Add Friend</button>}
-                                    {friends && <button type="button" className="btn friend-button mx-2" disabled>Friends &#10004;</button>}
+                                    {!friends && !pending && <button onClick={addFriend} type="button" className="btn buttons mx-2">Add Friend</button>}
+                                    {friends && !pending && <button type="button" className="btn checkmark-button mx-2" disabled>Friends &#10004;</button>}
+                                    {!friends && pending && <button type="button" className="btn checkmark-button mx-2" disabled>Request Pending</button>}
                                     <Link to={otherUser ? `/message/${otherUser.username}` : ''} className="btn buttons mx-2">Send Message</Link>
                                 </div>
                             </div>

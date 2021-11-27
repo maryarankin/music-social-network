@@ -1,10 +1,11 @@
 /* component to display search results for artists, albums, or tracks */
 
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
+import { onValue, ref } from 'firebase/database';
 import { addArtistToProfile, addTrackToProfile, addAlbumToProfile } from '../functions/addFavorites';
 import defaultAlbumCover from '../assets/default-album-cover.png';
 import Stars from './Stars';
@@ -93,6 +94,25 @@ const SearchResult = (props) => {
         name = name.substring(0, 29) + '...';
     }
 
+    //check if result already added to faves
+    const [added, setAdded] = useState(false);
+
+    useEffect(() => {
+        if (isAuthenticated && !isLoading && loggedInUser) {
+            setAdded(false);
+
+            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
+            let uppercaseType = searchType;
+            uppercaseType = uppercaseType[0].toUpperCase() + uppercaseType.slice(1);
+
+            onValue(ref(database, `fave${uppercaseType}/${id}${dbId}`), (snapshot) => {
+                if (snapshot.val()) {
+                    setAdded(true);
+                }
+            });
+        }
+    }, [isAuthenticated, !isLoading, loggedInUser, id])
+
     return <>
         <div className="card mt-3 search-result">
             <Link to={`/${linkSearchType}/${linkId}`} className="search-result-link">
@@ -121,7 +141,8 @@ const SearchResult = (props) => {
                                 <Stars popularity={popularity} />
                             </div>
                             <div className="col-2 d-flex justify-content-end">
-                                {isAuthenticated && <button onClick={() => addArtistToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>}
+                                {isAuthenticated && !added && <button onClick={() => addArtistToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>}
+                                {isAuthenticated && added && <button type="button" className="btn checkmark-button btn-sm search-result-button d-none d-xl-block" disabled>&#10004;</button>}
                             </div>
                         </div>
                     </li>
@@ -138,7 +159,8 @@ const SearchResult = (props) => {
                                 Release Date: {releaseDate}
                             </div>
                             <div className="col-2 d-flex justify-content-end">
-                                {isAuthenticated && <button onClick={() => addAlbumToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>}
+                                {isAuthenticated && !added && <button onClick={() => addAlbumToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>}
+                                {isAuthenticated && added && <button type="button" className="btn checkmark-button btn-sm search-result-button d-none d-xl-block" disabled>&#10004;</button>}
                             </div>
                         </div>
                     </li>
@@ -156,7 +178,8 @@ const SearchResult = (props) => {
                                 <Stars popularity={popularity} />
                             </div>
                             <div className="col-2 d-flex justify-content-end">
-                                {isAuthenticated && <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>}
+                                {isAuthenticated && !added && <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm search-result-button d-none d-xl-block">+</button>}
+                                {isAuthenticated && added && <button type="button" className="btn checkmark-button btn-sm search-result-button d-none d-xl-block" disabled>&#10004;</button>}
                             </div>
                         </div>
                     </li>

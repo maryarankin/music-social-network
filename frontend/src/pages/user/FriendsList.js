@@ -46,7 +46,7 @@ const FriendsList = () => {
             <div className="d-flex justify-content-center">
                 <div className="row mt-5">
                     {friends.map((friend, index) => {
-                        return <div className="col-3" key={index}>
+                        return <div className="col-3 mx-5" key={index}>
                             <User friend={friend} />
                         </div>
                     })}

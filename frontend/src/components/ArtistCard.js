@@ -1,12 +1,15 @@
 /* card component to display artist info on artist show page */
 
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
-import { addArtistToProfile, addTrackToProfile } from '../functions/addFavorites';
+import { onValue, ref } from 'firebase/database';
+import { addArtistToProfile } from '../functions/addFavorites';
 import DarkStars from './DarkStars';
+import ArtistTopTrack from './ArtistTopTrack';
+import RelatedArtist from './RelatedArtist';
 //import axios from 'axios';
 
 const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers, artistPopularity, artistTopTracks, relatedArtists }) => {
@@ -21,6 +24,22 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
         }
     })
 
+    //check if artist already added to faves
+    const [added, setAdded] = useState(false);
+
+    useEffect(() => {
+        if (isAuthenticated && !isLoading && loggedInUser) {
+            setAdded(false);
+
+            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
+            onValue(ref(database, `faveArtist/${id}${dbId}`), (snapshot) => {
+                if (snapshot.val()) {
+                    setAdded(true);
+                }
+            });
+        }
+    }, [isAuthenticated, !isLoading, loggedInUser, id])
+
     return <>
         <div className="container mt-5 mx-5 d-flex justify-content-center">
             <div className="card artist-card d-flex justify-content-center" style={{ width: '75%' }}>
@@ -32,25 +51,17 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                     <p className="card-text d-inline"><span>Popularity: </span></p>
                     <DarkStars popularity={artistPopularity} />
                 </div>
-                {isAuthenticated && <div className="card-body">
-                    <button onClick={() => addArtistToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons">Add Artist</button>
-                </div>}
+                <div className="card-body">
+                    {isAuthenticated && !added && <button onClick={() => addArtistToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons">Add Artist</button>}
+                    {isAuthenticated && added && <button type="button" className="btn checkmark-button" disabled>&#10004;</button>}
+                </div>
 
                 <div className="card-header artist-card-list-header mt-3">
                     Top Songs
                 </div>
                 <ul className="list-group list-group-flush">
                     {artistTopTracks.map((track) => {
-                        return <li key={track.id} className="list-group-item artist-card-list">
-                            <div className="row">
-                                <div className="col-10">
-                                    <Link to={`/album/${track.album.id}`} className="artist-card-link">{track.name}</Link>
-                                </div>
-                                <div className="col-2 d-flex justify-content-end">
-                                    {isAuthenticated && <button onClick={() => addTrackToProfile(track.id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>}
-                                </div>
-                            </div>
-                        </li>
+                        return <ArtistTopTrack key={track.id} track={track} />
                     })}
                 </ul>
 
@@ -59,16 +70,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                 </div>
                 <ul className="list-group list-group-flush">
                     {relatedArtists.map((artist) => {
-                        return <li key={artist.id} className="list-group-item artist-card-list">
-                            <div className="row">
-                                <div className="col-10">
-                                    <Link to={`/artist/${artist.id}`} className="artist-card-link">{artist.name}</Link>
-                                </div>
-                                <div className="col-2 d-flex justify-content-end">
-                                    {isAuthenticated && <button onClick={() => addArtistToProfile(artist.id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons btn-sm d-none d-xl-block">+</button>}
-                                </div>
-                            </div>
-                        </li>
+                        return <RelatedArtist key={artist.id} artist={artist} />
                     })}
                 </ul>
             </div>

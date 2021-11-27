@@ -5,6 +5,7 @@ import { Context } from '../Context';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
+import { onValue, ref } from 'firebase/database';
 import { addTrackToProfile } from '../functions/addFavorites';
 import Stars from './Stars'
 import defaultAlbumCoverDark from '../assets/default-album-cover-dark.png';
@@ -51,6 +52,22 @@ const Track = ({ track_number, name, duration_ms, id }) => {
         getTrack(accessToken, id);
     }, [accessToken, id])
 
+    //check if track already added to faves
+    const [added, setAdded] = useState(false);
+
+    useEffect(() => {
+        if (isAuthenticated && !isLoading && loggedInUser) {
+            setAdded(false);
+
+            let dbId = loggedInUser.email.substr(0, loggedInUser.email.indexOf('.'));
+            onValue(ref(database, `faveTrack/${id}${dbId}`), (snapshot) => {
+                if (snapshot.val()) {
+                    setAdded(true);
+                }
+            });
+        }
+    }, [isAuthenticated, !isLoading, loggedInUser, id])
+
     return (
         <div className="card" style={{ width: '75%' }}>
             <img src={defaultAlbumCoverDark} className="card-img-top album-cover my-4" alt={name} />
@@ -60,7 +77,8 @@ const Track = ({ track_number, name, duration_ms, id }) => {
                 <p className="card-text d-inline"><span>Popularity: </span></p>
                 <Stars popularity={popularity} />
                 <div className="mt-3">
-                    {isAuthenticated && <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons">+</button>}
+                    {isAuthenticated && !added && <button onClick={() => addTrackToProfile(id, isAuthenticated, isLoading, loggedInUser, database)} type="button" className="btn buttons">+</button>}
+                    {isAuthenticated && added && <button type="button" className="btn checkmark-button" disabled>&#10004;</button>}
                 </div>
             </div>
         </div>

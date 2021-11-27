@@ -116,8 +116,7 @@ const Profile = () => {
                         <div className="container">
                             <div className="card d-flex justify-content-center" style={{ width: '75%' }}>
                                 <div className="card-body">
-                                    <button onClick={editMode} type="button" className="btn buttons mx-2">{inEditMode ? 'Done Editing' : 'Edit Favorites'}</button>
-                                    <Link to="/profile/edit" type="button" className="btn buttons">Edit Profile</Link>
+                                    <button onClick={editMode} type="button" className="btn buttons">{inEditMode ? 'Save' : 'Edit Favorites'}</button>
                                 </div>
                             </div>
                         </div>
