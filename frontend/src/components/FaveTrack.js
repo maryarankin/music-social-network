@@ -27,7 +27,12 @@ const FaveTrack = ({ id, editMode }) => {
         };
 
         axios.request(options).then(function (response) {
-            setName(response.data.name);
+            if (response.data.name.length > 30) {
+                setName(response.data.name.substring(0, 29) + '...');
+            }
+            else {
+                setName(response.data.name);
+            }
             setImage(response.data.album.images[0].url);
             setAlbumId(response.data.album.id);
         }).catch(function (error) {
@@ -38,11 +43,6 @@ const FaveTrack = ({ id, editMode }) => {
     useEffect(() => {
         getTrack(accessToken, id);
     }, [id])
-
-    //abbreviate name if too long
-    // if (name.length > 21) {
-    //     name = name.substring(0, 20) + '...';
-    // }
 
     return (
         <div className="card">

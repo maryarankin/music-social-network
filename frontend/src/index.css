@@ -37,7 +37,6 @@
 
 .notif-icon {
     color: #3f2119;
-    margin-top: 0.6rem;
 }
 
 .notif-icon-solid {
@@ -64,6 +63,20 @@
     font-family: 'Orbitron', sans-serif;
     font-size: 1.5rem;
     color: #3f2119;
+}
+
+.top-songs {
+    background-color: #3f2119;
+}
+
+.top-50 {
+    width: 60%;
+}
+
+.top-50-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    color: #ec7a5d;
 }
 
 .buttons {

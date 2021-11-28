@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
-import { query, ref, onValue, orderByChild, equalTo, set } from 'firebase/database';
+import { query, ref, onValue, orderByChild, equalTo, set, remove } from 'firebase/database';
 import { FirebaseContext } from '../../components/firebase/FirebaseContext';
 import { UserContext } from '../../UserContext';
 import ProfileCard from '../../components/ProfileCard';
@@ -19,6 +19,7 @@ const ShowUser = () => {
     const [otherUserId, setOtherUserId] = useState('');
     const [friends, setFriends] = useState(false);
     const [pending, setPending] = useState(false);
+    const [removedFriend, setRemovedFriend] = useState(false);
 
     useEffect(() => {
         if (isAuthenticated && !isLoading) {
@@ -90,6 +91,28 @@ const ShowUser = () => {
         }
     }
 
+    //remove friend
+    const removeFriend = async () => {
+        if (isAuthenticated && !isLoading) {
+            setRemovedFriend(false);
+
+            const toRef = query(ref(database, `friends/${loggedInUser.username}${otherUser.username}`));
+            const fromRef = query(ref(database, `friends/${otherUser.username}${loggedInUser.username}`));
+
+            // onValue(toRef, (snapshot) => {
+            //     console.log('to' + snapshot.val());
+            // })
+
+            // onValue(fromRef, (snapshot) => {
+            //     console.log('from ' + snapshot.val());
+            // })
+            remove(toRef);
+            remove(fromRef);
+
+            setRemovedFriend(true);
+        }
+    }
+
     //check if already friends
     useEffect(() => {
         if (isAuthenticated && !isLoading && loggedInUser) {
@@ -122,7 +145,7 @@ const ShowUser = () => {
                 })
             })
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, otherUser])
+    }, [isAuthenticated, !isLoading, loggedInUser, otherUser, removedFriend])
 
     return (
         <>
@@ -169,10 +192,11 @@ const ShowUser = () => {
                         <div className="container">
                             <div className="card d-flex justify-content-center" style={{ width: '75%' }}>
                                 <div className="card-body">
-                                    {!friends && !pending && <button onClick={addFriend} type="button" className="btn buttons mx-2">Add Friend</button>}
-                                    {friends && !pending && <button type="button" className="btn checkmark-button mx-2" disabled>Friends &#10004;</button>}
-                                    {!friends && pending && <button type="button" className="btn checkmark-button mx-2" disabled>Request Pending</button>}
-                                    <Link to={otherUser ? `/message/${otherUser.username}` : ''} className="btn buttons mx-2">Send Message</Link>
+                                    {!friends && !pending && <button onClick={addFriend} type="button" className="btn buttons mx-1">Add Friend</button>}
+                                    {friends && !pending && <button type="button" className="btn checkmark-button mx-1" disabled>Friends &#10004;</button>}
+                                    {!friends && pending && <button type="button" className="btn checkmark-button mx-1" disabled>Request Pending</button>}
+                                    <Link to={otherUser ? `/message/${otherUser.username}` : ''} className="btn buttons mx-1">Send Message</Link>
+                                    {friends && !pending && <button onClick={removeFriend} type="button" className="btn buttons mx-1">Remove Friend</button>}
                                 </div>
                             </div>
                         </div>

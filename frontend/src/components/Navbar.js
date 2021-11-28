@@ -202,10 +202,18 @@ const Navbar = () => {
                     }
 
                     {isAuthenticated && !friendNotifs[0] && !msgNotifs[0] &&
-                        <li className="nav-item mx-3">
-                            <FontAwesomeIcon className="notif-icon" icon={farBell} />
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <FontAwesomeIcon className="notif-icon" icon={farBell} />
+                            </a>
+                            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <p className="dropdown-item mb-0">No Notifications</p>
+                                </li>
+                            </ul>
                         </li>
                     }
+
 
                     {isAuthenticated && <div>
                         <span className="mx-4">Welcome, {loggedInUser ? loggedInUser.username : 'loading'}</span>

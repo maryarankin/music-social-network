@@ -14,6 +14,7 @@ const Inbox = () => {
 
     //get selected message & all other messages
     const [mainMessage, setMainMessage] = useState();
+    const [mainMsgId, setMainMsgId] = useState('');
     const [messages, setMessages] = useState([]);
     const [msgIds, setMsgIds] = useState([]);
 
@@ -25,6 +26,7 @@ const Inbox = () => {
 
             onValue(msgRef, (snapshot) => {
                 setMainMessage(snapshot.val());
+                setMainMsgId(snapshot.key);
             })
         }
     }, [isAuthenticated, isLoading, loggedInUser, id])
@@ -32,6 +34,7 @@ const Inbox = () => {
     useEffect(() => {
         if (isAuthenticated && !isLoading && loggedInUser) {
             setMessages([]);
+            setMsgIds([]);
             const msgsRef = query(ref(database, 'messages'), orderByChild('toUser'), equalTo(loggedInUser.username));
 
             onValue(msgsRef, (snapshot) => {
@@ -68,7 +71,7 @@ const Inbox = () => {
 
             <div className="col-8">
                 {mainMessage &&
-                    <Message message={mainMessage} />}
+                    <Message message={mainMessage} id={mainMsgId} />}
             </div>
         </div>
     </div>
