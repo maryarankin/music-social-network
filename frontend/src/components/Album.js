@@ -33,7 +33,7 @@ const Album = ({ id, artists, images, name, release_date }) => {
                 }
             });
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, id])
+    }, [database, isAuthenticated, isLoading, loggedInUser, id])
 
     return (
         <div className="card" style={{ width: '75%' }}>

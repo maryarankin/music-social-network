@@ -32,7 +32,7 @@ const ShowUser = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading])
+    }, [database, isAuthenticated, isLoading, id])
 
     const [favoriteAlbums, setFavoriteAlbums] = useState([]);
     const [favoriteTracks, setFavoriteTracks] = useState([]);
@@ -50,7 +50,7 @@ const ShowUser = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading, otherUser])
+    }, [database, isAuthenticated, isLoading, otherUser])
 
     //favorite tracks
     useEffect(() => {
@@ -64,7 +64,7 @@ const ShowUser = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading, otherUser])
+    }, [database, isAuthenticated, isLoading, otherUser])
 
     //favorite albums
     useEffect(() => {
@@ -78,7 +78,7 @@ const ShowUser = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading, otherUser])
+    }, [database, isAuthenticated, isLoading, otherUser])
 
     //add friend
     const addFriend = async () => {
@@ -99,13 +99,6 @@ const ShowUser = () => {
             const toRef = query(ref(database, `friends/${loggedInUser.username}${otherUser.username}`));
             const fromRef = query(ref(database, `friends/${otherUser.username}${loggedInUser.username}`));
 
-            // onValue(toRef, (snapshot) => {
-            //     console.log('to' + snapshot.val());
-            // })
-
-            // onValue(fromRef, (snapshot) => {
-            //     console.log('from ' + snapshot.val());
-            // })
             remove(toRef);
             remove(fromRef);
 
@@ -145,7 +138,7 @@ const ShowUser = () => {
                 })
             })
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, otherUser, removedFriend])
+    }, [database, isAuthenticated, isLoading, loggedInUser, otherUser, removedFriend])
 
     return (
         <>

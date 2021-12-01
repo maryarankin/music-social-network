@@ -37,7 +37,7 @@ const FriendsList = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading, loggedInUser])
+    }, [database, isAuthenticated, isLoading, loggedInUser])
 
     return <div>
         {!isAuthenticated && <h1>Sign in to continue</h1>}

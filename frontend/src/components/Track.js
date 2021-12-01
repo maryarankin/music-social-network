@@ -66,7 +66,7 @@ const Track = ({ track_number, name, duration_ms, id }) => {
                 }
             });
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, id])
+    }, [database, isAuthenticated, isLoading, loggedInUser, id])
 
     return (
         <div className="card" style={{ width: '75%' }}>

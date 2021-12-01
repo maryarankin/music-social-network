@@ -26,7 +26,7 @@ const MessageForm = () => {
                 setProfilePic(url);
             })
         }
-    }, [isAuthenticated, isLoading])
+    }, [isAuthenticated, isLoading, id])
 
     const history = useHistory();
     const [message, setMessage] = useState('');
@@ -39,7 +39,8 @@ const MessageForm = () => {
                 message: message,
                 status: 'unread',
                 toUser: id,
-                fromUser: loggedInUser.username
+                fromUser: loggedInUser.username,
+                date: Date.now()
             })
         }
 

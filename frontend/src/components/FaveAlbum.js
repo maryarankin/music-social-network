@@ -38,12 +38,7 @@ const FaveAlbum = ({ id, editMode }) => {
 
     useEffect(() => {
         getAlbum(accessToken, id);
-    }, [id])
-
-    //later create a function that more dynamically shortens the title? or find a library for this?
-    // if (name.length > 19) {
-    //     setName(name.substring(0, 18) + '...');
-    // }
+    }, [accessToken, id])
 
     return (
         <div className="card">

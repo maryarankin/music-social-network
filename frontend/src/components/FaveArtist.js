@@ -35,12 +35,7 @@ const FaveArtist = ({ id, editMode }) => {
 
     useEffect(() => {
         getArtist(accessToken, id);
-    }, [id])
-
-    //abbreviate name if too long
-    // if (name.length > 21) {
-    //     name = name.substring(0, 20) + '...';
-    // }
+    }, [accessToken, id])
 
     return (
         <div className="card">

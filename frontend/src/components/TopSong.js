@@ -33,7 +33,7 @@ const TopSong = ({ id, albumId, artists, images, name }) => {
                 }
             });
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, id])
+    }, [database, isAuthenticated, isLoading, loggedInUser, id])
 
     return (
         <div className="card mt-4">

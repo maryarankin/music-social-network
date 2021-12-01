@@ -15,14 +15,12 @@ import MessageForm from './components/MessageForm';
 import ArtistSearch from './pages/search/ArtistSearch';
 import AlbumSearch from './pages/search/AlbumSearch';
 import TrackSearch from './pages/search/TrackSearch';
-//import UserSearch from './pages/search/UserSearch';
 import FindFriends from './pages/user/FindFriends';
 import FriendsList from './pages/user/FriendsList';
 import ShowArtist from './pages/show/ShowArtist';
 import ShowAlbum from './pages/show/ShowAlbum';
 import ShowUser from './pages/show/ShowUser';
 import Inbox from './components/Inbox';
-//import ShowTrack from './pages/show/ShowTrack';
 import NotFound from './components/NotFound';
 
 const App = () => {
@@ -43,7 +41,7 @@ const App = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading])
+    }, [database, isAuthenticated, isLoading])
 
 
     return <UserContext.Provider value={{ loggedInUser }}>
@@ -79,9 +77,6 @@ const App = () => {
                     <Route path="/tracksearch">
                         <TrackSearch />
                     </Route>
-                    {/*<Route path="/usersearch">
-                        <UserSearch />
-                    </Route>*/}
                     <Route path="/findfriends">
                         <FindFriends />
                     </Route>

@@ -1,7 +1,6 @@
 /* card component to display artist info on artist show page */
 
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { FirebaseContext } from './firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -38,7 +37,7 @@ const ArtistCard = ({ id, artistName, artistImage, artistGenre, artistFollowers,
                 }
             });
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, id])
+    }, [database, isAuthenticated, isLoading, loggedInUser, id])
 
     return <>
         <div className="container mt-5 mx-5 d-flex justify-content-center">

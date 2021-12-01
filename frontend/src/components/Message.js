@@ -9,6 +9,10 @@ const Message = ({ message, id }) => {
     const { isAuthenticated, isLoading } = useAuth0();
     const history = useHistory();
 
+    let timestamp = new Date(message.date);
+    let timestampString = timestamp.toString();
+    timestampString = timestampString.substr(0, timestampString.indexOf('GMT'));
+
     const deleteMessage = () => {
         if (isAuthenticated && !isLoading) {
             remove(ref(database, 'messages/' + `${id}`));
@@ -17,13 +21,14 @@ const Message = ({ message, id }) => {
         }
     }
 
-    return <div className="card">
+    return <div className="card msg-txt">
         <div className="card-header">
             <strong>Message</strong>
         </div>
         <ul className="list-group list-group-flush">
-            <li className="list-group-item"><strong>From:</strong> {message && <Link to={`/user/${message.fromUser}`} className="msg-link">{message.fromUser}</Link>}</li>
-            <li className="list-group-item">{message && message.message}</li>
+            <li className="list-group-item msg-txt"><strong>From:</strong> {message && <Link to={`/user/${message.fromUser}`} className="msg-link">{message.fromUser}</Link>}</li>
+            <li className="list-group-item msg-txt"><strong>Sent:</strong> {message && timestampString}</li>
+            <li className="list-group-item msg-txt">{message && message.message}</li>
             <li className="list-group-item">
                 <Link to={`/message/${message.fromUser}`} className="btn buttons">Reply</Link>
                 <button onClick={deleteMessage} className="btn buttons mx-3">Delete</button>

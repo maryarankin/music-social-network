@@ -29,7 +29,7 @@ const Inbox = () => {
                 setMainMsgId(snapshot.key);
             })
         }
-    }, [isAuthenticated, isLoading, loggedInUser, id])
+    }, [database, isAuthenticated, isLoading, loggedInUser, id])
 
     useEffect(() => {
         if (isAuthenticated && !isLoading && loggedInUser) {
@@ -44,25 +44,25 @@ const Inbox = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading, loggedInUser, id])
+    }, [database, isAuthenticated, isLoading, loggedInUser, id])
 
     return <div className="container mt-5">
         {!mainMessage && id && <h1>loading</h1>}
         <div className="row">
 
             <div className="col-4">
-                <div className="card" style={{ width: '75%' }}>
+                <div className="card msg-txt" style={{ width: '75%' }}>
                     <div className="card-header">
                         <strong>All Messages</strong>
                     </div>
                     <ul className="list-group list-group-flush">
                         {messages.map((msg, index) => {
                             return <Link to={`/inbox/${msgIds[index]}`} key={index} className="msg-link">
-                                {msg.status === 'unread' && msgIds[index] === id && <li className="list-group-item selected-message"><strong>From: {msg.fromUser}</strong></li>}
-                                {msg.status === 'read' && msgIds[index] === id && <li className="list-group-item selected-message">From: {msg.fromUser}</li>}
+                                {msg.status === 'unread' && msgIds[index] === id && <li className="list-group-item selected-message msg-txt"><strong>From: {msg.fromUser}</strong></li>}
+                                {msg.status === 'read' && msgIds[index] === id && <li className="list-group-item selected-message msg-txt">From: {msg.fromUser}</li>}
 
-                                {msg.status === 'unread' && msgIds[index] !== id && <li className="list-group-item"><strong>From: {msg.fromUser}</strong></li>}
-                                {msg.status === 'read' && msgIds[index] !== id && <li className="list-group-item">From: {msg.fromUser}</li>}
+                                {msg.status === 'unread' && msgIds[index] !== id && <li className="list-group-item msg-txt"><strong>From: {msg.fromUser}</strong></li>}
+                                {msg.status === 'read' && msgIds[index] !== id && <li className="list-group-item msg-txt">From: {msg.fromUser}</li>}
                             </Link>
                         })}
                     </ul>

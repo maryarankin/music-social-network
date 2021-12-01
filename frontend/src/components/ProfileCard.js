@@ -4,13 +4,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { fbStorage } from '../components/firebase/firebase';
 import { useAuth0 } from "@auth0/auth0-react";
-import { FirebaseContext } from '../components/firebase/FirebaseContext';
 import { UserContext } from '../UserContext';
 import defaultProfilePicture from '../assets/anon-profile-picture.png';
 
 const ProfileCard = ({ user }) => {
     const { isAuthenticated, isLoading } = useAuth0();
-    const { database } = useContext(FirebaseContext);
     const { loggedInUser } = useContext(UserContext);
     const [profilePic, setProfilePic] = useState('');
 

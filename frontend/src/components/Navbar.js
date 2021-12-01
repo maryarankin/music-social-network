@@ -13,7 +13,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { faBell as farBell } from '@fortawesome/free-regular-svg-icons';
 
 const Navbar = () => {
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const { isAuthenticated, isLoading } = useAuth0();
     const { loggedInUser } = useContext(UserContext);
     const { database } = useContext(FirebaseContext);
     const history = useHistory();
@@ -51,7 +51,7 @@ const Navbar = () => {
                 })
             })
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, clickedNotif])
+    }, [database, isAuthenticated, isLoading, loggedInUser, clickedNotif])
 
     const acceptFriendRequest = (fromUser, toUser) => {
         setClickedNotif(!clickedNotif);
@@ -139,11 +139,6 @@ const Navbar = () => {
                                 <li>
                                     <Link to="/tracksearch" className="dropdown-item">By Track</Link>
                                 </li>
-
-                                {/* <li><hr className="dropdown-divider" /></li>
-                                <li>
-                                    <Link to="/usersearch" className="dropdown-item">By User</Link>
-                                </li> */}
                             </ul>
                         </li>
                     </ul>

@@ -46,7 +46,7 @@ const ShowAlbum = () => {
 
     useEffect(() => {
         getAlbum(accessToken, id);
-    }, [])
+    }, [accessToken, id])
 
     return <div>
 

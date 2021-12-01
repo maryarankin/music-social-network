@@ -27,7 +27,7 @@ const AlbumCard = ({ id, albumName, albumCover, albumArtist, albumArtistId, albu
                 }
             });
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, id])
+    }, [database, isAuthenticated, isLoading, loggedInUser, id])
 
     return <>
         <div className="container mt-5 mx-5 d-flex justify-content-center">

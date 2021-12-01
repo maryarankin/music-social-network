@@ -47,7 +47,7 @@ const User = ({ friend }) => {
                 setProfilePic(url);
             })
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, friend])
+    }, [database, isAuthenticated, isLoading, loggedInUser, friend])
 
     //add friend
     const addFriend = async () => {

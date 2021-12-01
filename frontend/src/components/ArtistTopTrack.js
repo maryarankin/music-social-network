@@ -25,7 +25,7 @@ const ArtistTopTrack = ({ track }) => {
                 }
             });
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, track.id])
+    }, [database, isAuthenticated, isLoading, loggedInUser])
 
     return <li className="list-group-item artist-card-list">
         <div className="row">

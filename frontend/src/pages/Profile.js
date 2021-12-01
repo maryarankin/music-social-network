@@ -1,8 +1,6 @@
 /* Profile page where all of a user's information is shown; also where they can display their favorite albums, songs, and artists */
 
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-//import firebase from '../firebase';
 import { useAuth0 } from "@auth0/auth0-react";
 import { ref, onValue, query, orderByChild, equalTo } from 'firebase/database';
 import { FirebaseContext } from '../components/firebase/FirebaseContext';
@@ -40,7 +38,7 @@ const Profile = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading, loggedInUser])
+    }, [database, isAuthenticated, isLoading, loggedInUser])
 
     //favorite tracks
     useEffect(() => {
@@ -54,7 +52,7 @@ const Profile = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading, loggedInUser])
+    }, [database, isAuthenticated, isLoading, loggedInUser])
 
     //favorite albums
     useEffect(() => {
@@ -68,7 +66,7 @@ const Profile = () => {
                 })
             })
         }
-    }, [isAuthenticated, isLoading, loggedInUser])
+    }, [database, isAuthenticated, isLoading, loggedInUser])
 
     return (
         <>

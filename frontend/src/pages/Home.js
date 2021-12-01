@@ -28,7 +28,7 @@ const Home = () => {
 
     useEffect(() => {
         getPlaylist(accessToken, '37i9dQZEVXbLp5XoPON0wI');
-    }, [])
+    }, [accessToken])
 
     return <>
         <div className="container mt-5">

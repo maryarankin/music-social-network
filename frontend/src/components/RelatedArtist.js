@@ -25,7 +25,7 @@ const RelatedArtist = ({ artist }) => {
                 }
             });
         }
-    }, [isAuthenticated, !isLoading, loggedInUser, artist.id])
+    }, [database, isAuthenticated, isLoading, loggedInUser])
 
     return <li className="list-group-item artist-card-list">
         <div className="row">

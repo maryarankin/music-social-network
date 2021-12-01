@@ -116,7 +116,7 @@ const ShowArtist = () => {
         getArtistAlbums(accessToken, id, albums);
         getArtistTopTracks(accessToken, id);
         getRelatedArtists(accessToken, id);
-    }, [id])
+    }, [accessToken, id])
 
     return <div>
 

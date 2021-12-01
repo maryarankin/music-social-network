@@ -42,7 +42,7 @@ const FaveTrack = ({ id, editMode }) => {
 
     useEffect(() => {
         getTrack(accessToken, id);
-    }, [id])
+    }, [accessToken, id])
 
     return (
         <div className="card">
